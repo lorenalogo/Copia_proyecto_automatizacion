@@ -293,6 +293,129 @@ if (session_status() === PHP_SESSION_NONE) {
               </ul>
             </li>
 
+            <!-- AGREGANDO CONTROL DE ACTAS -->
+            <li class="nav-item has-treeview" style="display:<?php echo $_SESSION['btn_docentes'] ?>">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-paste"></i>
+                <p>
+                  Control de Actas
+                  <i class="fas fa-angle-left right"></i>
+                  <span class="badge badge-info right"></span>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <!----->
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Gestión Reunión
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Agendar Reunión</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Reuniones Pendientes</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Listar Reuniones</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--- Gestión Reunión  -->
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Gestión Acta
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Actas Pendientes</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Listar Actas</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--- Gestión acta  -->
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Acuerdo y Seguimiento
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Crear Acuerdo</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Acuerdos Pendientes</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Listar Acuerdos</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--- Gestión acuerdos  -->
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Lista Asistencia
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Asistencia por Acta</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Asistencia por Persona</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--- Gestión asistencia  -->
+              </ul>
+            </li>
+
 
             <!---- solicitudes ----->
 
@@ -404,9 +527,56 @@ if (session_status() === PHP_SESSION_NONE) {
                     <p> Mantenimientos Plan de Estudios</p>
                   </a>
                 </li>
-
+                <!--- Mantenimientos control actas  -->
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Mantenimientos Reu/Actas
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="../vistas/mantenimiento_actareunion_vista.php" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Tipo Reunión/Acta </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Estado Acta</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Estado Reunión</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Estado Acuerdo</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Estado Notificación</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Estado Participantes</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!-------->
               </ul>
-
             </li>
             <!----About ----->
 
