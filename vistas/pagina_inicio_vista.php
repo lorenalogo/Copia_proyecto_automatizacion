@@ -544,19 +544,19 @@ if (session_status() === PHP_SESSION_NONE) {
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="#" class="nav-link">
+                      <a href="../vistas/mantenimiento_estadoacta_vista.php" class="nav-link">
                         <i class="far fa-dot-circle nav-icon"></i>
                         <p>Estado Acta</p>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="#" class="nav-link">
+                      <a href="../vistas/mantenimiento_estadoreunion_vista.php" class="nav-link">
                         <i class="far fa-dot-circle nav-icon"></i>
                         <p>Estado Reunión</p>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="#" class="nav-link">
+                      <a href="../vistas/mantenimiento_estadoacuerdo_vista.php" class="nav-link">
                         <i class="far fa-dot-circle nav-icon"></i>
                         <p>Estado Acuerdo</p>
                       </a>
