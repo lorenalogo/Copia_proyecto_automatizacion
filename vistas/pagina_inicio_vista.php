@@ -532,7 +532,7 @@ if (session_status() === PHP_SESSION_NONE) {
                   <a href="#" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>
-                      Mantenimientos Reu/Actas
+                      Mantenimientos Actas
                       <i class="right fas fa-angle-left"></i>
                     </p>
                   </a>
