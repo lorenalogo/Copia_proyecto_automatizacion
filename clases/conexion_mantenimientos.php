@@ -1,7 +1,7 @@
 <?php
 require_once "global.php";
 
-$conexion = new mysqli('b6k45kz2tfov8k3gm3lb-mysql.services.clever-cloud.com', 'rouaonxvhriuzrnhqpot', 'vAK0fRKcphsgN4apfb5D', 'b6k45kz2tfov8k3gm3lb');
+$conexion = new mysqli('b6k45kz2tfov8k3gm3lb-mysql.services.clever-cloud.com', 'uaonxvhriuzrnhqp', 'vAK0fRKcphsgN4apfb5D', 'b6k45kz2tfov8k3gm3lb');
 
 mysqli_query($conexion, 'SET NAMES "' . DB_ENCODE . '"');
 
