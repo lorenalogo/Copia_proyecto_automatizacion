@@ -2,10 +2,10 @@
 
 
 
-    $servidor= "b6k45kz2tfov8k3gm3lb-mysql.services.clever-cloud.com";
-    $usuario= "uaonxvhriuzrnhqp";
-    $password = "vAK0fRKcphsgN4apfb5D";
-    $base= "b6k45kz2tfov8k3gm3lb";
+$servidor= "b6k45kz2tfov8k3gm3lb-mysql.services.clever-cloud.com";
+$usuario= "uaonxvhriuzrnhqp";
+$password = "vAK0fRKcphsgN4apfb5D";
+$base= "b6k45kz2tfov8k3gm3lb";
 
 	$mysqli = new mysqli($servidor, $usuario,$password,$base);
 	$connection = mysqli_connect($servidor, $usuario,$password,$base) or die("Error " . mysqli_error($connection));
