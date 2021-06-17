@@ -3,7 +3,6 @@ ob_start();
 session_start();
 require_once('../vistas/pagina_inicio_vista.php');
 require_once('../clases/Conexion.php');
-require_once('../clases/conexionacta.php');
 require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
@@ -87,23 +86,23 @@ require_once('../clases/funcion_permisos.php');
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody> 
                                                 <?php
                                                 try {
                                                     $sql = "SELECT * FROM tbl_tipo_reunion_acta";
-                                                    $resultado = $conn->query($sql);
+                                                    $resultado = $mysqli->query($sql);
                                                 } catch (Exception $e) {
                                                     $error = $e->getMessage();
                                                     echo $error;
                                                 }
                                                 while ($tipoacta = $resultado->fetch_assoc()) { ?>
                                                     <tr>
-                                                        <td><?php echo $tipoacta['Tipo']; ?></td>
+                                                        <td><?php echo $tipoacta['tipo']; ?></td>
                                                         <td>
-                                                            <a href="../vistas/editar_tiporeunion_vista.php?id=<?php echo $tipoacta['Id_Tipo'] ?>" class="btn btn-success" style="color: while;">
+                                                            <a href="../vistas/editar_tiporeunion_vista.php?id=<?php echo $tipoacta['id_tipo'] ?>" class="btn btn-success" style="color: while;">
                                                                 Editar
                                                             </a>
-                                                            <a href="#" data-id="<?php echo $tipoacta['Id_Tipo']; ?>" data-tipo="manactareunion" class="borrar_registro btn btn-danger ">
+                                                            <a href="#" data-id="<?php echo $tipoacta['id_tipo']; ?>" data-tipo="manactareunion" class="borrar_registro btn btn-danger ">
                                                                 Borrar
                                                             </a>
                                                         </td>

@@ -5,7 +5,6 @@ session_start();
 
 require_once('../vistas/pagina_inicio_vista.php');
 require_once('../clases/Conexion.php');
-require_once('../clases/conexionacta.php');
 $id = $_GET['id'];
 require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
@@ -44,8 +43,8 @@ require_once('../clases/funcion_permisos.php');
         <!-- Main content -->
         <section class="content">
             <?php
-            $sql = "SELECT * FROM `tbl_tipo_reunion_acta` WHERE `Id_Tipo` = $id ";
-            $resultado = $conn->query($sql);
+            $sql = "SELECT * FROM `tbl_tipo_reunion_acta` WHERE `id_tipo` = $id ";
+            $resultado = $mysqli->query($sql);
             $tipo = $resultado->fetch_assoc();
 
             ?>
@@ -53,7 +52,7 @@ require_once('../clases/funcion_permisos.php');
                 <div class="card-body" style="padding-top: 100px;">
                     <div class="form-group">
                         <label for="tipo">Nombre Tipo: </label>
-                        <input type="text" value="<?php echo $tipo['Tipo']; ?>" class="form-control" class="form-control col-md-6" id="tipo" name="tipo" required>
+                        <input type="text" value="<?php echo $tipo['tipo']; ?>" class="form-control" class="form-control col-md-6" id="tipo" name="tipo" required>
                     </div>
                 </div>
                 <!-- /.card-body -->

@@ -3,7 +3,6 @@ ob_start();
 session_start();
 require_once('../vistas/pagina_inicio_vista.php');
 require_once('../clases/Conexion.php');
-require_once('../clases/conexionacta.php');
 require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
@@ -91,19 +90,19 @@ require_once('../clases/funcion_permisos.php');
                                                 <?php
                                                 try {
                                                     $sql = "SELECT * FROM tbl_estado_acuerdo";
-                                                    $resultado = $conn->query($sql);
+                                                    $resultado = $mysqli->query($sql);
                                                 } catch (Exception $e) {
                                                     $error = $e->getMessage();
                                                     echo $error;
                                                 }
                                                 while ($estadoacuerdo = $resultado->fetch_assoc()) { ?>
                                                     <tr>
-                                                        <td><?php echo $estadoacuerdo['Estado_Acuerdo']; ?></td>
+                                                        <td><?php echo $estadoacuerdo['estado_acuerdo']; ?></td>
                                                         <td>
-                                                            <a href="../vistas/editar_estadoacuerdo_vista.php?id=<?php echo $estadoacuerdo['Id_Estado'] ?>" class="btn btn-success" style="color: while;">
+                                                            <a href="../vistas/editar_estadoacuerdo_vista.php?id=<?php echo $estadoacuerdo['id_estado'] ?>" class="btn btn-success" style="color: while;">
                                                                 Editar
                                                             </a>
-                                                            <a href="#" data-id="<?php echo $estadoacuerdo['Id_Estado']; ?>" data-tipo="manacuerdo" class="borrar_estadoacuerdo btn btn-danger ">
+                                                            <a href="#" data-id="<?php echo $estadoacuerdo['id_estado']; ?>" data-tipo="manacuerdo" class="borrar_estadoacuerdo btn btn-danger ">
                                                                 Borrar
                                                             </a>
                                                         </td>

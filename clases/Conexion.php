@@ -15,7 +15,7 @@ $base= "automatizacion";
 		die('Error en la conexion' . $mysqli->connect_error);
 		exit();	
 	}
- $connect = new PDO("mysql:host=localhost;dbname=automatizacion", "root", "root");
+ $connect = new PDO("mysql:host=b6k45kz2tfov8k3gm3lb-mysql.services.clever-cloud.com;dbname=b6k45kz2tfov8k3gm3lb", "uaonxvhriuzrnhqp", "vAK0fRKcphsgN4apfb5D");
 
 if (!mysqli_set_charset($mysqli, "utf8")) {
         printf("Error cargando el conjunto de caracteres utf8: %s\n", mysqli_error($mysqli));

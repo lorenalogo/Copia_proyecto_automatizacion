@@ -1,10 +1,10 @@
 <?php
-include_once '../clases/conexionacta.php';
+include_once '../clases/Conexion.php';
 $estado = $_POST['estado'];
 $id_estado = $_POST['id_estado'];
 if ($_POST['estado-acta'] == 'nuevo') {
     try {
-        $stmt = $conn->prepare("INSERT INTO tbl_estado_acta (Estado) VALUES (?)");
+        $stmt = $mysqli->prepare("INSERT INTO tbl_estado_acta (estado) VALUES (?)");
         $stmt->bind_param("s", $estado);
         $stmt->execute();
         $id_registro = $stmt->insert_id;
@@ -19,7 +19,7 @@ if ($_POST['estado-acta'] == 'nuevo') {
             );
         }
         $stmt->close();
-        $conn->close();
+        $mysqli->close();
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -28,7 +28,7 @@ if ($_POST['estado-acta'] == 'nuevo') {
 
 if ($_POST['estado-acta'] == 'actualizar') {
     try {
-        $stmt = $conn->prepare('UPDATE tbl_estado_acta SET Estado = ? WHERE Id_Estado = ?');
+        $stmt = $mysqli->prepare('UPDATE tbl_estado_acta SET estado = ? WHERE id_estado = ?');
         $stmt->bind_param("si", $estado, $id_estado);
         $stmt->execute();
         if ($stmt->affected_rows) {
@@ -42,7 +42,7 @@ if ($_POST['estado-acta'] == 'actualizar') {
             );
         }
         $stmt->close();
-        $conn->close();
+        $mysqli->close();
     } catch (Exception $e) {
         $respuesta = array(
             'respuesta' => 'error'
@@ -57,7 +57,7 @@ if ($_POST['estado-acta'] == 'eliminar') {
     $id_borrar = $_POST['id'];
 
     try {
-        $stmt = $conn->prepare('DELETE FROM tbl_estado_acta WHERE Id_Estado = ? ');
+        $stmt = $mysqli->prepare('DELETE FROM tbl_estado_acta WHERE id_estado = ? ');
         $stmt->bind_param('i', $id_borrar);
         $stmt->execute();
         if ($stmt->affected_rows) {
@@ -71,7 +71,7 @@ if ($_POST['estado-acta'] == 'eliminar') {
             );
         }
         $stmt->close();
-        $conn->close();
+        $mysqli->close();
     } catch (Exception $e) {
         $respuesta = array(
             'respuesta' => $e->getMessage()

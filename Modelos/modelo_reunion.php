@@ -1,6 +1,6 @@
 <?php
 
-include_once '../clases/conexionacta.php';
+include_once '../clases/Conexion.php';
 $agenda = $_POST['agenda'];
 $asunto = $_POST['asunto'];
 $enlace = $_POST['enlace'];
@@ -17,13 +17,13 @@ $participante = $_POST['chk'];
 
 if ($_POST['reunion'] == 'nuevo') {
     try {
-        $stmt = $conn->prepare("INSERT INTO tbl_reunion (Id_Tipo, Id_Estado, Fecha, Nombre_Reunion, Lugar, Enlace, Hora_Inicio, Hora_Final, Asunto, Agenda_Propuesta) VALUES (?,?,?,?,?,?,?,?,?,?)");
+        $stmt = $mysqli->prepare("INSERT INTO tbl_reunion (id_tipo, id_estado, fecha, nombre_reunion, lugar, enlace, hora_inicio, hora_final, asunto, agenda_propuesta) VALUES (?,?,?,?,?,?,?,?,?,?)");
         $stmt->bind_param("iissssssss", $tipo, $estado, $fecha_formateada, $nombre, $lugar, $enlace, $horainicio, $horafinal, $asunto, $agenda);
         $stmt->execute();
         $id_registro = $stmt->insert_id;
         $id_reunion = $id_registro;
         foreach($participante as $par){
-            $stmt = $conn->prepare("INSERT INTO tbl_participantes (Id_Reunion, Id_Persona) VALUES (?,?)");
+            $stmt = $mysqli->prepare("INSERT INTO tbl_participantes (id_reunion, id_persona) VALUES (?,?)");
             $stmt->bind_param("ii", $id_reunion,$par);
             $stmt->execute();
         }
@@ -38,7 +38,7 @@ if ($_POST['reunion'] == 'nuevo') {
             );
         }
         $stmt->close();
-        $conn->close();
+        $mysqli->close();
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -48,7 +48,7 @@ if ($_POST['reunion'] == 'nuevo') {
 
 if ($_POST['reunion'] == 'actualizar') {
     try {
-        $stmt = $conn->prepare('UPDATE tbl_tipo_reunion_acta SET Tipo = ? WHERE Id_Tipo = ?');
+        $stmt = $mysqli->prepare('UPDATE tbl_tipo_reunion_acta SET Tipo = ? WHERE Id_Tipo = ?');
         $stmt->bind_param("si", $tipo, $id_tipo);
         $stmt->execute();
         if ($stmt->affected_rows) {
@@ -62,7 +62,7 @@ if ($_POST['reunion'] == 'actualizar') {
             );
         }
         $stmt->close();
-        $conn->close();
+        $mysqli->close();
     } catch (Exception $e) {
         $respuesta = array(
             'respuesta' => 'error'
@@ -75,7 +75,7 @@ if ($_POST['reunion'] == 'eliminar') {
     $id_borrar = $_POST['id'];
 
     try {
-        $stmt = $conn->prepare('DELETE FROM tbl_tipo_reunion_acta WHERE Id_Tipo = ? ');
+        $stmt = $mysqli->prepare('DELETE FROM tbl_tipo_reunion_acta WHERE Id_Tipo = ? ');
         $stmt->bind_param('i', $id_borrar);
         $stmt->execute();
         if ($stmt->affected_rows) {
@@ -89,7 +89,7 @@ if ($_POST['reunion'] == 'eliminar') {
             );
         }
         $stmt->close();
-        $conn->close();
+        $mysqli->close();
     } catch (Exception $e) {
         $respuesta = array(
             'respuesta' => $e->getMessage()

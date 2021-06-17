@@ -3,7 +3,6 @@ ob_start();
 session_start();
 require_once('../vistas/pagina_inicio_vista.php');
 require_once('../clases/Conexion.php');
-require_once('../clases/conexionacta.php');
 require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
@@ -91,19 +90,19 @@ require_once('../clases/funcion_permisos.php');
                                                 <?php
                                                 try {
                                                     $sql = "SELECT * FROM tbl_estado_acta";
-                                                    $resultado = $conn->query($sql);
+                                                    $resultado = $mysqli->query($sql);
                                                 } catch (Exception $e) {
                                                     $error = $e->getMessage();
                                                     echo $error;
                                                 }
                                                 while ($estadoacta = $resultado->fetch_assoc()) { ?>
                                                     <tr>
-                                                        <td><?php echo $estadoacta['Estado']; ?></td>
+                                                        <td><?php echo $estadoacta['estado']; ?></td>
                                                         <td>
-                                                            <a href="../vistas/editar_estadoacta_vista.php?id=<?php echo $estadoacta['Id_Estado'] ?>" class="btn btn-success" style="color: while;">
+                                                            <a href="../vistas/editar_estadoacta_vista.php?id=<?php echo $estadoacta['id_estado'] ?>" class="btn btn-success" style="color: while;">
                                                                 Editar
                                                             </a>
-                                                            <a href="#" data-id="<?php echo $estadoacta['Id_Estado']; ?>" data-tipo="manacta" class="borrar_estadoacta btn btn-danger ">
+                                                            <a href="#" data-id="<?php echo $estadoacta['id_estado']; ?>" data-tipo="manacta" class="borrar_estadoacta btn btn-danger ">
                                                                 Borrar
                                                             </a>
                                                         </td>

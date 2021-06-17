@@ -3,7 +3,6 @@ ob_start();
 session_start();
 require_once('../vistas/pagina_inicio_vista.php');
 require_once('../clases/Conexion.php');
-require_once('../clases/conexionacta.php');
 require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
@@ -64,10 +63,10 @@ $hoy = $dt->format("Y-m-d");
                                             <?php
                                             try {
                                                 $sql = "SELECT * FROM tbl_tipo_reunion_acta ";
-                                                $resultado = $conn->query($sql);
+                                                $resultado = $mysqli->query($sql);
                                                 while ($tipo_reunion = $resultado->fetch_assoc()) { ?>
-                                                    <option value="<?php echo $tipo_reunion['Id_Tipo']; ?>">
-                                                        <?php echo $tipo_reunion['Tipo']; ?>
+                                                    <option value="<?php echo $tipo_reunion['id_tipo']; ?>">
+                                                        <?php echo $tipo_reunion['tipo']; ?>
                                                     </option>
                                             <?php }
                                             } catch (Exception $e) {
@@ -155,8 +154,8 @@ $hoy = $dt->format("Y-m-d");
                                         </thead>
                                         <?php
                                         try {
-                                            $sql = "SELECT * FROM tbl_personas";
-                                            $resultado = $conn->query($sql);
+                                            $sql = "SELECT * FROM tbl_personas WHERE id_tipo_persona = 1";
+                                            $resultado = $mysqli->query($sql);
                                         } catch (Exception $e) {
                                             $error = $e->getMessage();
                                             echo $error;
@@ -165,13 +164,13 @@ $hoy = $dt->format("Y-m-d");
                                             <tr>
                                                 <td>
                                                     <div class="icheck-danger d-inline">
-                                                        <input type="checkbox" id="<?php echo $estadoacta['Id_Persona']; ?>" name="chk[]" value="<?php echo $estadoacta['Id_Persona']; ?>">
-                                                        <label for="<?php echo $estadoacta['Id_Persona']; ?>">
-                                                            <?php echo $estadoacta['Nombres']; ?>
+                                                        <input type="checkbox" id="<?php echo $estadoacta['id_persona']; ?>" name="chk[]" value="<?php echo $estadoacta['id_persona']; ?>">
+                                                        <label for="<?php echo $estadoacta['id_persona']; ?>">
+                                                            <?php echo $estadoacta['nombres']; ?>
                                                         </label>
                                                     </div>
                                                 </td>
-                                                <td><?php echo $estadoacta['Id_Tipo_Persona']; ?></td>
+                                                <td><?php echo $estadoacta['id_tipo_persona']; ?></td>
                                             </tr>
                                         <?php  }  ?>
                                     </table>

@@ -1,10 +1,10 @@
 <?php
-include_once '../clases/conexionacta.php';
+require_once('../clases/Conexion.php');
 $estado = $_POST['estado'];
 $id_estado = $_POST['id_estado'];
 if ($_POST['estado-reunion'] == 'nuevo') {
     try {
-        $stmt = $conn->prepare("INSERT INTO tbl_estado_reunion (Estado_Reunion) VALUES (?)");
+        $stmt = $mysqli->prepare("INSERT INTO tbl_estado_reunion (estado_reunion) VALUES (?)");
         $stmt->bind_param("s", $estado);
         $stmt->execute();
         $id_registro = $stmt->insert_id;
@@ -19,7 +19,7 @@ if ($_POST['estado-reunion'] == 'nuevo') {
             );
         }
         $stmt->close();
-        $conn->close();
+        $mysqli->close();
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -28,7 +28,7 @@ if ($_POST['estado-reunion'] == 'nuevo') {
 
 if ($_POST['estado-reunion'] == 'actualizar') {
     try {
-        $stmt = $conn->prepare('UPDATE tbl_estado_reunion SET Estado_Reunion = ? WHERE Id_Estado_Reunion = ?');
+        $stmt = $mysqli->prepare('UPDATE tbl_estado_reunion SET estado_reunion = ? WHERE id_estado_reunion = ?');
         $stmt->bind_param("si", $estado, $id_estado);
         $stmt->execute();
         if ($stmt->affected_rows) {
@@ -42,7 +42,7 @@ if ($_POST['estado-reunion'] == 'actualizar') {
             );
         }
         $stmt->close();
-        $conn->close();
+        $mysqli->close();
     } catch (Exception $e) {
         $respuesta = array(
             'respuesta' => 'error'
@@ -57,7 +57,7 @@ if ($_POST['estado-reunion'] == 'eliminar') {
     $id_borrar = $_POST['id'];
 
     try {
-        $stmt = $conn->prepare('DELETE FROM tbl_estado_reunion WHERE Id_Estado_Reunion = ? ');
+        $stmt = $mysqli->prepare('DELETE FROM tbl_estado_reunion WHERE id_estado_reunion = ? ');
         $stmt->bind_param('i', $id_borrar);
         $stmt->execute();
         if ($stmt->affected_rows) {
@@ -71,7 +71,7 @@ if ($_POST['estado-reunion'] == 'eliminar') {
             );
         }
         $stmt->close();
-        $conn->close();
+        $mysqli->close();
     } catch (Exception $e) {
         $respuesta = array(
             'respuesta' => $e->getMessage()

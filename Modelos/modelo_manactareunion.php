@@ -1,10 +1,10 @@
 <?php
-include_once '../clases/conexionacta.php';
+require_once('../clases/Conexion.php');
 $tipo = $_POST['tipo'];
 $id_tipo = $_POST['id_tipo'];
 if ($_POST['tipo-actareunion'] == 'nuevo') {
     try {
-        $stmt = $conn->prepare("INSERT INTO tbl_tipo_reunion_acta (Tipo) VALUES (?)");
+        $stmt = $mysqli->prepare("INSERT INTO tbl_tipo_reunion_acta (tipo) VALUES (?)");
         $stmt->bind_param("s", $tipo);
         $stmt->execute();
         $id_registro = $stmt->insert_id;
@@ -19,7 +19,7 @@ if ($_POST['tipo-actareunion'] == 'nuevo') {
             );
         }
         $stmt->close();
-        $conn->close();
+        $mysqli->close();
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -28,7 +28,7 @@ if ($_POST['tipo-actareunion'] == 'nuevo') {
 
 if ($_POST['tipo-actareunion'] == 'actualizar') {
     try {
-        $stmt = $conn->prepare('UPDATE tbl_tipo_reunion_acta SET Tipo = ? WHERE Id_Tipo = ?');
+        $stmt = $mysqli->prepare('UPDATE tbl_tipo_reunion_acta SET tipo = ? WHERE id_tipo = ?');
         $stmt->bind_param("si", $tipo, $id_tipo);
         $stmt->execute();
         if ($stmt->affected_rows) {
@@ -42,7 +42,7 @@ if ($_POST['tipo-actareunion'] == 'actualizar') {
             );
         }
         $stmt->close();
-        $conn->close();
+        $mysqli->close();
     } catch (Exception $e) {
         $respuesta = array(
             'respuesta' => 'error'
@@ -57,7 +57,7 @@ if ($_POST['tipo-actareunion'] == 'eliminar') {
     $id_borrar = $_POST['id'];
 
     try {
-        $stmt = $conn->prepare('DELETE FROM tbl_tipo_reunion_acta WHERE Id_Tipo = ? ');
+        $stmt = $mysqli->prepare('DELETE FROM tbl_tipo_reunion_acta WHERE id_tipo = ? ');
         $stmt->bind_param('i', $id_borrar);
         $stmt->execute();
         if ($stmt->affected_rows) {
@@ -71,7 +71,7 @@ if ($_POST['tipo-actareunion'] == 'eliminar') {
             );
         }
         $stmt->close();
-        $conn->close();
+        $mysqli->close();
     } catch (Exception $e) {
         $respuesta = array(
             'respuesta' => $e->getMessage()

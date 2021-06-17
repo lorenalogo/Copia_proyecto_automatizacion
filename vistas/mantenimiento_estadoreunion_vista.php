@@ -3,7 +3,6 @@ ob_start();
 session_start();
 require_once('../vistas/pagina_inicio_vista.php');
 require_once('../clases/Conexion.php');
-require_once('../clases/conexionacta.php');
 require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
@@ -88,22 +87,22 @@ require_once('../clases/funcion_permisos.php');
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php
+                                                <?php 
                                                 try {
                                                     $sql = "SELECT * FROM tbl_estado_reunion";
-                                                    $resultado = $conn->query($sql);
+                                                    $resultado = $mysqli->query($sql);
                                                 } catch (Exception $e) {
                                                     $error = $e->getMessage();
                                                     echo $error;
                                                 }
                                                 while ($estadoreunion = $resultado->fetch_assoc()) { ?>
                                                     <tr>
-                                                        <td><?php echo $estadoreunion['Estado_Reunion']; ?></td>
+                                                        <td><?php echo $estadoreunion['estado_reunion']; ?></td>
                                                         <td>
-                                                            <a href="../vistas/editar_estadoreunion_vista.php?id=<?php echo $estadoreunion['Id_Estado_Reunion'] ?>" class="btn btn-success" style="color: while;">
+                                                            <a href="../vistas/editar_estadoreunion_vista.php?id=<?php echo $estadoreunion['id_estado_reunion'] ?>" class="btn btn-success" style="color: while;">
                                                                 Editar
                                                             </a>
-                                                            <a href="#" data-id="<?php echo $estadoreunion['Id_Estado_Reunion']; ?>" data-tipo="manreunion" class="borrar_estadoreunion btn btn-danger ">
+                                                            <a href="#" data-id="<?php echo $estadoreunion['id_estado_reunion']; ?>" data-tipo="manreunion" class="borrar_estadoreunion btn btn-danger ">
                                                                 Borrar
                                                             </a>
                                                         </td>
