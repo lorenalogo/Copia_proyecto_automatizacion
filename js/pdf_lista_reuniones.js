@@ -3,7 +3,7 @@ fecha = hoy.getDate() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getFullYear();
 hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
 fechaYHora = fecha + ' ' + hora;
 
-//REPORTE DE JORNADAS
+//LISTADO DE REUNIONES colaboración JLLC-9112205
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
   $('#tabla11').DataTable( {
