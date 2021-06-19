@@ -161,9 +161,23 @@ require_once('../clases/funcion_permisos.php');
                                                                     header: {
                                                                         left: 'today,prev,next',
                                                                         center: 'title',
-                                                                        right: 'month,agendaDay,agendaWeek',
+                                                                        right: 'month,agendaWeek,agendaDay',
                                                                     },
-                                                                    events: 'http://localhost/Copia_proyecto_automatizacion/modelos/modelo_reuniones_calendario.php'
+                                                                    events: 'http://localhost/Copia_proyecto_automatizacion/modelos/modelo_reuniones_calendario.php',
+                                                                    eventAfterRender: function(event, element, view) {
+                                                                        var hoy = new Date();
+                                                                        
+                                                                        if (event.start > hoy && event.end < hoy) {
+                                                                            element.css('background-color', '#AA1313');
+                                                                            element.css('color', 'white');
+                                                                        } else if (event.start < hoy && event.end < hoy) {
+                                                                            element.css('background-color', '#125591');
+                                                                            element.css('color', 'white');
+                                                                        } else if (event.start > hoy && event.end > hoy) {
+                                                                            element.css('background-color', '#1BA253');
+                                                                            element.css('color', 'white');
+                                                                        }
+                                                                    },
                                                                 });
                                                             });
                                                         </script>
