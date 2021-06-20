@@ -8,17 +8,16 @@ require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
 
 
-$Id_objeto=156;
-        
-  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'Ingreso' , 'A Mantenimiento Estado Acta');
+$Id_objeto = 156;
 
- $visualizacion= permiso_ver($Id_objeto);
+bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A Mantenimiento Estado Acta');
+
+$visualizacion = permiso_ver($Id_objeto);
 
 
 
-if ($visualizacion==0)
- {
-     echo '<script type="text/javascript">
+if ($visualizacion == 0) {
+    echo '<script type="text/javascript">
                               swal({
                                    title:"",
                                    text:"Lo sentimos no tiene permiso de visualizar la pantalla",
@@ -29,40 +28,27 @@ if ($visualizacion==0)
                            window.location = "../vistas/menu_mantenimientoacta_vista.php";
 
                             </script>';
- // header('location:  ../vistas/menu_usuarios_vista.php');
-}
+    // header('location:  ../vistas/menu_usuarios_vista.php');
+} else {
 
-else
 
-{
-       
-
-if (permisos::permiso_insertar($Id_objeto)=='1')
-{
-    $_SESSION['btn_nuevo_tipo']="";
-    }
-    else
-    {
-        $_SESSION['btn_nuevo_tipo']="disabled";
+    if (permisos::permiso_insertar($Id_objeto) == '1') {
+        $_SESSION['btn_nuevo_tipo'] = "";
+    } else {
+        $_SESSION['btn_nuevo_tipo'] = "disabled";
     }
 
- if (permisos::permiso_modificar($Id_objeto)=='1')
- {
-  $_SESSION['btn_editar']="";
-}
-else
-{
-    $_SESSION['btn_editar']="disabled";
- }
+    if (permisos::permiso_modificar($Id_objeto) == '1') {
+        $_SESSION['btn_editar'] = "";
+    } else {
+        $_SESSION['btn_editar'] = "disabled";
+    }
 
- if (permisos::permiso_eliminar($Id_objeto)=='1')
- {
-  $_SESSION['btn_borrar']="";
-}
-else
-{
-    $_SESSION['btn_borrar']="disabled";
- }
+    if (permisos::permiso_eliminar($Id_objeto) == '1') {
+        $_SESSION['btn_borrar'] = "";
+    } else {
+        $_SESSION['btn_borrar'] = "disabled";
+    }
 }
 
 ob_end_flush();
@@ -112,7 +98,7 @@ ob_end_flush();
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="tipo">Nombre Tipo: </label>
-                                    <input type="text" class="form-control" class="form-control col-md-6" id="tipo" name="tipo" placeholder="Ingrese un tipo nuevo" required>
+                                    <input type="text" class="form-control" class="form-control col-md-6" id="tipo" name="tipo" placeholder="Ingrese un tipo nuevo" required title="Se Requiere este campo lleno, MAYUSCULAS o MINUSCULAS y no se Aceptan caracteres especiales" minlength="3" maxlength="15" pattern="[A-Za-z]{1,15}">
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -129,6 +115,7 @@ ob_end_flush();
                 </div>
                 <!-- /.modal-dialog -->
             </div>
+
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
@@ -137,7 +124,7 @@ ob_end_flush();
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">Listado de Modalidades</h3>
-                                    <a data-toggle="modal" data-target="#modal-crear" type="button" class="btn btn-app bg-warning float-right derecha <?php echo $_SESSION['btn_nuevo_tipo'];?>">
+                                    <a data-toggle="modal" data-target="#modal-crear" type="button" class="btn btn-app bg-warning float-right derecha <?php echo $_SESSION['btn_nuevo_tipo']; ?>">
                                         <i class="fas fa-plus-circle"><br></i>Nuevo
                                     </a>
                                 </div>
@@ -164,10 +151,10 @@ ob_end_flush();
                                                     <tr>
                                                         <td><?php echo $tipoacta['tipo']; ?></td>
                                                         <td>
-                                                            <a href="../vistas/editar_tiporeunion_vista.php?id=<?php echo $tipoacta['id_tipo'] ?>" class="btn btn-success <?php echo $_SESSION['btn_editar'];?>" style="color: while;">
+                                                            <a href="../vistas/editar_tiporeunion_vista.php?id=<?php echo $tipoacta['id_tipo'] ?>" class="btn btn-success <?php echo $_SESSION['btn_editar']; ?>" style="color: while;">
                                                                 Editar
                                                             </a>
-                                                            <a href="#" data-id="<?php echo $tipoacta['id_tipo']; ?>" data-tipo="manactareunion" class="borrar_registro btn btn-danger <?php echo $_SESSION['btn_borrar'];?>">
+                                                            <a href="#" data-id="<?php echo $tipoacta['id_tipo']; ?>" data-tipo="manactareunion" class="borrar_registro btn btn-danger <?php echo $_SESSION['btn_borrar']; ?>">
                                                                 Borrar
                                                             </a>
                                                         </td>
