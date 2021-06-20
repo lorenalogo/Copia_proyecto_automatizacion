@@ -9,6 +9,47 @@ require_once('../clases/funcion_permisos.php');
 $dtz = new DateTimeZone("America/Tegucigalpa");
 $dt = new DateTime("now", $dtz);
 $hoy = $dt->format("Y-m-d");
+$Id_objeto=146;
+        
+  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'Ingreso' , 'A crear Reunion');
+
+ $visualizacion= permiso_ver($Id_objeto);
+
+
+
+if ($visualizacion==0)
+ {
+     echo '<script type="text/javascript">
+                              swal({
+                                   title:"",
+                                   text:"Lo sentimos no tiene permiso de visualizar la pantalla",
+                                   type: "error",
+                                   showConfirmButton: false,
+                                   timer: 3000
+                                });
+                           window.location = "../vistas/menu_reunion_vista.php";
+
+                            </script>';
+ // header('location:  ../vistas/menu_usuarios_vista.php');
+}
+
+else
+
+{
+       
+
+if (permisos::permiso_insertar($Id_objeto)=='1')
+    {
+        $_SESSION['btn_crear']="";
+        }
+        else
+        {
+            $_SESSION['btn_crear']="disabled='disabled'";
+        }
+
+    }
+
+ob_end_flush();
 ?>
 <!DOCTYPE html>
 <html>
@@ -185,7 +226,7 @@ $hoy = $dt->format("Y-m-d");
                 <div style="padding: 0px 0 25px 0;">
                     <input type="hidden" name="estado" value="1">
                     <input type="hidden" name="reunion" value="nuevo">
-                    <button style="padding-right: 15px;" type="submit" class="btn btn-success float-left">Crear</button>
+                    <button style="padding-right: 15px;" type="submit" class="btn btn-success float-left" <?php echo $_SESSION['btn_crear'];?>>Crear</button>
                     <a style="color: white !important; margin: 0px 0px 0px 10px;" class="cancelar-reunion btn btn-danger" href="reuniones_pendientes_vista.php">Cancelar</a>
                 </div>
             </div>

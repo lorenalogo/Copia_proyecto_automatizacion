@@ -10,6 +10,47 @@ require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
 
+$Id_objeto=160;
+        
+  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'Ingreso' , 'A Mantenimiento Estado Notificacion');
+
+ $visualizacion= permiso_ver($Id_objeto);
+
+
+
+if ($visualizacion==0)
+ {
+     echo '<script type="text/javascript">
+                              swal({
+                                   title:"",
+                                   text:"Lo sentimos no tiene permiso de visualizar la pantalla",
+                                   type: "error",
+                                   showConfirmButton: false,
+                                   timer: 3000
+                                });
+                           window.location = "../vistas/menu_mantenimientoacta_vista.php";
+
+                            </script>';
+ // header('location:  ../vistas/menu_usuarios_vista.php');
+}
+
+else
+
+{
+       
+
+if (permisos::permiso_insertar($Id_objeto)=='1')
+{
+    $_SESSION['btn_guardar']="";
+    }
+    else
+    {
+        $_SESSION['btn_guardar']="disabled";
+    }
+}
+
+ob_end_flush();
+
 
 
 
@@ -149,7 +190,7 @@ ob_end_flush();
 
 
                                     <p class="text-center" style="margin-top: 20px;">
-                                        <button type="submit" class="btn btn-primary" id="btn_guardar_categoria" name="btn_guardar_categoria" <?php echo $_SESSION['btn_guardar_categoria']; ?>><i class="zmdi zmdi-floppy"></i> Guardar</button>
+                                        <button type="submit" class="btn btn-primary <?php echo $_SESSION['btn_guardar']; ?>" id="btn_guardar_categoria" name="btn_guardar_categoria" <?php echo $_SESSION['btn_guardar_categoria']; ?> ><i class="zmdi zmdi-floppy"></i> Guardar</button>
                                     </p>
 
                                 </div>

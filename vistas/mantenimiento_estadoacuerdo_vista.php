@@ -6,6 +6,65 @@ require_once('../clases/Conexion.php');
 require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
+
+$Id_objeto=159;
+        
+  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'Ingreso' , 'A Mantenimiento Estado Acuerdo');
+
+ $visualizacion= permiso_ver($Id_objeto);
+
+
+
+if ($visualizacion==0)
+ {
+     echo '<script type="text/javascript">
+                              swal({
+                                   title:"",
+                                   text:"Lo sentimos no tiene permiso de visualizar la pantalla",
+                                   type: "error",
+                                   showConfirmButton: false,
+                                   timer: 3000
+                                });
+                           window.location = "../vistas/menu_mantenimientoacta_vista.php";
+
+                            </script>';
+ // header('location:  ../vistas/menu_usuarios_vista.php');
+}
+
+else
+
+{
+       
+
+if (permisos::permiso_insertar($Id_objeto)=='1')
+{
+    $_SESSION['btn_nuevo_tipo']="";
+    }
+    else
+    {
+        $_SESSION['btn_nuevo_tipo']="disabled";
+    }
+
+ if (permisos::permiso_modificar($Id_objeto)=='1')
+ {
+  $_SESSION['btn_editar']="";
+}
+else
+{
+    $_SESSION['btn_editar']="disabled";
+ }
+
+ if (permisos::permiso_eliminar($Id_objeto)=='1')
+ {
+  $_SESSION['btn_borrar']="";
+}
+else
+{
+    $_SESSION['btn_borrar']="disabled";
+ }
+}
+
+ob_end_flush();
 ?>
 <!DOCTYPE html>
 <html>
@@ -72,7 +131,7 @@ require_once('../clases/funcion_permisos.php');
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">Listado de Estados</h3>
-                                    <a data-toggle="modal" data-target="#modal-crear" type="button" class="btn btn-app bg-warning float-right derecha ">
+                                    <a data-toggle="modal" data-target="#modal-crear" type="button" class="btn btn-app bg-warning float-right derecha <?php echo $_SESSION['btn_nuevo_tipo'];?>">
                                         <i class="fas fa-plus-circle"><br></i>Nuevo
                                     </a>
                                 </div>
@@ -99,10 +158,10 @@ require_once('../clases/funcion_permisos.php');
                                                     <tr>
                                                         <td><?php echo $estadoacuerdo['estado_acuerdo']; ?></td>
                                                         <td>
-                                                            <a href="../vistas/editar_estadoacuerdo_vista.php?id=<?php echo $estadoacuerdo['id_estado'] ?>" class="btn btn-success" style="color: while;">
+                                                            <a href="../vistas/editar_estadoacuerdo_vista.php?id=<?php echo $estadoacuerdo['id_estado'] ?>" class="btn btn-success <?php echo $_SESSION['btn_editar'];?>" style="color: while;">
                                                                 Editar
                                                             </a>
-                                                            <a href="#" data-id="<?php echo $estadoacuerdo['id_estado']; ?>" data-tipo="manacuerdo" class="borrar_estadoacuerdo btn btn-danger ">
+                                                            <a href="#" data-id="<?php echo $estadoacuerdo['id_estado']; ?>" data-tipo="manacuerdo" class="borrar_estadoacuerdo btn btn-danger <?php echo $_SESSION['btn_borrar'];?>">
                                                                 Borrar
                                                             </a>
                                                         </td>

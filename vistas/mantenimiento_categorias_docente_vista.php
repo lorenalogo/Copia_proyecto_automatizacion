@@ -60,7 +60,7 @@ FROM tbl_categorias";
 }
 
 
-$Id_objeto = 59;
+$Id_objeto = 161;
 $visualizacion = permiso_ver($Id_objeto);
 
 
@@ -83,11 +83,23 @@ if ($visualizacion == 0) {
     bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A Mantenimiento Categorías');
 
 
-    if (permisos::permiso_modificar($Id_objeto) == '1') {
-        $_SESSION['btn_modificar_categoria'] = "";
-    } else {
-        $_SESSION['btn_modificar_categoria'] = "disabled";
-    }
+    if (permisos::permiso_modificar($Id_objeto)=='1')
+        {
+        $_SESSION['btn_editar']="";
+        }
+        else
+        {
+            $_SESSION['btn_editar']="disabled";
+        }
+
+    if (permisos::permiso_eliminar($Id_objeto)=='1')
+        {
+        $_SESSION['btn_borrar']="";
+        }
+        else
+        {
+            $_SESSION['btn_borrar']="disabled='disabled'";
+        }
 
 
 
@@ -221,7 +233,7 @@ ob_end_flush();
 
                                 <td style="text-align: center;">
 
-                                    <a href="../vistas/mantenimiento_categorias_docente_vista.php?categoria=<?php echo $row['categoria']; ?>" class="btn btn-primary btn-raised btn-xs">
+                                    <a href="../vistas/mantenimiento_categorias_docente_vista.php?categoria=<?php echo $row['categoria']; ?>" class="btn btn-primary btn-raised btn-xs <?php echo $_SESSION['btn_editar'];?>">
                                         <i class="far fa-edit" style="display:<?php echo $_SESSION['modificar_categoria'] ?> "></i>
                                     </a>
                                 </td>
@@ -229,7 +241,7 @@ ob_end_flush();
                                 <td style="text-align: center;">
 
                                     <form action="../Controlador/eliminar_categoria_controlador.php?categoria=<?php echo $row['categoria']; ?>" method="POST" class="FormularioAjax" data-form="delete" autocomplete="off">
-                                        <button type="submit" class="btn btn-danger btn-raised btn-xs">
+                                        <button type="submit" class="btn btn-danger btn-raised btn-xs" <?php echo $_SESSION['btn_editar'];?>>
 
                                             <i class="far fa-trash-alt" style="display:<?php echo $_SESSION['eliminar_categoria'] ?> "></i>
                                         </button>

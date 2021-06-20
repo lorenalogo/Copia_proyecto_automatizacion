@@ -255,7 +255,7 @@ if (session_status() === PHP_SESSION_NONE) {
               </ul>
             </li>
             <!-- AGREGANDO CONTROL DE ACTAS -->
-            <li class="nav-item has-treeview">
+            <li class="nav-item has-treeview" style="display:<?php echo $_SESSION['btn_control_actas'] ?>">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-paste"></i>
                 <p>
@@ -266,7 +266,7 @@ if (session_status() === PHP_SESSION_NONE) {
               </a>
               <ul class="nav nav-treeview">
 
-                <li class="nav-item">
+                <li class="nav-item" style="display:<?php echo $_SESSION['gestion_reunion'] ?>">
                   <a href="../vistas/menu_reunion_vista.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>
@@ -275,7 +275,7 @@ if (session_status() === PHP_SESSION_NONE) {
                   </a>
                 </li>
                 <!--- Gestión Reunión  -->
-                <li class="nav-item">
+                <li class="nav-item" style="display:<?php echo $_SESSION['gestion_actas'] ?>">
                   <a href="../vistas/menu_acta_vista.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>
@@ -284,7 +284,7 @@ if (session_status() === PHP_SESSION_NONE) {
                   </a>
                 </li>
                 <!--- Gestión acta  -->
-                <li class="nav-item">
+                <li class="nav-item" style="display:<?php echo $_SESSION['gestion_acuerdos_seguimientos'] ?>">
                   <a href="../vistas/menu_acuerdo_vista.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>
@@ -293,7 +293,7 @@ if (session_status() === PHP_SESSION_NONE) {
                   </a>
                 </li>
                 <!--- Gestión acuerdos  -->
-                <li class="nav-item">
+                <li class="nav-item" style="display:<?php echo $_SESSION['gestion_lista_asistencia'] ?>">
                   <a href="../vistas/menu_asistencia_vista.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>
