@@ -105,7 +105,7 @@ ob_end_flush();
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="estado">Nombre Estado: </label>
-                                    <input type="text" class="form-control" class="form-control col-md-6" id="estado" name="estado" placeholder="Ingrese un estado nuevo" required>
+                                    <input type="text" class="form-control" class="form-control col-md-6" id="estado" name="estado" placeholder="Ingrese un estado nuevo" required title="Se Requiere este campo lleno, MAYUSCULAS o MINUSCULAS y no se Aceptan caracteres especiales" minlength="3" maxlength="15" pattern="[A-Za-z]{1,15}">
                                 </div>
                             </div>
                             <!-- /.card-body -->
