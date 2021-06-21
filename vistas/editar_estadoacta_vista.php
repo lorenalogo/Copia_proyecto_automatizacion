@@ -52,7 +52,7 @@ require_once('../clases/funcion_permisos.php');
                 <div class="card-body" style="padding-top: 100px;">
                     <div class="form-group">
                         <label for="tipo">Nombre Estado: </label>
-                        <input type="text" value="<?php echo $estado['estado']; ?>" class="form-control" class="form-control col-md-6" id="estado" name="estado" required>
+                        <input type="text" value="<?php echo $estado['estado']; ?>" class="form-control" class="form-control col-md-6" id="estado" name="estado" required title="Solo se permiten MAYÚSCULAS o MINÚSCULAS y no se Aceptan caracteres especiales" minlength="3" maxlength="15" pattern="[A-Za-z]{1,15}">
                     </div>
                 </div>
                 <!-- /.card-body -->

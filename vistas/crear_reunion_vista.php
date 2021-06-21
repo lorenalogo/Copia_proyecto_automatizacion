@@ -195,7 +195,7 @@ ob_end_flush();
                                         </thead>
                                         <?php
                                         try {
-                                            $sql = "SELECT * FROM tbl_personas WHERE id_tipo_persona = 1";
+                                            $sql = "SELECT t1.id_persona,concat_ws(' ', t1.nombres, t1.apellidos) as nombres, t3.jornada FROM tbl_personas t1 INNER JOIN tbl_horario_docentes t2 ON t2.id_persona = t1.id_persona INNER JOIN tbl_jornadas t3 ON t2.id_jornada = t3.id_jornada";
                                             $resultado = $mysqli->query($sql);
                                         } catch (Exception $e) {
                                             $error = $e->getMessage();
@@ -211,7 +211,7 @@ ob_end_flush();
                                                         </label>
                                                     </div>
                                                 </td>
-                                                <td><?php echo $estadoacta['id_tipo_persona']; ?></td>
+                                                <td><?php echo $estadoacta['jornada']; ?></td>
                                             </tr>
                                         <?php  }  ?>
                                     </table>
