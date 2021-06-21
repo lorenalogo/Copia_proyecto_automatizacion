@@ -230,7 +230,7 @@ if (permiso_ver('161') == '1') {
                                                 <div class="icon">
                                                     <i class="fas fa-edit"></i>
                                                 </div>
-                                                <a href="../vistas/mantenimiento_categorias_docente_vista.php" class="small-box-footer">
+                                                <a href="../vistas/mantenimiento_estado_participante_vista.php" class="small-box-footer">
                                                     Ir <i class="fas fa-arrow-circle-right"></i>
                                                 </a>
                                             </div>
