@@ -206,7 +206,7 @@ if (permiso_ver('161') == '1') {
                                             <div class="small-box bg-primary">
                                                 <div class="inner">
                                                     <h4>Mantenimiento Estado Notificación</h4>
-                                                    <p><?php echo $_SESSION['mantenimiento_estado_notificacion_vista']; ?></p>
+                                                    <p><?php echo $_SESSION['mantenimiento_estado_notificacion_vista.php']; ?></p>
                                                 </div>
                                                 <div class="icon">
                                                     <i class="fas fa-edit"></i>
