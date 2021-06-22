@@ -231,7 +231,7 @@ if (permiso_ver('161') == '1') {
                                                     <i class="fas fa-edit"></i>
                                                 </div>
 <<<<<<< HEAD
-                                                <a href="../vistas/mantenimiento_estado_participante_vista.php" class="small-box-footer">
+                                                <a href="../vistas/mantenimiento_estadoparticipante_vista.php" class="small-box-footer">
 =======
                                                 <a href="../vistas/mantenimiento_estado_participante_vista.php" class="small-box-footer">
 >>>>>>> f9e3b9edafaedd8e6d60c9df202ba8801c21023a
