@@ -206,7 +206,7 @@ if (permiso_ver('161') == '1') {
                                             <div class="small-box bg-primary">
                                                 <div class="inner">
                                                     <h4>Mantenimiento Estado Notificación</h4>
-                                                    <p><?php echo $_SESSION['mantenimiento_estado_notificacion_vista']; ?></p>
+                                                    <p><?php echo $_SESSION['mantenimiento_estado_notificacion_vista.php']; ?></p>
                                                 </div>
                                                 <div class="icon">
                                                     <i class="fas fa-edit"></i>
@@ -230,7 +230,11 @@ if (permiso_ver('161') == '1') {
                                                 <div class="icon">
                                                     <i class="fas fa-edit"></i>
                                                 </div>
-                                                <a href="../vistas/mantenimiento_estadoparticipante_vista.php" class="small-box-footer">
+<<<<<<< HEAD
+                                                <a href="../vistas/mantenimiento_estado_participante_vista.php" class="small-box-footer">
+=======
+                                                <a href="../vistas/mantenimiento_estado_participante_vista.php" class="small-box-footer">
+>>>>>>> f9e3b9edafaedd8e6d60c9df202ba8801c21023a
                                                     Ir <i class="fas fa-arrow-circle-right"></i>
                                                 </a>
                                             </div>
