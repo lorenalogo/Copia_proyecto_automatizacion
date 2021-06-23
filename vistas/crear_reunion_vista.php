@@ -95,7 +95,7 @@ ob_end_flush();
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="nombre">Nombre:</label>
-                                        <input required type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese nombre de la Reunion">
+                                        <input required minlength="5" type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese nombre de la Reunion">
                                     </div>
                                     <div class="form-group">
                                         <label for="tipo">Tipo de Reunión</label>
@@ -118,7 +118,7 @@ ob_end_flush();
                                     </div>
                                     <div class="form-group">
                                         <label for="lugar">Lugar:</label>
-                                        <input required style="width: 90%;" type="text" class="form-control" id="lugar" name="lugar" placeholder="Lugar donde se dearrollara la Reunion">
+                                        <input required minlength="4" style="width: 90%;" type="text" class="form-control" id="lugar" name="lugar" placeholder="Lugar donde se dearrollara la Reunion">
                                     </div>
                                     <div class="form-group">
                                         <label for="fecha">Fecha:</label>
@@ -138,7 +138,7 @@ ob_end_flush();
                                     </div>
                                     <div class="form-group">
                                         <label for="enlace">Enlace de la Reunión:</label>
-                                        <input required type="text" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
+                                        <input minlength="10" type="text" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -156,11 +156,11 @@ ob_end_flush();
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="asunto">Asunto:</label>
-                                    <textarea required class="form-control" id="asunto" name="asunto" rows="3" placeholder="Ingrese el asunto de la Reunión"></textarea>
+                                    <textarea required minlength="4" class="form-control" id="asunto" name="asunto" rows="3" placeholder="Ingrese el asunto de la Reunión"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="agenda">Agenda Propuesta</label>
-                                    <textarea required class="form-control" id="agenda" name="agenda" rows="16" placeholder="Ingrese Agenda Propuesta"></textarea>
+                                    <textarea required minlength="10" class="form-control" id="agenda" name="agenda" rows="16" placeholder="Ingrese Agenda Propuesta"></textarea>
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -195,7 +195,7 @@ ob_end_flush();
                                         </thead>
                                         <?php
                                         try {
-                                            $sql = "SELECT t1.id_persona,concat_ws(' ', t1.nombres, t1.apellidos) as nombres, t3.jornada FROM tbl_personas t1 INNER JOIN tbl_horario_docentes t2 ON t2.id_persona = t1.id_persona INNER JOIN tbl_jornadas t3 ON t2.id_jornada = t3.id_jornada";
+                                            $sql = "SELECT t1.id_persona,concat_ws(' ', t1.nombres, t1.apellidos) as nombres, t3.jornada FROM tbl_personas t1 INNER JOIN tbl_horario_docentes t2 ON t2.id_persona = t1.id_persona INNER JOIN tbl_jornadas t3 ON t2.id_jornada = t3.id_jornada ORDER BY nombres ASC";
                                             $resultado = $mysqli->query($sql);
                                         } catch (Exception $e) {
                                             $error = $e->getMessage();

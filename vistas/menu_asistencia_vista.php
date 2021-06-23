@@ -3,46 +3,18 @@ require_once('../vistas/pagina_inicio_vista.php');
 require_once('../clases/Conexion.php');
 require_once('../clases/funcion_visualizar.php');
 
-if (permiso_ver('49') == '1') {
+if (permiso_ver('154') == '1') {
 
-    $_SESSION['menu_docentes_vista'] = "...";
+    $_SESSION['asistencia_acta_menu'] = "...";
 } else {
-    $_SESSION['menu_docentes_vista'] = "No tiene permisos para visualizar";
+    $_SESSION['asistencia_acta_menu'] = "No tiene permisos para visualizar";
 }
 
-if (permiso_ver('50') == '1') {
+if (permiso_ver('155') == '1') {
 
-    $_SESSION['registro_docentes_vista'] = "...";
+    $_SESSION['asistencia_persona_menu'] = "...";
 } else {
-    $_SESSION['registro_docentes_vista'] = "No tiene permisos para visualizar";
-}
-
-if (permiso_ver('51') == '1') {
-
-    $_SESSION['gestion_docentes_vista'] = "...";
-} else {
-    $_SESSION['gestion_docentes_vista'] = "No tiene permisos para visualizar";
-}
-
-if (permiso_ver('52') == '1') {
-
-    $_SESSION['comisiones_actividades_docentes_vista'] = "...";
-} else {
-    $_SESSION['comisiones_actividades_docentes_vista'] = "No tiene permisos para visualizar";
-}
-
-if (permiso_ver('53') == '1') {
-
-    $_SESSION['reporte_carga_academica_docentes_vista'] = "...";
-} else {
-    $_SESSION['reporte_carga_academica_docentes_vista'] = "No tiene permisos para visualizar";
-}
-
-if (permiso_ver('54') == '1') {
-
-    $_SESSION['perfil_docentes_vista'] = "...";
-} else {
-    $_SESSION['perfil_docentes_vista'] = "No tiene permisos para visualizar";
+    $_SESSION['asistencia_persona_menu'] = "No tiene permisos para visualizar";
 }
 
 
@@ -89,7 +61,7 @@ if (permiso_ver('54') == '1') {
                             <div class="small-box bg-primary">
                                 <div class="inner">
                                     <h4>Asistencia por Acta</h4>
-                                    <p><?php echo $_SESSION['gestion_docentes_vista']; ?></p>
+                                    <p><?php echo $_SESSION['asistencia_acta_menu']; ?></p>
                                 </div>
                                 <div class="icon"><i class="fas fa-file-alt"></i>
                                 </div>
@@ -113,7 +85,7 @@ if (permiso_ver('54') == '1') {
                             <div class="small-box bg-success">
                                 <div class="inner">
                                     <h4>Asistencia por Persona</h4>
-                                    <p><?php echo $_SESSION['reporte_carga_academica_docentes_vista']; ?></p>
+                                    <p><?php echo $_SESSION['asistencia_persona_menu']; ?></p>
                                 </div>
                                 <div class="icon"><i class="fas fa-user"></i>
                                 </div>
