@@ -1,5 +1,4 @@
 <?php
-//colaboracion JLLC-9112205
 ob_start();
 session_start();
 require_once('../vistas/pagina_inicio_vista.php');
@@ -7,31 +6,42 @@ require_once('../clases/Conexion.php');
 require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
-$Id_objeto=46;        
-  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'Ingreso' , 'A Mantenimiento de Estado de Notificación de Reunión');
+$Id_objeto=158;
+        
+  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'Ingreso' , 'A Mantenimiento Estado Reunion');
+
  $visualizacion= permiso_ver($Id_objeto);
+
+
+
 if ($visualizacion==0)
  {
      echo '<script type="text/javascript">
-                swal({
-                    title:"",
-                    text:"Lo sentimos no tiene permiso de visualizar la pantalla",
-                    type: "error",
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-                window.location = "../vistas/menu_mantenimientoacta_vista.php";
-            </script>';
+                              swal({
+                                   title:"",
+                                   text:"Lo sentimos no tiene permiso de visualizar la pantalla",
+                                   type: "error",
+                                   showConfirmButton: false,
+                                   timer: 3000
+                                });
+                           window.location = "../vistas/menu_mantenimientoacta_vista.php";
+
+                            </script>';
+ // header('location:  ../vistas/menu_usuarios_vista.php');
 }
+
 else
+
 {
+       
+
 if (permisos::permiso_insertar($Id_objeto)=='1')
 {
-    $_SESSION['btn_nuevo_estado_participante']="";
+    $_SESSION['btn_nuevo_tipo']="";
     }
     else
     {
-        $_SESSION['btn_nuevo_estado_participante']="disabled";
+        $_SESSION['btn_nuevo_tipo']="disabled";
     }
 
  if (permisos::permiso_modificar($Id_objeto)=='1')
@@ -52,15 +62,18 @@ else
     $_SESSION['btn_borrar']="disabled";
  }
 }
+
 ob_end_flush();
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" type="text/css" href="../plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
     <link rel=" stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js">
     <title></title>
 </head>
+
 <body>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -74,7 +87,7 @@ ob_end_flush();
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                            <li class="breadcrumb-item active">Estado Notificación de Reunión</li>
+                            <li class="breadcrumb-item active">Estado Notificación</li>
                         </ol>
                     </div>
                 </div>
@@ -88,16 +101,16 @@ ob_end_flush();
                         <div class="modal-header">
                             <h4 class="modal-title">Nuevo estado</h4>
                         </div>
-                        <form role="form" name="guardar-estadonotificacion" id="guardar-estadonotificacion" method="post" action="../Modelos/mantenimiento_estadonotificacion_modelo.php">
+                        <form role="form" name="guardar-estadonoti" id="guardar-estadonoti" method="post" action="../Modelos/modelo_mannoti.php">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="estado">Estado: </label>
-                                    <input type="text" class="form-control" class="form-control col-md-6" id="estado" name="estado" placeholder="Ingrese un estado de notificacionnuevo" required title="Se Requiere este campo lleno, MAYUSCULAS o MINUSCULAS y no se Aceptan caracteres especiales" minlength="3" maxlength="15" pattern="[A-Za-z]{1,15}">
+                                    <label for="estado">Nombre Estado: </label>
+                                    <input type="text" class="form-control" class="form-control col-md-6" id="estado" name="estado" placeholder="Ingrese un estado nuevo" required title="Solo se permiten MAYÚSCULAS o MINÚSCULAS y no se Aceptan caracteres especiales" minlength="3" maxlength="15" pattern="[A-Za-z]{1,15}">
                                 </div>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <input type="hidden" name="estado-notificacion" value="nuevo">
+                                <input type="hidden" name="estado-noti" value="nuevo">
                                 <button type="submit" class="btn btn-primary float-right" id="crear_registro">Añadir</button>
                             </div>
                         </form>
@@ -116,14 +129,14 @@ ob_end_flush();
                             <!-- /.card -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Listado de Estados de Notificación</h3>
-                                    <a data-toggle="modal" data-target="#modal-crear" type="button" class="btn btn-app bg-warning float-right derecha <?php echo $_SESSION['btn_nuevo_estado'];?>">
+                                    <h3 class="card-title">Listado de Estados</h3>
+                                    <a data-toggle="modal" data-target="#modal-crear" type="button" class="btn btn-app bg-warning float-right derecha <?php echo $_SESSION['btn_nuevo_tipo'];?>">
                                         <i class="fas fa-plus-circle"><br></i>Nuevo
                                     </a>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <form role="form" name="guardar-estadonotif" id="guardar-estadonotif" method="post" action="../Modelos/mantenimiento_estadonotificacion_vista.php">
+                                    <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_mannoti.php">
                                         <table id="tabla11" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
@@ -132,22 +145,22 @@ ob_end_flush();
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php
+                                                <?php 
                                                 try {
-                                                    $sql = "SELECT * FROM tbl_estado_participante";
+                                                    $sql = "SELECT * FROM tbl_estado_notificacion";
                                                     $resultado = $mysqli->query($sql);
                                                 } catch (Exception $e) {
                                                     $error = $e->getMessage();
                                                     echo $error;
                                                 }
-                                                while ($estadonotificacion = $resultado->fetch_assoc()) { ?>
+                                                while ($estadonoti = $resultado->fetch_assoc()) { ?>
                                                     <tr>
-                                                        <td><?php echo $estadonotificacion['estado']; ?></td>
+                                                        <td><?php echo $estadonoti['estado']; ?></td>
                                                         <td>
-                                                            <a href="../vistas/editar_estadonotificacion_vista.php?id=<?php echo $estadonotificacion['id_estado_participante'] ?>" class="btn btn-success <?php echo $_SESSION['btn_editar'];?>" style="color: while;">
+                                                            <a href="../vistas/editar_estadonoti_vista.php?id=<?php echo $estadonoti['id_estado_notificacion'] ?>" class="btn btn-success <?php echo $_SESSION['btn_editar'];?>" style="color: while;">
                                                                 Editar
                                                             </a>
-                                                            <a href="#" data-id="<?php echo $estadonotificacion['id_estado_participante']; ?>" data-tipo="manestadonotificacion" class="borrar_estadonotificacion btn btn-danger <?php echo $_SESSION['btn_borrar'];?>">
+                                                            <a href="#" data-id="<?php echo $estadonoti['id_estado_notificacion']; ?>" data-tipo="mannoti" class="borrar_estadonoti btn btn-danger <?php echo $_SESSION['btn_borrar'];?>">
                                                                 Borrar
                                                             </a>
                                                         </td>
@@ -173,7 +186,7 @@ ob_end_flush();
     </div>
     <script type="text/javascript" language="javascript">
         function ventana() {
-            window.open("../Controlador/reporte_mantenimiento_estadonotificacionreunion_controlador.php", "REPORTE");
+            window.open("../Controlador/reporte_mantenimiento_estadoactareunion_controlador.php", "REPORTE");
         }
     </script>
     <script type="text/javascript">
@@ -207,4 +220,4 @@ ob_end_flush();
 <script src="../plugins/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
 <script src="../plugins/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
 <script src="../plugins/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
-<script src="../js/tiponotificacion-ajax.js"></script>
+<script src="../js/tipoacta-ajax.js"></script>

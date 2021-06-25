@@ -70,7 +70,6 @@ require_once('../clases/funcion_permisos.php');
 
 
 
-
     <script type="text/javascript" language="javascript">
         function ventana() {
             window.open("../Controlador/reporte_mantenimiento_estadoactareunion_controlador.php", "REPORTE");

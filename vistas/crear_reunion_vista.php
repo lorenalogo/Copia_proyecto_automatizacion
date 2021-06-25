@@ -9,17 +9,16 @@ require_once('../clases/funcion_permisos.php');
 $dtz = new DateTimeZone("America/Tegucigalpa");
 $dt = new DateTime("now", $dtz);
 $hoy = $dt->format("Y-m-d");
-$Id_objeto=146;
-        
-  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'Ingreso' , 'A crear Reunion');
+$Id_objeto = 146;
 
- $visualizacion= permiso_ver($Id_objeto);
+bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A crear Reunion');
+
+$visualizacion = permiso_ver($Id_objeto);
 
 
 
-if ($visualizacion==0)
- {
-     echo '<script type="text/javascript">
+if ($visualizacion == 0) {
+    echo '<script type="text/javascript">
                               swal({
                                    title:"",
                                    text:"Lo sentimos no tiene permiso de visualizar la pantalla",
@@ -30,24 +29,16 @@ if ($visualizacion==0)
                            window.location = "../vistas/menu_reunion_vista.php";
 
                             </script>';
- // header('location:  ../vistas/menu_usuarios_vista.php');
-}
+    // header('location:  ../vistas/menu_usuarios_vista.php');
+} else {
 
-else
 
-{
-       
-
-if (permisos::permiso_insertar($Id_objeto)=='1')
-    {
-        $_SESSION['btn_crear']="";
-        }
-        else
-        {
-            $_SESSION['btn_crear']="disabled='disabled'";
-        }
-
+    if (permisos::permiso_insertar($Id_objeto) == '1') {
+        $_SESSION['btn_crear'] = "";
+    } else {
+        $_SESSION['btn_crear'] = "disabled='disabled'";
     }
+}
 
 ob_end_flush();
 ?>
@@ -99,8 +90,8 @@ ob_end_flush();
                                     </div>
                                     <div class="form-group">
                                         <label for="tipo">Tipo de Reunión</label>
-                                        <select class="form-control" style="width: 60%;" id="tipo" name="tipo">
-                                            <option value="0">-- Selecione un Tipo de Reunión --</option>
+                                        <select class="form-control" onchange="showInp()" style="width: 50%;" id="tipo" name="tipo">
+                                            <option value="0">-- Selecione un Tipo --</option>
                                             <?php
                                             try {
                                                 $sql = "SELECT * FROM tbl_tipo_reunion_acta ";
@@ -116,29 +107,25 @@ ob_end_flush();
                                             ?>
                                         </select>
                                     </div>
+        <div class="form-group">
+            <label for="lugar">Lugar:</label>
+            <input required minlength="4" style="width: 90%;" type="text" class="form-control" id="lugar" name="lugar" placeholder="Lugar donde se dearrollara la Reunion">
+        </div>
+        <div class="form-group">
+            <label for="fecha">Fecha:</label>
+            <input required style="width: 40%;" type="date" class="form-control datetimepicker-input" id="fecha" name="fecha" min="<?php echo $hoy; ?>" />
+        </div>
+        <div class="form-group">
+            <label for="horainicio">Hora Inicio: </label>
+            <input required style="width: 30%;" type="time" class="form-control" id="horainicio" name="horainicio">
+        </div>
+        <div class="form-group">
+            <label for="horafinal">Hora Final: </label>
+            <input required style="width: 30%;" type="time" class="form-control" id="horafinal" name="horafinal">
+        </div>
                                     <div class="form-group">
-                                        <label for="lugar">Lugar:</label>
-                                        <input required minlength="4" style="width: 90%;" type="text" class="form-control" id="lugar" name="lugar" placeholder="Lugar donde se dearrollara la Reunion">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="fecha">Fecha:</label>
-                                        <div style="width: 40%;" class="input-group date">
-                                            <input required type="date" class="form-control datetimepicker-input" id="fecha" name="fecha" min="<?php echo $hoy; ?>" />
-                                            <div class="input-group-append">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="horainicio">Hora Inicio: </label>
-                                        <input required style="width: 30%;" type="time" class="form-control" id="horainicio" name="horainicio">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="horafinal">Hora Final: </label>
-                                        <input required style="width: 30%;" type="time" class="form-control" id="horafinal" name="horafinal">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="enlace">Enlace de la Reunión:</label>
-                                        <input minlength="10" type="text" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
+                                        <label style="display: none;" id="enlaces" for="enlace">Enlace de la Reunión:</label>
+                                        <input style="display: none;" minlength="10" type="text" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -160,7 +147,7 @@ ob_end_flush();
                                 </div>
                                 <div class="form-group">
                                     <label for="agenda">Agenda Propuesta</label>
-                                    <textarea required minlength="10" class="form-control" id="agenda" name="agenda" rows="16" placeholder="Ingrese Agenda Propuesta"></textarea>
+                                    <textarea required minlength="10" class="form-control" id="agenda" name="agenda" rows="13" placeholder="Ingrese Agenda Propuesta"></textarea>
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -226,7 +213,7 @@ ob_end_flush();
                 <div style="padding: 0px 0 25px 0;">
                     <input type="hidden" name="estado" value="1">
                     <input type="hidden" name="reunion" value="nuevo">
-                    <button style="padding-right: 15px;" type="submit" class="btn btn-success float-left" <?php echo $_SESSION['btn_crear'];?>>Crear</button>
+                    <button style="padding-right: 15px;" type="submit" class="btn btn-success float-left" <?php echo $_SESSION['btn_crear']; ?> disabled>Crear</button>
                     <a style="color: white !important; margin: 0px 0px 0px 10px;" class="cancelar-reunion btn btn-danger" href="reuniones_pendientes_vista.php">Cancelar</a>
                 </div>
             </div>
@@ -263,6 +250,27 @@ ob_end_flush();
                 }
             }
         }
+
+        $(function() {
+            $('input:checkbox').change(function() {
+                $('button:submit').prop({
+                    disabled: $('input:checkbox:checked').length < 2
+                });
+            });
+        });
+
+        function showInp() {
+            getSelectValue = document.getElementById("tipo").value;
+            if (getSelectValue == "2") {
+                document.getElementById("enlace").style.display = "block";
+                document.getElementById("enlace").required = true;
+                document.getElementById("enlaces").style.display = "block";
+            } else {
+                document.getElementById("enlace").style.display = "none";
+                document.getElementById("enlaces").style.display = "none";
+                document.getElementById("enlace").required = false;
+            }
+        }
     </script>
 
 </body>
@@ -275,6 +283,8 @@ ob_end_flush();
 <script src="../plugins/select2/js/select2.min.js"></script>
 <!-- Select2 -->
 <script src="../plugins/select2/js/select2.full.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 <!-- datatables JS -->
 <script type="text/javascript" src="../plugins/datatables/datatables.min.js"></script>
 <!-- para usar botones en datatables JS -->

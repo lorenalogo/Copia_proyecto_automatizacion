@@ -1,12 +1,11 @@
 <?php
-//colaboracion JLLC-91122015
 include_once '../clases/Conexion.php';
-$estado = $_POST['estadonotificacion'];
+$estado = $_POST['estado'];
 $id_estado = $_POST['id_estado'];
 if ($_POST['estado-participante'] == 'nuevo') {
     try {
-        $stmt = $mysqli->prepare("INSERT INTO tbl_estado_participante (estado_participante) VALUES (?)");
-        $stmt->bind_param("s", $estado_participante);
+        $stmt = $mysqli->prepare("INSERT INTO tbl_estado_participante (estado) VALUES (?)");
+        $stmt->bind_param("s", $estado);
         $stmt->execute();
         $id_registro = $stmt->insert_id;
         if ($id_registro > 0) {
@@ -51,9 +50,9 @@ if ($_POST['estado-participante'] == 'actualizar') {
     }
     die(json_encode($respuesta));
 }
+
 if ($_POST['estado-participante'] == 'eliminar') {
     $id_borrar = $_POST['id'];
-
     try {
         $stmt = $mysqli->prepare('DELETE FROM tbl_estado_participante WHERE id_estado = ? ');
         $stmt->bind_param('i', $id_borrar);

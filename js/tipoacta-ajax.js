@@ -1,5 +1,68 @@
 $(document).ready(function () {
 
+
+    /********** guardarestado noti ***********/
+    $('#guardar-estadoparticipante').on('submit', function (e) {
+        e.preventDefault();
+        var datos = $(this).serializeArray();
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var resultado = data;
+                if (resultado.respuesta == 'exito') {
+                    swal({
+                        title: "Correcto", text: "Se guardo correctamente!", type:
+                            "success"
+                    }).then(function () {
+                        location.href = "../Vistas/mantenimiento_estadoparticipante_vista.php";
+                    }
+                    );
+                } else {
+                    swal(
+                        'Error',
+                        'Hubo un error!',
+                        'error'
+                    )
+                }
+            }
+        })
+    });
+
+    /********** guardarestado noti ***********/
+    $('#guardar-estadonoti').on('submit', function (e) {
+        e.preventDefault();
+        var datos = $(this).serializeArray();
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var resultado = data;
+                if (resultado.respuesta == 'exito') {
+                    swal({
+                        title: "Correcto", text: "Se guardo correctamente!", type:
+                            "success"
+                    }).then(function () {
+                        location.href = "../Vistas/mantenimiento_estadonoti_vista.php";
+                    }
+                    );
+                } else {
+                    swal(
+                        'Error',
+                        'Hubo un error!',
+                        'error'
+                    )
+                }
+            }
+        })
+    });
+
     /********** guardar tipo reunion/acta ********** UNICO*/
     $('#guardar-tiporeu').on('submit', function (e) {
         e.preventDefault();
@@ -336,6 +399,90 @@ $(document).ready(function () {
         });
     });
 
+    /********** borrar estado noti ***********/
+    $('.borrar_estadonoti').on('click', function (e) {
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        var estado = $(this).attr('data-tipo');
+        swal({
+            title: '¿Está Seguro?',
+            text: 'Si lo elimina no podra revertirlo!!',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtontext: 'Si, Eliminarlo!',
+            cancelButtontext: 'Cancelar'
+        }).then(function () {
+            $.ajax({
+                type: 'post',
+                data: {
+                    'id': id,
+                    'estado-noti': 'eliminar'
+                },
+                url: '../Modelos/modelo_' + estado + '.php',
+                success: function (data) {
+                    var resultado = JSON.parse(data);
+                    if (resultado.respuesta == 'exito') {
+                        swal(
+                            'Eliminado!',
+                            'Eliminado con Exito!',
+                            'success'
+                        )
+                        jQuery('[data-id="' + resultado.id_eliminado + '"]').parents('tr').remove();
+                    } else {
+                        swal(
+                            'Error!',
+                            'No se pudo eliminar',
+                            'error'
+                        )
+                    }
+                }
+            })
+        });
+    });
+
+    $('.borrar_estadoparticipante').on('click', function (e) {
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        var estado = $(this).attr('data-tipo');
+        swal({
+            title: '¿Está Seguro?',
+            text: 'Si lo elimina no podra revertirlo!!',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtontext: 'Si, Eliminarlo!',
+            cancelButtontext: 'Cancelar'
+        }).then(function () {
+            $.ajax({
+                type: 'post',
+                data: {
+                    'id': id,
+                    'estado-participante': 'eliminar'
+                },
+                url: '../Modelos/modelo_' + estado + '.php',
+                success: function (data) {
+                    var resultado = JSON.parse(data);
+                    if (resultado.respuesta == 'exito') {
+                        swal(
+                            'Eliminado!',
+                            'Eliminado con Exito!',
+                            'success'
+                        )
+                        jQuery('[data-id="' + resultado.id_eliminado + '"]').parents('tr').remove();
+                    } else {
+                        swal(
+                            'Error!',
+                            'No se pudo eliminar',
+                            'error'
+                        )
+                    }
+                }
+            })
+        });
+    });
 
 
 

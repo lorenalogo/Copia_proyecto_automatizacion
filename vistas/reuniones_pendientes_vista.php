@@ -14,12 +14,16 @@ require_once('../clases/funcion_permisos.php');
 <head>
     <link rel="stylesheet" type="text/css" href="../plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
     <link rel=" stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="../js/jquery.min.js"></script>
     <script src="../js/moment.min.js"></script>
     <!-- full calendar-->
     <link rel="stylesheet" type="text/css" href="../css/fullcalendar.min.css">
     <script src="../js/fullcalendar.min.js"></script>
     <script src="../js/es.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <title></title>
 </head>
 
@@ -42,39 +46,7 @@ require_once('../clases/funcion_permisos.php');
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-        <!-- /.modal -->
-        <div class="modal fade" id="modal-default">
 
-            <div class="modal-dialog modal-dialog-centered modal-sm">
-                <div class="modal-content lg-secondary">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Lista de Participantes</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <?php
-                        try {
-                            $sql = "SELECT `id_persona` FROM `tbl_participantes` WHERE id_reunion = 1";
-                            $resultado = $mysqli->query($sql);
-                        } catch (Exception $e) {
-                            $error = $e->getMessage();
-                            echo $error;
-                        }
-                        while ($reunion = $resultado->fetch_assoc()) { ?>
-                            <p><?php echo $reunion['id_persona']; ?></p>
-                        <?php  }  ?>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -95,7 +67,7 @@ require_once('../clases/funcion_permisos.php');
                                         <div class="card-header p-0 border-bottom-0">
                                             <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
                                                 <li class="nav-item">
-                                                    <a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill" href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true">Vista General Detallada</a>
+                                                    <a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill" href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true">Vista General</a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link" id="custom-tabs-four-messages-tab" data-toggle="pill" href="#custom-tabs-four-messages" role="tab" aria-controls="custom-tabs-four-messages" aria-selected="false">Vista Calendario</a>
@@ -115,14 +87,13 @@ require_once('../clases/funcion_permisos.php');
                                                                     <th>Fecha</th>
                                                                     <th>Hora Inicio</th>
                                                                     <th>Hora Final</th>
-                                                                    <th>Participantes</th>
                                                                     <th>Acciones</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <?php
                                                                 try {
-                                                                    $sql = "SELECT * FROM `tbl_reunion` WHERE id_estado = 1 AND 3";
+                                                                    $sql = "SELECT * FROM `tbl_reunion` WHERE id_estado = 1 OR id_estado = 3";
                                                                     $resultado = $mysqli->query($sql);
                                                                 } catch (Exception $e) {
                                                                     $error = $e->getMessage();
@@ -136,13 +107,12 @@ require_once('../clases/funcion_permisos.php');
                                                                         <td><?php echo $reunion['fecha']; ?></td>
                                                                         <td><?php echo $reunion['hora_inicio']; ?></td>
                                                                         <td><?php echo $reunion['hora_final']; ?></td>
-                                                                        <td><a data-id="<?php echo $reunion['id_reunion']; ?>" data-toggle="modal" data-target="#modal-default" href="#">Ver Participantes</a></td>
                                                                         <td>
                                                                             <a href="../vistas/editar_tiporeunion_vista.php?id=<?php echo $reunion['id_tipo'] ?>" class="btn btn-success" style="color: while;">
                                                                                 <i class="far fa-edit"></i><br>Editar
                                                                             </a>
                                                                             <a href="#" data-id="<?php echo $reunion['id_tipo']; ?>" data-tipo="manactareunion" class="borrar_registro btn btn-danger ">
-                                                                                <i class="far fa-window-close"></i><br>Borrar
+                                                                                <i class="far fa-window-close"></i><br>Cancelar
                                                                             </a>
                                                                         </td>
                                                                     </tr>
@@ -163,10 +133,10 @@ require_once('../clases/funcion_permisos.php');
                                                                         center: 'title',
                                                                         right: 'month,agendaWeek,agendaDay',
                                                                     },
-                                                                    events: 'http://localhost/Copia_proyecto_automatizacion/modelos/modelo_reuniones_calendario.php',
+                                                                    events: '../Modelos/modelo_reuniones_calendario.php',
                                                                     eventAfterRender: function(event, element, view) {
                                                                         var hoy = new Date();
-                                                                        
+
                                                                         if (event.start > hoy && event.end < hoy) {
                                                                             element.css('background-color', '#AA1313');
                                                                             element.css('color', 'white');
@@ -178,6 +148,20 @@ require_once('../clases/funcion_permisos.php');
                                                                             element.css('color', 'white');
                                                                         }
                                                                     },
+                                                                    eventClick: function(calEvent, jsEvent, view) {
+                                                                        $('#tituloReunion').html(calEvent.title);
+                                                                        $('#tipo').html(calEvent.tipo);
+                                                                        $('#estado').html(calEvent.estado_reunion);
+                                                                        $('#participantes').html(calEvent.participantes);
+                                                                        $('#enlace').html(calEvent.enlace);
+                                                                        $('#asunto').html(calEvent.asunto);
+                                                                        $('#agenda_propuesta').html(calEvent.agenda_propuesta);
+                                                                        $('#fecha').html(calEvent.fecha);
+                                                                        $('#hora_inicio').html(calEvent.hora_inicio);
+                                                                        $('#hora_final').html(calEvent.hora_final);
+                                                                        $('#lugar').html(calEvent.lugar);
+                                                                        $("#exampleModalLong").modal();
+                                                                    }
                                                                 });
                                                             });
                                                         </script>
@@ -222,6 +206,37 @@ require_once('../clases/funcion_permisos.php');
             });
         });
     </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloReunion"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div><b>Tipo: </b><a id="tipo"></a></div>
+                    <div><b>Estado: </b><a id="estado"></a></div>
+                    <div><b>Lugar: </b><a id="lugar"></a></div>
+                    <div><b>Fecha: </b><a id="fecha"></a></div>
+                    <div><b>Hora Inicio: </b><a id="hora_inicio"></a></div>
+                    <div><b>Hora Final: </b><a id="hora_final"></a></div>
+                    <div><b>Enlace: </b><a id="enlace"></a></div>
+                    <div><b> Lista Participantes: </b><div id="participantes"></div></div>
+                    <h6><b> Asunto: </b></h6>
+                    <div id="asunto"></div>
+                    <div><b> Agenda Propuesta: </b></div>
+                    <a id="agenda_propuesta"></a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
