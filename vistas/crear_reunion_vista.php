@@ -107,22 +107,22 @@ ob_end_flush();
                                             ?>
                                         </select>
                                     </div>
-        <div class="form-group">
-            <label for="lugar">Lugar:</label>
-            <input required minlength="4" style="width: 90%;" type="text" class="form-control" id="lugar" name="lugar" placeholder="Lugar donde se dearrollara la Reunion">
-        </div>
-        <div class="form-group">
-            <label for="fecha">Fecha:</label>
-            <input required style="width: 40%;" type="date" class="form-control datetimepicker-input" id="fecha" name="fecha" min="<?php echo $hoy; ?>" />
-        </div>
-        <div class="form-group">
-            <label for="horainicio">Hora Inicio: </label>
-            <input required style="width: 30%;" type="time" class="form-control" id="horainicio" name="horainicio">
-        </div>
-        <div class="form-group">
-            <label for="horafinal">Hora Final: </label>
-            <input required style="width: 30%;" type="time" class="form-control" id="horafinal" name="horafinal">
-        </div>
+                                    <div class="form-group">
+                                        <label for="lugar">Lugar:</label>
+                                        <input required minlength="4" style="width: 90%;" type="text" class="form-control" id="lugar" name="lugar" placeholder="Lugar donde se dearrollara la Reunion">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fecha">Fecha:</label>
+                                        <input required style="width: 40%;" type="date" class="form-control datetimepicker-input" id="fecha" name="fecha" min="<?php echo $hoy; ?>" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="horainicio">Hora Inicio: </label>
+                                        <input required style="width: 30%;" type="time" class="form-control" id="horainicio" name="horainicio" min="7:00" max="23:00">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="horafinal">Hora Final: </label>
+                                        <input required style="width: 30%;" type="time" class="form-control" id="horafinal" name="horafinal" min="7:30" max="24:00">
+                                    </div>
                                     <div class="form-group">
                                         <label style="display: none;" id="enlaces" for="enlace">Enlace de la Reunión:</label>
                                         <input style="display: none;" minlength="10" type="text" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
@@ -272,7 +272,33 @@ ob_end_flush();
             }
         }
     </script>
-
+    <script>
+        const inicio = document.getElementById("horainicio");
+        const final = document.getElementById("horafinal");
+        const comparaHoras = () => {
+            const vInicio = inicio.value;
+            const vFinal = final.value;
+            if (!vInicio || !vFinal) {
+                return;
+            }
+            const tIni = new Date();
+            const pInicio = vInicio.split(":");
+            tIni.setHours(pInicio[0], pInicio[1]);
+            const tFin = new Date();
+            const pFin = vFinal.split(":");
+            tFin.setHours(pFin[0], pFin[1]);
+            if (tFin.getTime() < tIni.getTime()) {
+                alert("La hora final no puede menor a de inicio");
+                document.getElementById('horafinal').value = ''
+            }
+            if (tFin.getTime() === tIni.getTime()) {
+                alert("La hora inicio con la hora final no pueden ser Iguales");
+                document.getElementById('horafinal').value = ''
+            }
+        }
+        inicio.addEventListener("change", comparaHoras);
+        final.addEventListener("change", comparaHoras);
+    </script>
 </body>
 
 </html>
