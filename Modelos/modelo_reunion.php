@@ -1,6 +1,7 @@
 <?php
 
 include_once '../clases/Conexion.php';
+$enlace = $_POST['NULL'];
 $agenda = $_POST['agenda'];
 $asunto = $_POST['asunto'];
 $enlace = $_POST['enlace'];
