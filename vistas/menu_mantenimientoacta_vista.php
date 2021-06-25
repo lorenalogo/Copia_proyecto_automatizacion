@@ -212,7 +212,7 @@ if (permiso_ver('161') == '1') {
                                                     <i class="fas fa-edit"></i>
                                                 </div>
 
-                                                <a href="../vistas/mantenimiento_estadonotificaion_vista.php" class="small-box-footer">
+                                                <a href="../vistas/mantenimiento_estadonotificacion_vista.php" class="small-box-footer">
                                                     Ir <i class="fas fa-arrow-circle-right"></i>
                                                 </a>
                                             </div>
