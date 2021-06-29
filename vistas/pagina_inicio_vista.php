@@ -3,31 +3,18 @@
 require_once('../clases/Conexion.php');
 require_once('../clases/permisos_usuario.php');
 
-
-
-
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
-
-
-
-
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Informatica Administrativa</title>
-
-
-
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
   <!-- Font Awesome Icons -->
@@ -52,18 +39,13 @@ if (session_status() === PHP_SESSION_NONE) {
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
   <link rel="stylesheet" type="text/css" href="../plugins/sweetalert2/sweetalert2.min.css">
   <link rel="stylesheet" href="../dist/css/sweetalert2.css">
   <script src="../js/funciones.js"></script>
-
-
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
-
-
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
@@ -71,7 +53,6 @@ if (session_status() === PHP_SESSION_NONE) {
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
       </ul>
-
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
@@ -80,29 +61,19 @@ if (session_status() === PHP_SESSION_NONE) {
             <i class="fas fa-user-tag"></i>
           </a>
         </li>
-
         <li class="nav-item dropdown">
           <a class="nav-link" href="../vistas/gestion_respuesta_usuario_vista.php">
             <i class="fas fa-question-circle"></i>
           </a>
         </li>
-
         <li class="nav-item dropdown">
           <a class="btn-exit-system" href="#!">
             <i class="fas fa-sign-out-alt"></i>
           </a>
         </li>
-
       </ul>
-
     </nav>
-
     <!-- nav -->
-
-
-
-
-
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
@@ -110,7 +81,6 @@ if (session_status() === PHP_SESSION_NONE) {
         <img src="../dist/img/lOGO_OFICIAL.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Informática </span>
       </a>
-
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
@@ -123,18 +93,15 @@ if (session_status() === PHP_SESSION_NONE) {
                                         echo ($_SESSION['usuario']); ?></a>
           </div>
         </div>
-
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
             <li class="nav-item has-treeview " style="display:<?php echo $_SESSION['btn_seguridad'] ?>">
               <a href="#" class="nav-link ">
                 <i class="nav-icon fas fa-user-shield"></i>
                 <p>
                   Seguridad
                   <i class="right fas fa-angle-left"></i>
-
                 </p>
               </a>
               <ul class="nav nav-treeview">
@@ -144,7 +111,6 @@ if (session_status() === PHP_SESSION_NONE) {
                     <p>Preguntas de Seguridad</p>
                   </a>
                 </li>
-
                 <li class="nav-item" style="display:<?php echo $_SESSION['usuarios_vista'] ?>">
                   <a href="../vistas/menu_usuarios_vista.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -177,7 +143,6 @@ if (session_status() === PHP_SESSION_NONE) {
                 </li>
               </ul>
             </li>
-
             <li class="nav-item has-treeview" style="display:<?php echo $_SESSION['btn_vinculacion'] ?>">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
@@ -214,7 +179,6 @@ if (session_status() === PHP_SESSION_NONE) {
                 </li>
               </ul>
             </li>
-
             <li class="nav-item has-treeview" style="display:<?php echo $_SESSION['btn_coordinacion'] ?>">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-book"></i>
@@ -225,7 +189,6 @@ if (session_status() === PHP_SESSION_NONE) {
                 </p>
               </a>
               <ul class="nav nav-treeview">
-
                 <li class="nav-item" style="display:<?php echo $_SESSION['final_practica'] ?>">
                   <a href="../vistas/revision_finalizacion_vista.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -272,7 +235,6 @@ if (session_status() === PHP_SESSION_NONE) {
                 </li>
               </ul>
             </li>
-
             <!-- AGREGANDO DOCENTES -->
             <li class="nav-item has-treeview" style="display:<?php echo $_SESSION['btn_docentes'] ?>">
               <a href="#" class="nav-link">
@@ -292,10 +254,57 @@ if (session_status() === PHP_SESSION_NONE) {
                 </li>
               </ul>
             </li>
+            <!-- AGREGANDO CONTROL DE ACTAS -->
+            <li class="nav-item has-treeview" style="display:<?php echo $_SESSION['btn_control_actas'] ?>">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-paste"></i>
+                <p>
+                  Control de Actas
+                  <i class="fas fa-angle-left right"></i>
+                  <span class="badge badge-info right"></span>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
 
-
+                <li class="nav-item" style="display:<?php echo $_SESSION['gestion_reunion'] ?>">
+                  <a href="../vistas/menu_reunion_vista.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Gestión Reunión
+                    </p>
+                  </a>
+                </li>
+                <!--- Gestión Reunión  -->
+                <li class="nav-item" style="display:<?php echo $_SESSION['gestion_actas'] ?>">
+                  <a href="../vistas/menu_acta_vista.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Gestión Acta
+                    </p>
+                  </a>
+                </li>
+                <!--- Gestión acta  -->
+                <li class="nav-item" style="display:<?php echo $_SESSION['gestion_acuerdos_seguimientos'] ?>">
+                  <a href="../vistas/menu_acuerdo_vista.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Acuerdo y Seguimiento
+                    </p>
+                  </a>
+                </li>
+                <!--- Gestión acuerdos  -->
+                <li class="nav-item" style="display:<?php echo $_SESSION['gestion_lista_asistencia'] ?>">
+                  <a href="../vistas/menu_asistencia_vista.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Lista Asistencia
+                    </p>
+                  </a>
+                </li>
+                <!--- Gestión asistencia  -->
+              </ul>
+            </li>
             <!---- solicitudes ----->
-
             <li class="nav-item has-treeview" style="display:<?php echo $_SESSION['btn_solicitudes'] ?>">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-file-signature"></i>
@@ -305,7 +314,6 @@ if (session_status() === PHP_SESSION_NONE) {
                   <span class="badge badge-info right"></span>
                 </p>
               </a>
-
               <ul class="nav nav-treeview">
                 <li class="nav-item" style="display:<?php echo $_SESSION['solicitud_practica'] ?>">
                   <a href="../vistas/menu_estudiantes_practica_vista.php" class="nav-link">
@@ -346,7 +354,6 @@ if (session_status() === PHP_SESSION_NONE) {
               </ul>
             </li>
             <!---- Ayuda ----->
-
             <li class="nav-item has-treeview" style="display:<?php echo $_SESSION['btn_ayuda'] ?>">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-book-open"></i>
@@ -372,7 +379,6 @@ if (session_status() === PHP_SESSION_NONE) {
                   </a>
                 </li>
               </ul>
-
               <!---- ----->
               <!----MANTENIMIENTOS ----->
             <li class="nav-item has-treeview" style="display:<?php echo $_SESSION['btn_mantenimiento'] ?>">
@@ -385,7 +391,6 @@ if (session_status() === PHP_SESSION_NONE) {
                 </p>
               </a>
               <ul class="nav nav-treeview">
-
                 <li class="nav-item" style="display:<?php echo $_SESSION['mantemiento_carga_academica'] ?>">
                   <a href="../vistas/menu_mantenimiento.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -404,12 +409,19 @@ if (session_status() === PHP_SESSION_NONE) {
                     <p> Mantenimientos Plan de Estudios</p>
                   </a>
                 </li>
-
+                <!--- Mantenimientos control actas  -->
+                <li class="nav-item">
+                  <a href="../vistas/menu_mantenimientoacta_vista.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Mantenimientos Actas
+                    </p>
+                  </a>
+                </li>
+                <!-------->
               </ul>
-
             </li>
             <!----About ----->
-
             <li class="nav-item has-treeview" style="display:<?php echo $_SESSION['btn_solicitudes'] ?>">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-info"></i>
@@ -427,22 +439,14 @@ if (session_status() === PHP_SESSION_NONE) {
                   </a>
                 </li>
               </ul>
-
               <!---- ----->
-
-
-
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
     </aside>
-
-
-
   </div>
-
   <!-- REQUIRED SCRIPTS -->
   <!-- jQuery -->
   <script src="../plugins/jquery/jquery.min.js"></script>
@@ -455,16 +459,13 @@ if (session_status() === PHP_SESSION_NONE) {
   <script src="../plugins/select2/js/select2.full.min.js"></script>
   <!-- AdminLTE App -->
   <script src="../dist/js/adminlte.js"></script>
-
   <!-- OPTIONAL SCRIPTS -->
   <script src="../dist/js/demo.js"></script>
-
   <!-- PAGE PLUGINS -->
   <!-- jQuery Mapael -->
   <!-- bootstrap color picker -->
   <script src="../plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
   <script src="../plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-
   <script src="../plugins/raphael/raphael.min.js"></script>
   <script src="../plugins/jquery-mapael/jquery.mapael.min.js"></script>
   <script src="../plugins/jquery-mapael/maps/usa_states.min.js"></script>
@@ -473,16 +474,13 @@ if (session_status() === PHP_SESSION_NONE) {
   <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
   <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
   <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-
   <!-- InputMask -->
   <script src="../plugins/moment/moment.min.js"></script>
   <script src="../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
   <!-- ChartJS -->
   <script src="../plugins/chart.js/Chart.min.js"></script>
-
   <!-- PAGE SCRIPTS -->
   <script src="../dist/js/pages/dashboard2.js"></script>
-
   <!-- Bootstrap 4 -->
   <!-- SweetAlert2 -->
   <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
@@ -491,37 +489,22 @@ if (session_status() === PHP_SESSION_NONE) {
   <script src="../plugins/toastr/toastr.min.js"></script>
   <!-- AdminLTE App -->
   <script type="text/javascript" src="../plugins/sweetalert2/sweetalert2.min.js"></script>
-
   <script src="../dist/js/sweetalert2.min.js"></script>
-
   <script src="../dist/js/main.js"></script>
-
-
-
   <script type="text/javascript" src="../plugins/bootstrap/js/bootstrap.min.js"></script>
-
-
   <script src="../js/sweetalert2.min.js"></script>
-
   <script src="../js/main.js"></script>
-
-
-
-
   <script type="text/javascript">
     //Colorpicker
     $('.my-colorpicker1').colorpicker()
     //color picker with addon
     $('.my-colorpicker2').colorpicker()
-
     $('.my-colorpicker2').on('colorpickerChange', function(event) {
       $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
     });
-
     $(function() {
           //Initialize Select2 Elements
           $('.select2').select2()
-
           //Initialize Select2 Elements
           $('.select2bs4').select2({
             theme: 'bootstrap4'
@@ -529,12 +512,8 @@ if (session_status() === PHP_SESSION_NONE) {
   </script>
   <script>
     $(function() {
-
       //Input para telefono
       $('[data-mask]').inputmask()
-
-
-
     })
   </script>
   <script type="text/javascript">
@@ -544,13 +523,9 @@ if (session_status() === PHP_SESSION_NONE) {
         position: 'top-end',
         showConfirmButton: false,
         timer: 5000
-
       });
-
-
     });
   </script>
-
 </body>
 
 </html>
