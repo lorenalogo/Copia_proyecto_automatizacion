@@ -77,7 +77,7 @@ require_once('../clases/funcion_permisos.php');
                                         <div class="card-body">
                                             <div class="tab-content" id="custom-tabs-four-tabContent">
                                                 <div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
-                                                    <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_manactareunion.php">
+                                                    <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_manreunion.php">
                                                         <table id="tabla11" class="table table-bordered table-striped">
                                                             <thead>
                                                                 <tr>
@@ -108,10 +108,10 @@ require_once('../clases/funcion_permisos.php');
                                                                         <td><?php echo $reunion['hora_inicio']; ?></td>
                                                                         <td><?php echo $reunion['hora_final']; ?></td>
                                                                         <td>
-                                                                            <a href="../vistas/editar_tiporeunion_vista.php?id=<?php echo $reunion['id_tipo'] ?>" class="btn btn-success" style="color: while;">
+                                                                            <a href="../vistas/editar_reunion_vista.php?id=<?php echo $reunion['id_reunion'] ?>" style="min-width:80px;" class="btn btn-success" style="color: while;">
                                                                                 <i class="far fa-edit"></i><br>Editar
                                                                             </a>
-                                                                            <a href="#" data-id="<?php echo $reunion['id_tipo']; ?>" data-tipo="manactareunion" class="borrar_registro btn btn-danger ">
+                                                                            <a href="#" data-id="<?php echo $reunion['id_reunion']; ?>" data-tipo="manreunion" style="max-width: 80px;" style="ma" class="cancelar_registro btn btn-danger ">
                                                                                 <i class="far fa-window-close"></i><br>Cancelar
                                                                             </a>
                                                                         </td>
@@ -225,7 +225,9 @@ require_once('../clases/funcion_permisos.php');
                     <div><b>Hora Inicio: </b><a id="hora_inicio"></a></div>
                     <div><b>Hora Final: </b><a id="hora_final"></a></div>
                     <div><b>Enlace: </b><a id="enlace"></a></div>
-                    <div><b> Lista Participantes: </b><div id="participantes"></div></div>
+                    <div><b> Lista Participantes: </b>
+                        <div id="participantes"></div>
+                    </div>
                     <h6><b> Asunto: </b></h6>
                     <div id="asunto"></div>
                     <div><b> Agenda Propuesta: </b></div>
