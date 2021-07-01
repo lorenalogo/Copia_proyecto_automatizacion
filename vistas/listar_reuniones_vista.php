@@ -72,9 +72,9 @@ ob_end_flush();
         <!--Pantalla 2-->
         <div class="card card-default">
           <div class="card-header"> <!--BOTON AGENDAR REUNIÓN-->
-                <div class="px-1">
+               <!-- <div class="px-1">
                     <a href="../vistas/agendar_reunion_vista.php" class="btn btn-warning"><i class="fas fa-arrow"></i>Agendar Nueva Reunión</a>
-                </div>
+                </div>-->
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                 </div>                
@@ -89,29 +89,36 @@ ob_end_flush();
                                             <div class="tab-content" id="custom-tabs-four-tabContent">
                                                 <div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
                                                     <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_manactareunion.php">
-                                                        <table id="tabla11" class="table table-bordered table-striped">
+                                                                          <table id="tabla11" class="table table-bordered table-striped">
                                                             <thead>
                                                                 <tr>
-                                                                <th>No.</th>
-                                                                <th>Tipo de Reunión</th>
-                                                                <th>Estado</th>	
-                                                                <th>Fecha</th>
-                                                                <th>Nombre Reunion</th>
+                                                                <th>Nombre Reunión</th>
+                                                                <th>Tipo</th>
+                                                                <th>Estado</th> 
                                                                 <th>Lugar</th>
-                                                                <th>Enlace</th>
+                                                                <th>Fecha</th>
                                                                 <th>Hora Inicio</th>
                                                                 <th>Hora Final</th>
                                                                 <th>Asunto</th>
-                                                                <th>Agenda Propuesta</th>
-                                                                <th>Desarrollo</th>
-                                                                <th>Acta</th>
+                                                                <!-- <th>Acta</th>-->
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <?php
                                                                 try 
                                                                 {
-                                                                    $sql = "SELECT * FROM `tbl_reunion` WHERE id_estado = 1";
+                                                                    $sql = "SELECT tbl_reunion.id_reunion AS id_reunion,
+                                                                    tbl_reunion.nombre_reunion AS nombre,
+                                                                    tbl_tipo_reunion_acta.tipo AS tipo, 
+                                                                    tbl_estado_reunion.estado_reunion AS estado,
+                                                                    tbl_reunion.lugar AS lugar, 
+                                                                    tbl_reunion.fecha AS fecha, 
+                                                                    tbl_reunion.hora_inicio AS hora_incio, 
+                                                                    tbl_reunion.hora_final AS hora_final,
+                                                                    tbl_reunion.asunto AS Asunto
+                                                                    FROM tbl_reunion
+                                                                    INNER JOIN tbl_tipo_reunion_acta ON tbl_reunion.id_Tipo = tbl_tipo_reunion_acta.id_tipo
+                                                                    INNER JOIN tbl_estado_reunion ON tbl_reunion.id_estado = tbl_estado_reunion.id_estado_reunion";
                                                                     $resultado = $mysqli->query($sql);
                                                                 } 
                                                                 catch (Exception $e) 
@@ -121,25 +128,21 @@ ob_end_flush();
                                                                 }
                                                                 while ($reunion = $resultado->fetch_assoc()) 
                                                                 { ?>
-                                                                    <tr>
-                                                                        <td><?php echo $reunion['id_reunion']; ?></td>                                                                        
-                                                                        <td><?php echo $reunion['id_tipo']; ?></td>
-                                                                        <td><?php echo $reunion['id_estado']; ?></td>
-                                                                        <td><?php echo $reunion['fecha']; ?></td>
-                                                                        <td><?php echo $reunion['nombre_reunion']; ?></td>
-                                                                        <td><?php echo $reunion['lugar']; ?></td>
-                                                                        <td><?php echo $reunion['enlace']; ?></td>
-                                                                        <td><?php echo $reunion['hora_inicio']; ?></td>
-                                                                        <td><?php echo $reunion['hora_final']; ?></td>
-                                                                        <td><?php echo $reunion['Asunto']; ?></td>
-                                                                        <td><?php echo $reunion['Agenda_propuesta']; ?></td>
-                                                                        <td><?php echo $reunion['Desarrollo']; ?></td>
-                                                                        <td><a data-id="<?php echo $reunion['id_reunion']; ?>" data-toggle="modal" data-target="#modal-default" href="#">Ver Acta</a></td>
-                                                                    </tr>
+                                                                <tr>
+                                                                    <td><?php echo $reunion['nombre']; ?></td>
+                                                                    <td><?php echo $reunion['tipo']; ?></td>
+                                                                    <td><?php echo $reunion['estado']; ?></td>
+                                                                    <td><?php echo $reunion['lugar']; ?></td>
+                                                                    <td><?php echo $reunion['fecha']; ?></td>
+                                                                    <td><?php echo $reunion['hora_incio']; ?></td>
+                                                                    <td><?php echo $reunion['hora_final']; ?></td>
+                                                                    <td><?php echo $reunion['Asunto']; ?></td>
+                                                                <!--<td><a data-id="<?php echo $reunion['id_reunion']; ?>" data-toggle="modal" data-target="#modal-default" href="#">Ver Acta</a></td>-->
+                                                                </tr>
                                                                 <?php  
                                                                 }  ?>
                                                             </tbody>
-                                                        </table>
+                                                        </table>     
                                                    </form>
                                                 </div>
                                                 <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel" aria-labelledby="custom-tabs-four-messages-tab">
