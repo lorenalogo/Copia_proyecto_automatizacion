@@ -77,6 +77,7 @@ ob_end_flush();
 
         <!-- Main content -->
         <section class="content">
+
             <?php
             $sql = "SELECT
             t1.id_reunion,
@@ -100,7 +101,28 @@ ob_end_flush();
 
             ?>
             <div class="container-fluid">
-                <div class="row">
+
+            <div class="card card-primary card-outline card-tabs">
+                <div class="card-header p-0 pt-1 border-bottom-0">
+                    <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="datosgenerales-tab" data-toggle="pill" href="#datosgenerales" role="tab" aria-controls="datosgenerales" aria-selected="false">Datos Generales y Asistencia</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " id="datosreunion-tab" data-toggle="pill" href="#datosreunion" role="tab" aria-controls="datosreunion" aria-selected="true">Datos Reunion</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="archivos-tab" data-toggle="pill" href="#archivos" role="tab" aria-controls="archivos" aria-selected="false">Adjuntar archivos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-three-settings-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-settings" aria-selected="false">Settings</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="custom-tabs-three-tabContent">
+                        <div class="tab-pane fade active show" id="datosgenerales" role="tabpanel" aria-labelledby="datosgenerales-tab">
+                        <div class="row">
                     <!-- left column -->
                     <div class="col-md-6">
                         <!-- general form elements -->
@@ -251,8 +273,9 @@ ob_end_flush();
                     </div>
                     <!--/.col (right) -->
                 </div>
-                <!-- /.row -->
-                <div class="card card-warning">
+                    </div>
+                        <div class="tab-pane fade " id="datosreunion" role="tabpanel" aria-labelledby="datosreunion-tab">
+                        <div class="card card-warning">
                     <div class="card-header">
                         <h3 class="card-title">Datos de la Reunión</h3>
                     </div>
@@ -282,8 +305,9 @@ ob_end_flush();
                         </div>
                     </div>
                     <!-- /.card-body -->
-                </div>
-                <div class="card card-danger">
+                </div>                       </div>
+                        <div class="tab-pane fade" id="archivos" role="tabpanel" aria-labelledby="archivos-tab">
+                        <div class="card card-danger">
                     <div class="card-header">
                         <h3 class="card-title">Adjunar Archivos</h3>
                     </div>
@@ -343,7 +367,18 @@ ob_end_flush();
                         </div>
                     </div>
                     <!-- /.card-body -->
+                </div>                     </div>
+                        <div class="tab-pane fade" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
+4                        </div>
+                    </div>
                 </div>
+                <!-- /.card -->
+            </div>
+
+
+                <!-- /.row -->
+
+
                 <div style="padding: 0px 0 25px 0;">
                     <input type="hidden" name="id_registro" value="<?php echo $id; ?>">
                     <input type="hidden" name="acta" value="actualizar">
@@ -372,15 +407,15 @@ ob_end_flush();
         });
     </script>
     <?php
-                    $sql = "SELECT
+    $sql = "SELECT
                     Valor
                 FROM
                     `tbl_parametros`
                 WHERE
                     Parametro = 'acta_max_size'";
-                    $resultado = $mysqli->query($sql);
-                    $aceptados = $resultado->fetch_assoc();
-                    ?>
+    $resultado = $mysqli->query($sql);
+    $aceptados = $resultado->fetch_assoc();
+    ?>
     <script>
         const MAXIMO_TAMANIO_BYTES = <?php echo $aceptados['Valor']; ?>; // 1MB = 1 millón de bytes
 
