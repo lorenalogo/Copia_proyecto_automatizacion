@@ -16,6 +16,7 @@ require_once('../clases/funcion_permisos.php');
     <link rel=" stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="../js/jquery.min.js"></script>
+
     <script src="../js/moment.min.js"></script>
     <!-- full calendar-->
     <link rel="stylesheet" type="text/css" href="../css/fullcalendar.min.css">
@@ -77,7 +78,7 @@ require_once('../clases/funcion_permisos.php');
                                         <div class="card-body">
                                             <div class="tab-content" id="custom-tabs-four-tabContent">
                                                 <div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
-                                                    <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_manreunion.php">
+                                                    <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_reunion.php">
                                                         <table id="tabla11" class="table table-bordered table-striped">
                                                             <thead>
                                                                 <tr>
@@ -93,7 +94,10 @@ require_once('../clases/funcion_permisos.php');
                                                             <tbody>
                                                                 <?php
                                                                 try {
-                                                                    $sql = "SELECT * FROM `tbl_reunion` WHERE id_estado = 1 OR id_estado = 3";
+                                                                    $sql = "SELECT t1.id_reunion,t1.nombre_reunion,t2.tipo,t1.lugar,t1.fecha,t1.hora_inicio,t1.hora_final 
+                                                                    FROM tbl_reunion t1 
+                                                                    INNER JOIN tbl_tipo_reunion_acta t2 on t2.id_tipo = t1.id_tipo
+                                                                    WHERE id_estado = 1 OR id_estado = 3";
                                                                     $resultado = $mysqli->query($sql);
                                                                 } catch (Exception $e) {
                                                                     $error = $e->getMessage();
@@ -102,7 +106,7 @@ require_once('../clases/funcion_permisos.php');
                                                                 while ($reunion = $resultado->fetch_assoc()) { ?>
                                                                     <tr>
                                                                         <td><?php echo $reunion['nombre_reunion']; ?></td>
-                                                                        <td><?php echo $reunion['id_tipo']; ?></td>
+                                                                        <td><?php echo $reunion['tipo']; ?></td>
                                                                         <td><?php echo $reunion['lugar']; ?></td>
                                                                         <td><?php echo $reunion['fecha']; ?></td>
                                                                         <td><?php echo $reunion['hora_inicio']; ?></td>
@@ -111,7 +115,7 @@ require_once('../clases/funcion_permisos.php');
                                                                             <a href="../vistas/editar_reunion_vista.php?id=<?php echo $reunion['id_reunion'] ?>" style="min-width:80px;" class="btn btn-success" style="color: while;">
                                                                                 <i class="far fa-edit"></i><br>Editar
                                                                             </a>
-                                                                            <a href="#" data-id="<?php echo $reunion['id_reunion']; ?>" data-tipo="manreunion" style="max-width: 80px;" style="ma" class="cancelar_registro btn btn-danger ">
+                                                                            <a href="#" data-id="<?php echo $reunion['id_reunion']; ?>" data-tipo="reunion" style="max-width: 80px;" style="ma" class="cancelar_registro btn btn-danger ">
                                                                                 <i class="far fa-window-close"></i><br>Cancelar
                                                                             </a>
                                                                         </td>
@@ -126,7 +130,13 @@ require_once('../clases/funcion_permisos.php');
                                                         <!-- THE CALENDAR -->
                                                         <div id="calendarioweb"></div>
                                                         <script>
+                                                            function sumarDias(fecha, dias) {
+                                                                fecha.setDate(fecha.getDate() + dias);
+                                                                return fecha;
+                                                            }
+                                                            
                                                             $(document).ready(function() {
+                                                                var undia = (sumarDias(hoy, +1));
                                                                 $('#calendarioweb').fullCalendar({
                                                                     header: {
                                                                         left: 'today,prev,next',
@@ -135,17 +145,21 @@ require_once('../clases/funcion_permisos.php');
                                                                     },
                                                                     events: '../Modelos/modelo_reuniones_calendario.php',
                                                                     eventAfterRender: function(event, element, view) {
-                                                                        var hoy = new Date();
 
-                                                                        if (event.start > hoy && event.end < hoy) {
-                                                                            element.css('background-color', '#AA1313');
+                                                                        var hoy = new Date();
+                                                                        
+                                                                        if (event.start < hoy) {
+                                                                            element.css('background-color', '#ff0000');
                                                                             element.css('color', 'white');
-                                                                        } else if (event.start < hoy && event.end < hoy) {
-                                                                            element.css('background-color', '#125591');
+                                                                            element.css('border', 0);
+                                                                        } else if (event.start > hoy && event.end > hoy && event.end > undia) {
+                                                                            element.css('background-color', '#1d964f');
                                                                             element.css('color', 'white');
-                                                                        } else if (event.start > hoy && event.end > hoy) {
-                                                                            element.css('background-color', '#1BA253');
+                                                                            element.css('border', 0);
+                                                                        }else{
+                                                                            element.css('background-color', '#1c4299');
                                                                             element.css('color', 'white');
+                                                                            element.css('border', 0);
                                                                         }
                                                                     },
                                                                     eventClick: function(calEvent, jsEvent, view) {
@@ -185,60 +199,58 @@ require_once('../clases/funcion_permisos.php');
                 <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-    </div>
-    <script type="text/javascript" language="javascript">
-        function ventana() {
-            window.open("../Controlador/reporte_mantenimiento_estadoactareunion_controlador.php", "REPORTE");
-        }
-    </script>
-    <script type="text/javascript">
-        $(function() {
-            $('#tabla11').DataTable({
-                "paging": true,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": true,
-                "responsive": true,
-            });
-        });
-    </script>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="tituloReunion"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div><b>Tipo: </b><a id="tipo"></a></div>
-                    <div><b>Estado: </b><a id="estado"></a></div>
-                    <div><b>Lugar: </b><a id="lugar"></a></div>
-                    <div><b>Fecha: </b><a id="fecha"></a></div>
-                    <div><b>Hora Inicio: </b><a id="hora_inicio"></a></div>
-                    <div><b>Hora Final: </b><a id="hora_final"></a></div>
-                    <div><b>Enlace: </b><a id="enlace"></a></div>
-                    <div><b> Lista Participantes: </b>
-                        <div id="participantes"></div>
+        <script type="text/javascript" language="javascript">
+            function ventana() {
+                window.open("../Controlador/reporte_mantenimiento_estadoactareunion_controlador.php", "REPORTE");
+            }
+        </script>
+        <script type="text/javascript">
+            $(function() {
+                $('#tabla11').DataTable({
+                    "paging": true,
+                    "lengthChange": true,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": true,
+                    "responsive": true,
+                });
+            });
+        </script>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tituloReunion"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <h6><b> Asunto: </b></h6>
-                    <div id="asunto"></div>
-                    <div><b> Agenda Propuesta: </b></div>
-                    <a id="agenda_propuesta"></a>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <div class="modal-body">
+                        <div><b>Tipo: </b><a id="tipo"></a></div>
+                        <div><b>Estado: </b><a id="estado"></a></div>
+                        <div><b>Lugar: </b><a id="lugar"></a></div>
+                        <div><b>Fecha: </b><a id="fecha"></a></div>
+                        <div><b>Hora Inicio: </b><a id="hora_inicio"></a></div>
+                        <div><b>Hora Final: </b><a id="hora_final"></a></div>
+                        <div><b>Enlace: </b><a id="enlace"></a></div>
+                        <div><b> Lista Participantes: </b>
+                            <div id="participantes"></div>
+                        </div>
+                        <h6><b> Asunto: </b></h6>
+                        <div id="asunto"></div>
+                        <div><b> Agenda Propuesta: </b></div>
+                        <a id="agenda_propuesta"></a>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>

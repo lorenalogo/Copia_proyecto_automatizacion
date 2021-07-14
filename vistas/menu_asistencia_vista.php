@@ -65,7 +65,7 @@ if (permiso_ver('155') == '1') {
                                 </div>
                                 <div class="icon"><i class="fas fa-file-alt"></i>
                                 </div>
-                                <a href="../vistas/asistencia_persona_vista.php" class="small-box-footer">
+                                <a href="../vistas/asistencia_actas_vista.php" class="small-box-footer">
                                     Ir <i class="fas fa-arrow-circle-right"></i>
                                 </a>
                             </div>
@@ -89,7 +89,7 @@ if (permiso_ver('155') == '1') {
                                 </div>
                                 <div class="icon"><i class="fas fa-user"></i>
                                 </div>
-                                <a href="../vistas/asistencia_actas_vista.php" class="small-box-footer">
+                                <a href="../vistas/asistencia_persona_vista.php" class="small-box-footer">
                                     Ir <i class="fas fa-arrow-circle-right"></i>
                                 </a>
                             </div>

@@ -94,7 +94,7 @@ ob_end_flush();
                             <div class="card-header">
                                 <h3 class="card-title">Datos Generales</h3>
                             </div>
-                            <form role="form" name="guardar-reunion" id="guardar-reunion" method="post" action="../Modelos/modelo_reunion.php">
+                            <form role="form" name="editar-reunion" id="editar-reunion" method="post" action="../Modelos/modelo_reunion.php">
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="nombre">Nombre:</label>
@@ -106,13 +106,20 @@ ob_end_flush();
                                             <option value="0">-- Selecione un Tipo --</option>
                                             <?php
                                             try {
+                                                $tipo_actual = $estado['id_tipo'];
                                                 $sql = "SELECT * FROM tbl_tipo_reunion_acta ";
                                                 $resultado = $mysqli->query($sql);
-                                                while ($tipo_reunion = $resultado->fetch_assoc()) { ?>
-                                                    <option value="<?php echo $tipo_reunion['id_tipo']; ?>">
+                                                while ($tipo_reunion = $resultado->fetch_assoc()) { 
+                                                    if($tipo_reunion['id_tipo'] == $tipo_actual){ ?>
+                                                    <option value="<?php echo $tipo_reunion['id_tipo']; ?>" selected>
                                                         <?php echo $tipo_reunion['tipo']; ?>
                                                     </option>
-                                            <?php }
+                                                    <?php } else { ?>
+                                                        <option value="<?php echo $tipo_reunion['id_tipo']; ?>">
+                                                        <?php echo $tipo_reunion['tipo']; ?>
+                                                    </option>
+                                                    <?php }
+                                            }
                                             } catch (Exception $e) {
                                                 echo "Error: " . $e->getMessage();
                                             }
@@ -129,15 +136,15 @@ ob_end_flush();
                                     </div>
                                     <div class="form-group">
                                         <label for="horainicio">Hora Inicio: </label>
-                                        <input required style="width: 30%;" type="time" value="<?php echo $estado['hora_inicio']; ?>" class="form-control" id="horainicio" name="horainicio" min="7:00" max="23:00">
+                                        <input required style="width: 30%;" type="time" value="<?php echo $estado['hora_inicio']; ?>" class="form-control" id="horainicio" name="horainicio" min="7:00:00" max="23:00:00">
                                     </div>
                                     <div class="form-group">
                                         <label for="horafinal">Hora Final: </label>
-                                        <input required style="width: 30%;" type="time" value="<?php echo $estado['hora_final']; ?>" class="form-control" id="horafinal" name="horafinal" min="7:30" max="24:00">
+                                        <input required style="width: 30%;" type="time" value="<?php echo $estado['hora_final']; ?>" class="form-control" id="horafinal" name="horafinal" min="7:30:00" max="24:00:00">
                                     </div>
                                     <div class="form-group">
-                                        <label style="display: none;" id="enlaces" for="enlace">Enlace de la Reunión:</label>
-                                        <input style="display: none;" value="<?php echo $estado['enlace']; ?>" minlength="10" type="text" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
+                                        <label  id="enlaces" for="enlace">Enlace de la Reunión:</label>
+                                        <input  value="<?php echo $estado['enlace']; ?>" minlength="10" type="text" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -194,7 +201,23 @@ ob_end_flush();
                                         </thead>
                                         <?php
                                         try {
-                                            $sql = "SELECT t1.id_persona,concat_ws(' ', t1.nombres, t1.apellidos) as nombres, t3.jornada FROM tbl_personas t1 INNER JOIN tbl_horario_docentes t2 ON t2.id_persona = t1.id_persona INNER JOIN tbl_jornadas t3 ON t2.id_jornada = t3.id_jornada ORDER BY nombres ASC";
+                                            $sql = "SELECT
+    t1.id_persona,
+    CONCAT_WS(' ', t1.nombres, t1.apellidos) AS nombres,
+    t3.jornada,
+    t4.invitado
+FROM
+    tbl_personas t1
+INNER JOIN tbl_horario_docentes t2 ON
+    t2.id_persona = t1.id_persona
+INNER JOIN tbl_jornadas t3 ON
+    t2.id_jornada = t3.id_jornada
+INNER JOIN tbl_participantes t4 ON
+    t4.id_persona = t1.id_persona
+WHERE
+    t4.id_reunion = $id
+ORDER BY
+    nombres ASC";
                                             $resultado = $mysqli->query($sql);
                                         } catch (Exception $e) {
                                             $error = $e->getMessage();
@@ -204,7 +227,7 @@ ob_end_flush();
                                             <tr>
                                                 <td>
                                                     <div class="icheck-danger d-inline">
-                                                        <input type="checkbox" id="<?php echo $estadoacta['id_persona']; ?>" name="chk[]" value="<?php echo $estadoacta['id_persona']; ?>">
+                                                        <input type="checkbox" id="<?php echo $estadoacta['id_persona']; ?>" name="chk[]" value="<?php echo $estadoacta['id_persona']; ?>" checked>
                                                         <label for="<?php echo $estadoacta['id_persona']; ?>">
                                                             <?php echo $estadoacta['nombres']; ?>
                                                         </label>
@@ -223,9 +246,9 @@ ob_end_flush();
                     <!-- /.card-body -->
                 </div>
                 <div style="padding: 0px 0 25px 0;">
-                    <input type="hidden" name="estado" value="1">
-                    <input type="hidden" name="reunion" value="nuevo">
-                    <button style="padding-right: 15px;" type="submit" class="btn btn-success float-left" <?php echo $_SESSION['btn_crear']; ?> disabled>Crear</button>
+                    <input type="hidden" name="id_registro" value="<?php echo $id; ?>">
+                    <input type="hidden" name="reunion" value="actualizar">
+                    <button style="padding-right: 15px;" type="submit" class="btn btn-success float-left" id="editar_registro" <?php echo $_SESSION['btn_crear']; ?> >Guardar Cambios</button>
                     <a style="color: white !important; margin: 0px 0px 0px 10px;" class="cancelar-reunion btn btn-danger" href="reuniones_pendientes_vista.php">Cancelar</a>
                 </div>
             </div>
@@ -261,6 +284,11 @@ ob_end_flush();
                     checkboxes[i].checked = source.checked; //si es un checkbox le damos el valor del checkbox que lo llamó (Marcar/Desmarcar Todos)
                 }
             }
+        }
+        if (document.getElementById("enlace").value == "") {
+            document.getElementById("enlace").style.display = "none";
+                document.getElementById("enlaces").style.display = "none";
+                document.getElementById("enlace").required = false;
         }
 
         $(function() {

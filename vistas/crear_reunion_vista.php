@@ -135,7 +135,7 @@ ob_end_flush();
                                             </div>
                                             <div class="form-group">
                                                 <label style="display: none;" id="enlaces" for="enlace">Enlace de la Reunión:</label>
-                                                <input style="display: none;" minlength="10" type="text" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
+                                                <input style="display: none;" minlength="10" type="url" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
                                             </div>
                                         </div>
                                         <!-- /.card-body -->
