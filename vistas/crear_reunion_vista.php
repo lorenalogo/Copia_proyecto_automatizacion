@@ -76,10 +76,10 @@ ob_end_flush();
             <div class="container-fluid">
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" >
                     <li class="nav-item"  >
-                         <a  class="nav-link active danger" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">1</a>
+                         <a  class="nav-link active danger" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">1<br>Datos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">2</a>
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">2<br>Participantes</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
