@@ -3,6 +3,7 @@ ob_start();
 session_start();
 
 require_once('../clases/Conexion.php');
+$id = $_GET['id'];
 require_once('../vistas/pagina_inicio_vista.php');
 require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
@@ -55,9 +56,9 @@ ob_end_flush();
 <head>
     <link rel="stylesheet" type="text/css" href="../plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
     <link rel=" stylesheet" type="text/javascript" href="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="../js/tipoacta-ajax.js"></script>
 
     <title></title>
@@ -85,8 +86,16 @@ ob_end_flush();
         </section>
         <!-- Main content -->
         <section class="content">
+            
+            <?php
+            echo $id;
+            $sql = "SELECT * FROM `tbl_acuerdos` WHERE `id_acuerdo` = $id ";
+            $resultado = $mysqli->query($sql);
+            $estado = $resultado->fetch_assoc();
+
+            ?>
             <div class="container-fluid">
-                <form role="form" name="guardar-acuerdo" id="guardar-acuerdo" method="post" action="../Modelos/modelo_acuerdos.php">
+                <form role="form" name="editar-acuerdo" id="editar-acuerdo" method="post" action="../Modelos/modelo_acuerdos.php">
                     <div class="card card-danger">
                         <div class="card-header">
                             <h3 class="card-title">Acuerdos</h3>
@@ -98,13 +107,20 @@ ob_end_flush();
                                     <option value="0">-- Seleccione --</option>
                                     <?php
                                     try {
-                                        $sql = "SELECT * FROM tbl_acta WHERE id_estado = 3";
+                                        $tipo_actual = $estado['id_acta'];
+                                        $sql = "SELECT * FROM tbl_acta WHERE id_estado = 3 ";
                                         $resultado = $mysqli->query($sql);
-                                        while ($acta = $resultado->fetch_assoc()) { ?>
-                                            <option value="<?php echo $acta['id_acta']; ?>">
-                                                <?php echo $acta['num_acta']; ?>
-                                            </option>
+                                        while ($tipo_reunion = $resultado->fetch_assoc()) {
+                                            if ($tipo_reunion['id_acta'] == $tipo_actual) { ?>
+                                                <option value="<?php echo $tipo_reunion['id_acta']; ?>" selected>
+                                                    <?php echo $tipo_reunion['num_acta']; ?>
+                                                </option>
+                                            <?php } else { ?>
+                                                <option value="<?php echo $tipo_reunion['id_acta']; ?>">
+                                                    <?php echo $tipo_reunion['num_acta']; ?>
+                                                </option>
                                     <?php }
+                                        }
                                     } catch (Exception $e) {
                                         echo "Error: " . $e->getMessage();
                                     }
@@ -113,22 +129,29 @@ ob_end_flush();
                             </div>
                             <div class="form-group">
                                 <label>Responsable:</label>
-                                <select class="form-control" style="width: 50%;"  name="responsable" id="responsable">
+                                <select class="form-control" style="width: 50%;" name="responsable" id="responsable">
                                     <option value="0">-- Seleccione --</option>
                                     <?php
                                     try {
+                                        $responsable_actual = $estado['id_participante'];
                                         $sql = "SELECT 
-                                                t1.id_persona,concat_ws(' ', t1.nombres, t1.apellidos) as nombres
-                                                FROM tbl_personas t1 
-                                                INNER JOIN tbl_horario_docentes t2 ON t2.id_persona = t1.id_persona 
-                                                INNER JOIN tbl_jornadas t3 ON t2.id_jornada = t3.id_jornada 
-                                                ORDER BY nombres ASC";
+                                        t1.id_persona,concat_ws(' ', t1.nombres, t1.apellidos) as nombres
+                                        FROM tbl_personas t1 
+                                        INNER JOIN tbl_horario_docentes t2 ON t2.id_persona = t1.id_persona 
+                                        INNER JOIN tbl_jornadas t3 ON t2.id_jornada = t3.id_jornada 
+                                        ORDER BY nombres ASC";
                                         $resultado = $mysqli->query($sql);
-                                        while ($responsable = $resultado->fetch_assoc()) { ?>
-                                            <option value="<?php echo $responsable['id_persona']; ?>">
-                                                <?php echo $responsable['nombres']; ?>
-                                            </option>
+                                        while ($tipo_reunion = $resultado->fetch_assoc()) {
+                                            if ($tipo_reunion['id_persona'] == $responsable_actual) { ?>
+                                                <option value="<?php echo $tipo_reunion['id_persona']; ?>" selected>
+                                                    <?php echo $tipo_reunion['nombres']; ?>
+                                                </option>
+                                            <?php } else { ?>
+                                                <option value="<?php echo $tipo_reunion['id_persona']; ?>">
+                                                    <?php echo $tipo_reunion['nombres']; ?>
+                                                </option>
                                     <?php }
+                                        }
                                     } catch (Exception $e) {
                                         echo "Error: " . $e->getMessage();
                                     }
@@ -137,16 +160,17 @@ ob_end_flush();
                             </div>
                             <div class="form-group">
                                 <label>Nombre del Acuerdo:</label>
-                                <input style="width: 35%;" type="text" class="form-control" id="nombre_acuerdo" name="nombre_acuerdo" placeholder="Ingrese nombre del acuerdo">
+                                <input style="width: 35%;" type="text" class="form-control" id="nombre_acuerdo" value="<?php echo $estado['nombre_acuerdo']; ?>" name="nombre_acuerdo" placeholder="Ingrese nombre del acuerdo">
                             </div>
                             <div class="form-group">
                                 <label>Descripción:</label>
-                                <textarea class="form-control" placeholder="Ingrese la descripción del Acuerdo" rows="5" id="descripcion" name="descripcion"></textarea>
+                                <textarea class="form-control" placeholder="Ingrese la descripción del Acuerdo" rows="5" id="descripcion" name="descripcion"><?php echo $estado['descripcion']; ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Fecha Expiración:</label>
                                 <div style="width: 20%;" class="input-group date">
-                                    <input type="date" class="form-control " id="fecha_exp" name="fecha_exp" min="<?php echo $hoy; ?>" />
+                                    <input required style="width: 40%;" value="<?php echo $estado['fecha_expiracion']; ?>" type="date" class="form-control datetimepicker-input" id="fecha_exp" name="fecha_exp" min="<?php echo $hoy; ?>" />
+
                                 </div>
                             </div>
                         </div>
@@ -154,8 +178,8 @@ ob_end_flush();
             </div>
             <!-- /.row -->
             <div style="padding: 0px 0 25px 0;">
-                <input type="hidden" name="estado" value="1">
-                <input type="hidden" name="acuerdo" value="nuevo">
+                <input type="hidden" name="id_registro" value="<?php echo $id; ?>">
+                <input type="hidden" name="acuerdo" value="actualizar">
                 <button style="color: white !important;" type="submit" class="btn btn-primary" <?php echo $_SESSION['btn_crear']; ?>>Guardar</button>
                 <a style="color: white !important;" class="btn btn-danger" data-toggle="modal" data-target="#modal-default" href="#">Cancelar</a>
             </div>
@@ -203,11 +227,11 @@ ob_end_flush();
         });
     });
 
-    jQuery(document).ready(function($){
-    $(document).ready(function() {
-        $('#responsable').select2();
-    });
-});
+   /* jQuery(document).ready(function($) {
+        $(document).ready(function() {
+            $('#responsable').select2();
+        });
+    });*/
 </script>
 
 </html>

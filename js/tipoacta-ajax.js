@@ -652,7 +652,7 @@ $('.borrar_recursoacta').on('click', function (e) {
                         title: "Correcto", text: "Se guardo correctamente!",
                         type: "success",
                         confirmButtonText: "Ir a Acuerdos Pendientes",
-                        html: `<h3>La reunión se guardo con Exito!</h3>
+                        html: `<h3>El Acuerdo se guardo con Exito!</h3>
                                 <br>
                                 ¿Desea agregar otro acuerdo?
                                 <br>
@@ -673,12 +673,121 @@ $('.borrar_recursoacta').on('click', function (e) {
     });
 
 
+ /********** guardar acuerdo ***********/
+ $('#editar-acuerdo').on('submit', function (e) {
+    e.preventDefault();
+    var datos = $(this).serializeArray();
+    $.ajax({
+        type: $(this).attr('method'),
+        data: datos,
+        url: $(this).attr('action'),
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            var resultado = data;
+            if (resultado.respuesta == 'exito') {
+                swal({
+                    title: "Correcto", text: "Se guardo correctamente!",
+                    type: "success",
+                }).then(function () {
+                    location.href = "../vistas/acuerdos_pendientes_vista.php";
+                }
+                );
+            } else {
+                swal(
+                    'Error',
+                    'Hubo un error, no se modifico nada o falta un campo por llenar!',
+                    'error'
+                )
+            }
+        }
+    })
+});
+
+$('.finalizar_registroacuerdo').on('click', function (e) {
+    e.preventDefault();
+    var id = $(this).attr('data-id');
+    var estado = $(this).attr('data-tipo');
+    swal({
+        title: '¿Está Seguro?',
+        text: 'El responsable cumplio con la tarea asignada?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtontext: 'Si, Finalizar!',
+        cancelButtontext: 'Cancelar'
+    }).then(function () {
+        $.ajax({
+            type: 'post',
+            data: {
+                'id': id,
+                'acuerdos': 'finalizar'
+            },
+            url: '../Modelos/modelo_' + estado + '.php',
+            success: function (data) {
+                var resultado = JSON.parse(data);
+                if (resultado.respuesta == 'exito') {
+                    swal(
+                        'Finalizada!',
+                        'Finalizada con Exito!',
+                        'success'
+                    )
+                    jQuery('[data-id="' + resultado.id_eliminado + '"]').parents('tr').remove();
+                } else {
+                    swal(
+                        'Error!',
+                        'No se pudo Finalizada',
+                        'error'
+                    )
+                }
+            }
+        })
+    });
+});
 
 
-
-
-
-
+$('.cancelar_registroacuerdo').on('click', function (e) {
+    e.preventDefault();
+    var id = $(this).attr('data-id');
+    var estado = $(this).attr('data-tipo');
+    swal({
+        title: '¿Está Seguro?',
+        text: 'Si lo cancelar no podra revertirlo y se notificara al responsable!!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtontext: 'Si, Cancelarlo!',
+        cancelButtontext: 'Cancelar'
+    }).then(function () {
+        $.ajax({
+            type: 'post',
+            data: {
+                'id': id,
+                'acuerdo': 'cancelar'
+            },
+            url: '../Modelos/modelo_' + estado + '.php',
+            success: function (data) {
+                var resultado = JSON.parse(data);
+                if (resultado.respuesta == 'exito') {
+                    swal(
+                        'Cancelarlo!',
+                        'Cancelarlo con Exito!',
+                        'success'
+                    )
+                    jQuery('[data-id="' + resultado.id_eliminado + '"]').parents('tr').remove();
+                } else {
+                    swal(
+                        'Error!',
+                        'No se pudo Cancelar',
+                        'error'
+                    )
+                }
+            }
+        })
+    });
+});
 
 
 

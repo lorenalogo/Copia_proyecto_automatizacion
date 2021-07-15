@@ -65,7 +65,7 @@ require_once('../clases/funcion_permisos.php');
                             <div class="card-body">
                                 <div class="card card-primary card-outline card-outline-tabs">
                                     <div class="card-body">
-                                        <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_reunion.php">
+                                        <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_acuerdos.php">
                                             <table id="tabla11" class="table table-bordered table-striped">
                                                 <thead>
                                                     <tr>
@@ -88,7 +88,7 @@ require_once('../clases/funcion_permisos.php');
                                                         t1.nombre_acuerdo,
                                                         t1.descripcion,
                                                         t1.fecha_expiracion,
-                                                        t1.fecha_resolucion
+                                                        t1.resolucion
                                                     FROM
                                                         tbl_acuerdos t1
                                                     INNER JOIN tbl_acta t2 ON
@@ -112,10 +112,10 @@ require_once('../clases/funcion_permisos.php');
                                                                 <a href="../vistas/editar_acuerdo_vista.php?id=<?php echo $reunion['id_acuerdo'] ?>" style="min-width:86px; margin-bottom: 5px;" class="btn btn-primary" style="color: while;">
                                                                     <i class="far fa-edit"></i><br>Editar
                                                                 </a>
-                                                                <a href="#" data-id="<?php echo $reunion['id_acuerdo']; ?>" data-tipo="acuerdo"   style="min-width:86px; margin-bottom: 5px;" class="finalizar_registro btn btn-success ">
+                                                                <a href="#" data-id="<?php echo $reunion['id_acuerdo']; ?>" data-tipo="acuerdos"   style="min-width:86px; margin-bottom: 5px;" class="finalizar_registroacuerdo btn btn-success ">
                                                                 <i class="far fa-check-square"></i><br>Finalizar
                                                                 </a>
-                                                                <a href="#" data-id="<?php echo $reunion['id_acuerdo']; ?>" data-tipo="acuerdo"   class="cancelar_registro btn btn-danger ">
+                                                                <a href="#" data-id="<?php echo $reunion['id_acuerdo']; ?>" data-tipo="acuerdos"   class="cancelar_registroacuerdo btn btn-danger ">
                                                                     <i class="far fa-window-close"></i><br>Cancelar
                                                                 </a>
                                                             </td>

@@ -87,13 +87,13 @@ ob_end_flush();
                                                 <th>Nombre Acuerdo</th>
                                                 <th>Descripción</th>
                                                 <th>Fecha de Vencimiento</th>
-                                                <th>Fecha de Resolución</th>
+                                                <th>Estado Resolución</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             try {
-                                                $sql = "SELECT t2.num_acta, concat_ws(' ', t3.nombres, t3.apellidos) as persona, t1.nombre_acuerdo, t1.descripcion,t1.fecha_expiracion, t1.fecha_resolucion FROM tbl_acuerdos t1
+                                                $sql = "SELECT t2.num_acta, concat_ws(' ', t3.nombres, t3.apellidos) as persona, t1.nombre_acuerdo, t1.descripcion,t1.fecha_expiracion, t1.resolucion FROM tbl_acuerdos t1
                                                 INNER JOIN tbl_acta t2 ON t2.id_acta = t1.id_acta
                                                 INNER JOIN tbl_personas t3 on t3.id_persona = t1.id_participante";
                                                 $resultado = $mysqli->query($sql);
@@ -108,7 +108,7 @@ ob_end_flush();
                                                     <td><?php echo $reunion['nombre_acuerdo']; ?></td>
                                                     <td><?php echo $reunion['descripcion']; ?></td>
                                                     <td><?php echo $reunion['fecha_expiracion']; ?></td>
-                                                    <td><?php echo $reunion['fecha_resolucion']; ?></td>
+                                                    <td><?php echo $reunion['resolucion']; ?></td>
                                                 </tr>
                                             <?php
                                             }  ?>
