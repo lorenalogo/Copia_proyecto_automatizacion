@@ -87,7 +87,6 @@ ob_end_flush();
                                             <tr>
                                                 <th>No. Acta</th>
                                                 <th>Nombre Reunión</th>
-                                                <th>Tipo</th>
                                                 <th>Estado</th>
                                                 <th>Fecha</th>
                                                 <th>Hora Inicio</th>
@@ -116,7 +115,6 @@ ob_end_flush();
                                                 <tr>
                                                     <td><?php echo $reunion['num_acta']; ?></td>
                                                     <td><?php echo $reunion['nombre_reunion']; ?></td>
-                                                    <td><?php echo $reunion['tipo']; ?></td>
                                                     <td><?php echo $reunion['estado']; ?></td>
                                                     <td><?php echo $reunion['fecha']; ?></td>
                                                     <td><?php echo $reunion['hora_inicial']; ?></td>
