@@ -127,11 +127,11 @@ ob_end_flush();
                                             </div>
                                             <div class="form-group">
                                                 <label for="horainicio">Hora Inicio: </label>
-                                                <input required style="width: 30%;" type="time" class="form-control" id="horainicio" name="horainicio" min="7:00" max="23:00">
+                                                <input required style="width: 30%;" type="time" class="form-control" id="horainicio" name="horainicio" min="7:00" max="23:00" value="00:00">
                                             </div>
                                             <div class="form-group">
                                                 <label for="horafinal">Hora Final: </label>
-                                                <input required style="width: 30%;" type="time" class="form-control" id="horafinal" name="horafinal" min="7:30" max="24:00">
+                                                <input required style="width: 30%;" type="time" class="form-control" id="horafinal" name="horafinal" min="7:30" max="24:00" value="00:00">
                                             </div>
                                             <div class="form-group">
                                                 <label style="display: none;" id="enlaces" for="enlace">Enlace de la Reunión:</label>

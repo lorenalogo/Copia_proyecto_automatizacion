@@ -128,12 +128,18 @@ ob_end_flush();
                                         <i class="fas fa-plus-circle"><br></i>Nuevo
                                     </a>
                                 </div>
+                                <style>
+                                    .ocultar {
+                                        display: none;
+                                    }
+                                </style>
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_manactareunion.php">
-                                        <table id="tabla11" class="table table-bordered table-striped">
+                                        <table id="tabla1" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
+                                                    <th class="ocultar">No.</th>
                                                     <th>Tipo</th>
                                                     <th>Acciones</th>
                                                 </tr>
@@ -149,6 +155,7 @@ ob_end_flush();
                                                 }
                                                 while ($tipoacta = $resultado->fetch_assoc()) { ?>
                                                     <tr>
+                                                        <td class="ocultar"><?php echo $tipoacta['id_tipo']; ?></td>
                                                         <td><?php echo $tipoacta['tipo']; ?></td>
                                                         <td>
                                                             <a href="../vistas/editar_tiporeunion_vista.php?id=<?php echo $tipoacta['id_tipo'] ?>" class="btn btn-success <?php echo $_SESSION['btn_editar']; ?>" style="color: while;">
@@ -179,13 +186,11 @@ ob_end_flush();
     <!-- /.content-wrapper -->
     </div>
     <script type="text/javascript" language="javascript">
-        function ventana() {
-            window.open("../Controlador/reporte_mantenimiento_estadoactareunion_controlador.php", "REPORTE");
-        }
+
     </script>
     <script type="text/javascript">
         $(function() {
-            $('#tabla11').DataTable({
+            $('#tabla1').DataTable({
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,
@@ -193,6 +198,23 @@ ob_end_flush();
                 "info": true,
                 "autoWidth": true,
                 "responsive": true,
+                "language": {
+                    "processing": "Procesando...",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "zeroRecords": "No se encontraron resultados",
+                    "emptyTable": "Ningún dato disponible en esta tabla",
+                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "search": "Buscar:",
+                    "infoThousands": ",",
+                    "loadingRecords": "Cargando...",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
             });
         });
     </script>
@@ -204,7 +226,7 @@ ob_end_flush();
 <script type="text/javascript" src="../js/funciones_registro_docentes.js"></script>
 <script type="text/javascript" src="../js/validar_registrar_docentes.js"></script>
 
-<script type="text/javascript" src="../js/pdf_mantenimientos.js"></script>
+<script type="text/javascript" src="../js/pdf_reportes_actas.js"></script>
 <script src="../plugins/select2/js/select2.min.js"></script>
 <!-- datatables JS -->
 <script type="text/javascript" src="../plugins/datatables/datatables.min.js"></script>

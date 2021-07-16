@@ -6,17 +6,16 @@ require_once('../clases/Conexion.php');
 require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
-$Id_objeto=158;
-        
-  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'Ingreso' , 'A Mantenimiento Estado Reunion');
+$Id_objeto = 158;
 
- $visualizacion= permiso_ver($Id_objeto);
+bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A Mantenimiento Estado Reunion');
+
+$visualizacion = permiso_ver($Id_objeto);
 
 
 
-if ($visualizacion==0)
- {
-     echo '<script type="text/javascript">
+if ($visualizacion == 0) {
+    echo '<script type="text/javascript">
                               swal({
                                    title:"",
                                    text:"Lo sentimos no tiene permiso de visualizar la pantalla",
@@ -27,40 +26,27 @@ if ($visualizacion==0)
                            window.location = "../vistas/menu_mantenimientoacta_vista.php";
 
                             </script>';
- // header('location:  ../vistas/menu_usuarios_vista.php');
-}
+    // header('location:  ../vistas/menu_usuarios_vista.php');
+} else {
 
-else
 
-{
-       
-
-if (permisos::permiso_insertar($Id_objeto)=='1')
-{
-    $_SESSION['btn_nuevo_tipo']="";
-    }
-    else
-    {
-        $_SESSION['btn_nuevo_tipo']="disabled";
+    if (permisos::permiso_insertar($Id_objeto) == '1') {
+        $_SESSION['btn_nuevo_tipo'] = "";
+    } else {
+        $_SESSION['btn_nuevo_tipo'] = "disabled";
     }
 
- if (permisos::permiso_modificar($Id_objeto)=='1')
- {
-  $_SESSION['btn_editar']="";
-}
-else
-{
-    $_SESSION['btn_editar']="disabled";
- }
+    if (permisos::permiso_modificar($Id_objeto) == '1') {
+        $_SESSION['btn_editar'] = "";
+    } else {
+        $_SESSION['btn_editar'] = "disabled";
+    }
 
- if (permisos::permiso_eliminar($Id_objeto)=='1')
- {
-  $_SESSION['btn_borrar']="";
-}
-else
-{
-    $_SESSION['btn_borrar']="disabled";
- }
+    if (permisos::permiso_eliminar($Id_objeto) == '1') {
+        $_SESSION['btn_borrar'] = "";
+    } else {
+        $_SESSION['btn_borrar'] = "disabled";
+    }
 }
 
 ob_end_flush();
@@ -130,22 +116,28 @@ ob_end_flush();
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">Listado de Estados</h3>
-                                    <a data-toggle="modal" data-target="#modal-crear" type="button" class="btn btn-app bg-warning float-right derecha <?php echo $_SESSION['btn_nuevo_tipo'];?>">
+                                    <a data-toggle="modal" data-target="#modal-crear" type="button" class="btn btn-app bg-warning float-right derecha <?php echo $_SESSION['btn_nuevo_tipo']; ?>">
                                         <i class="fas fa-plus-circle"><br></i>Nuevo
                                     </a>
                                 </div>
+                                <style>
+                                    .ocultar {
+                                        display: none;
+                                    }
+                                </style>
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_manreunion.php">
-                                        <table id="tabla11" class="table table-bordered table-striped">
+                                        <table id="tabla3" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
+                                                    <th class="ocultar">No.</th>
                                                     <th>Estado</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php 
+                                                <?php
                                                 try {
                                                     $sql = "SELECT * FROM tbl_estado_reunion";
                                                     $resultado = $mysqli->query($sql);
@@ -155,12 +147,13 @@ ob_end_flush();
                                                 }
                                                 while ($estadoreunion = $resultado->fetch_assoc()) { ?>
                                                     <tr>
+                                                        <td class="ocultar"><?php echo $estadoreunion['id_estado_reunion']; ?></td>
                                                         <td><?php echo $estadoreunion['estado_reunion']; ?></td>
                                                         <td>
-                                                            <a href="../vistas/editar_estadoreunion_vista.php?id=<?php echo $estadoreunion['id_estado_reunion'] ?>" class="btn btn-success <?php echo $_SESSION['btn_editar'];?>" style="color: while;">
+                                                            <a href="../vistas/editar_estadoreunion_vista.php?id=<?php echo $estadoreunion['id_estado_reunion'] ?>" class="btn btn-success <?php echo $_SESSION['btn_editar']; ?>" style="color: while;">
                                                                 Editar
                                                             </a>
-                                                            <a href="#" data-id="<?php echo $estadoreunion['id_estado_reunion']; ?>" data-tipo="manreunion" class="borrar_estadoreunion btn btn-danger <?php echo $_SESSION['btn_borrar'];?>">
+                                                            <a href="#" data-id="<?php echo $estadoreunion['id_estado_reunion']; ?>" data-tipo="manreunion" class="borrar_estadoreunion btn btn-danger <?php echo $_SESSION['btn_borrar']; ?>">
                                                                 Borrar
                                                             </a>
                                                         </td>
@@ -185,13 +178,11 @@ ob_end_flush();
     <!-- /.content-wrapper -->
     </div>
     <script type="text/javascript" language="javascript">
-        function ventana() {
-            window.open("../Controlador/reporte_mantenimiento_estadoactareunion_controlador.php", "REPORTE");
-        }
+        
     </script>
     <script type="text/javascript">
         $(function() {
-            $('#tabla11').DataTable({
+            $('#tabla3').DataTable({
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,
@@ -210,7 +201,7 @@ ob_end_flush();
 <script type="text/javascript" src="../js/funciones_registro_docentes.js"></script>
 <script type="text/javascript" src="../js/validar_registrar_docentes.js"></script>
 
-<script type="text/javascript" src="../js/pdf_mantenimientos.js"></script>
+<script type="text/javascript" src="../js/pdf_reportes_actas.js"></script>
 <script src="../plugins/select2/js/select2.min.js"></script>
 <!-- datatables JS -->
 <script type="text/javascript" src="../plugins/datatables/datatables.min.js"></script>

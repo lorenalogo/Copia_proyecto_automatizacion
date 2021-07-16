@@ -120,7 +120,7 @@ ob_end_flush();
                                                     <td><?php echo $reunion['hora_inicial']; ?></td>
                                                     <td><?php echo $reunion['hora_final']; ?></td>
                                                     <td>
-                                                    <a target="_blank" href="<?php echo $reunion['url']; ?>">archivos</a></td>
+                                                    <a target="_blank" href="../vistas/archivos_acta_vista.php?id=<?php echo $reunion['id_acta'] ?>">archivos</a></td>
                                                     <td><a target="_blank" href="../vistas/reporte_acta.php?id=<?php echo $reunion['id_acta'] ?>">VER ACTA</a></td>
                                                 </tr>
                                             <?php

@@ -79,7 +79,7 @@ require_once('../clases/funcion_permisos.php');
                                             <div class="tab-content" id="custom-tabs-four-tabContent">
                                                 <div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
                                                     <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_reunion.php">
-                                                        <table id="tabla11" class="table table-bordered table-striped">
+                                                        <table id="tabla27" class="table table-bordered table-striped">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Nombre Reunión</th>
@@ -201,23 +201,32 @@ require_once('../clases/funcion_permisos.php');
         <!-- /.content -->
 
         <script type="text/javascript" language="javascript">
-            function ventana() {
-                window.open("../Controlador/reporte_mantenimiento_estadoactareunion_controlador.php", "REPORTE");
+          
+        </script>
+<script type="text/javascript">
+    $(function() {
+
+        $('#tabla27').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": true,
+            "responsive": true,
+            "language": {
+                "info": "Mostrando _START_ hasta _END_ de _TOTAL_ entradas",
+                "lengthMenu": "Mostrar _MENU_ entradas",
+                "search": "Buscar:",
+                "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
             }
-        </script>
-        <script type="text/javascript">
-            $(function() {
-                $('#tabla11').DataTable({
-                    "paging": true,
-                    "lengthChange": true,
-                    "searching": true,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": true,
-                    "responsive": true,
-                });
-            });
-        </script>
+        })
+
+    });
+    </script>
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

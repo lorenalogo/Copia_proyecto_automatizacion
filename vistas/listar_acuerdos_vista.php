@@ -79,7 +79,7 @@ ob_end_flush();
                         <div class="tab-content" id="custom-tabs-four-tabContent">
                             <div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
                                 <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_manactareunion.php">
-                                    <table id="tabla11" class="table table-bordered table-striped">
+                                    <table id="tabla30" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th>No. Acta</th>
@@ -133,11 +133,11 @@ ob_end_flush();
     <!-- /.content-wrapper -->
     </div>
     <script type="text/javascript">
-           function ventana() {
+        function ventana() {
             window.open("../Controlador/reporte_controlador.php", "REPORTE");
         }
         $(function() {
-            $('#tabla11').DataTable({
+            $('#tabla30').DataTable({
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,

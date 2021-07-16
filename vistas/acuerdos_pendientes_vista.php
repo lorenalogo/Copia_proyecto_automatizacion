@@ -66,7 +66,7 @@ require_once('../clases/funcion_permisos.php');
                                 <div class="card card-primary card-outline card-outline-tabs">
                                     <div class="card-body">
                                         <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_acuerdos.php">
-                                            <table id="tabla11" class="table table-bordered table-striped">
+                                            <table id="tabla29" class="table table-bordered table-striped">
                                                 <thead>
                                                     <tr>
                                                         <th>No. Acta</th>
@@ -148,7 +148,7 @@ require_once('../clases/funcion_permisos.php');
         </script>
         <script type="text/javascript">
             $(function() {
-                $('#tabla11').DataTable({
+                $('#tabla29').DataTable({
                     "paging": true,
                     "lengthChange": true,
                     "searching": true,

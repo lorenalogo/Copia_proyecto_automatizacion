@@ -250,10 +250,10 @@ ob_end_flush();
                                                 <td>
                                                     <div class="form-group">
                                                         <select class="form-control" name="asistencia[<?php echo $estadoacta['id_persona'] ?>]" id="<?php echo $estadoacta['id_persona']; ?>">
-                                                            <option value="0">-- Selecione un Estado --</option>
-                                                            <option value="1">Asistio</option>
-                                                            <option value="2">inasistencia</option>
-                                                            <option value="3">Excusa</option>
+                                                            <option value="0">--------</option>
+                                                            <option value="1">ASISTIO</option>
+                                                            <option value="2">INASISTENCIA</option>
+                                                            <option value="3">EXCUSA</option>
                                                         </select>
                                                     </div>
                                                 </td>
