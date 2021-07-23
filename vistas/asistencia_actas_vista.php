@@ -1,5 +1,4 @@
 <?php
-// Colaboracion: JLLC-9112205');
 ob_start();
 session_start();
 require_once('../vistas/pagina_inicio_vista.php');
@@ -7,6 +6,9 @@ require_once('../clases/Conexion.php');
 require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
+$dtz = new DateTimeZone("America/Tegucigalpa");
+$dt = new DateTime("now", $dtz);
+$anio = $dt->format("Y-m");
 $Id_objeto = 103;
 $visualizacion = permiso_ver($Id_objeto);
 if ($visualizacion == 0) {
@@ -114,7 +116,7 @@ ob_end_flush();
                                             INNER JOIN tbl_reunion t3 ON
                                                 t3.id_reunion = t1.id_reunion
                                             WHERE
-                                                t1.id_estado = 3
+                                                t1.id_estado=3 
                                             GROUP BY
                                                 t1.id_acta";
                                                 $resultado = $mysqli->query($sql);

@@ -12,33 +12,26 @@ $dt = new DateTime("now", $dtz);
 $hoy = $dt->format("Y-m-d");
 $Id_objeto = 146;
 bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A crear Reunion');
-
 $visualizacion = permiso_ver($Id_objeto);
-
-
 if ($visualizacion == 0) {
     echo '<script type="text/javascript">
-                              swal({
-                                   title:"",
-                                   text:"Lo sentimos no tiene permiso de visualizar la pantalla",
-                                   type: "error",
-                                   showConfirmButton: false,
-                                   timer: 3000
-                                });
-                           window.location = "../vistas/menu_reunion_vista.php";
-
+                                    swal({
+                                        title:"",
+                                        text:"Lo sentimos no tiene permiso de visualizar la pantalla",
+                                        type: "error",
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                        });
+                                window.location = "../vistas/menu_reunion_vista.php";
                             </script>';
     // header('location:  ../vistas/menu_usuarios_vista.php');
 } else {
-
-
     if (permisos::permiso_insertar($Id_objeto) == '1') {
         $_SESSION['btn_crear'] = "";
     } else {
         $_SESSION['btn_crear'] = "disabled='disabled'";
     }
 }
-
 ob_end_flush();
 ?>
 <!DOCTYPE html>
@@ -53,7 +46,6 @@ ob_end_flush();
 <body>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
@@ -70,14 +62,8 @@ ob_end_flush();
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
-
-
-
-
         <!-- Main content -->
         <section class="content">
-
             <?php
             $sql = "SELECT
             t1.id_reunion,
@@ -98,293 +84,278 @@ ob_end_flush();
             WHERE `id_acta` = $id ";
             $resultado = $mysqli->query($sql);
             $estado = $resultado->fetch_assoc();
-
             ?>
             <div class="container-fluid">
+                <form role="form" name="editar-actas" id="editar-actas-archivo" method="post" action="../Modelos/modelo_acta.php" enctype="multipart/form-data">
+                    <div style="padding: 0px 0 25px 0; float:right;">
+                        <input type="hidden" name="id_registro" value="<?php echo $id; ?>">
+                        <input type="hidden" name="acta" value="actualizar">
+                        <button style="padding-right: 15px;" type="submit" class="btn btn-success float-left" id="editar_registro" <?php echo $_SESSION['btn_crear']; ?>>Guardar Como Borrador</button>
+                        <a style="color: white !important; margin: 0px 0px 0px 10px;" class="cancelar-acta btn btn-danger" href="actas_pendientes_vista.php">Cancelar</a>
+                    </div><br><br><br>
+                    <div class="card card-primary card-outline card-tabs">
+                        <div class="card-header p-0 pt-1 border-bottom-0">
+                            <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="datosgenerales-tab" data-toggle="pill" href="#datosgenerales" role="tab" aria-controls="datosgenerales" aria-selected="false">Datos Generales y Asistencia</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " id="datosreunion-tab" data-toggle="pill" href="#datosreunion" role="tab" aria-controls="datosreunion" aria-selected="true">Datos Reunion</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="archivos-tab" data-toggle="pill" href="#archivos" role="tab" aria-controls="archivos" aria-selected="false">Adjuntar archivos</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="custom-tabs-three-tabContent">
+                                <div class="tab-pane fade active show" id="datosgenerales" role="tabpanel" aria-labelledby="datosgenerales-tab">
+                                    <div class="row">
+                                        <!-- left column -->
+                                        <div class="col-md-6">
+                                            <!-- general form elements -->
+                                            <div class="card card-primary">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Datos Generales</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label for="nombre">Nombre Reunión:</label>
+                                                        <input required minlength="5" type="text" value="<?php echo $estado['nombre_reunion']; ?>" class="form-control" id="nombre" name="nombre" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="tipo">Tipo de Reunión</label>
+                                                        <select class="form-control" onchange="showInp()" style="width: 50%;" id="tipo" name="tipo" disabled>
+                                                            <option value="0">-- Selecione un Tipo --</option>
+                                                            <?php
+                                                            try {
+                                                                $tipo_actual = $estado['id_tipo'];
+                                                                $sql = "SELECT * FROM tbl_tipo_reunion_acta ";
+                                                                $resultado = $mysqli->query($sql);
+                                                                while ($tipo_reunion = $resultado->fetch_assoc()) {
+                                                                    if ($tipo_reunion['id_tipo'] == $tipo_actual) { ?>
+                                                                        <option value="<?php echo $tipo_reunion['id_tipo']; ?>" selected>
+                                                                            <?php echo $tipo_reunion['tipo']; ?>
+                                                                        </option>
+                                                                    <?php } else { ?>
+                                                                        <option value="<?php echo $tipo_reunion['id_tipo']; ?>">
+                                                                            <?php echo $tipo_reunion['tipo']; ?>
+                                                                        </option>
+                                                            <?php }
+                                                                }
+                                                            } catch (Exception $e) {
+                                                                echo "Error: " . $e->getMessage();
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="lugar">Lugar:</label>
+                                                        <input required minlength="4" value="<?php echo $estado['lugar']; ?>" style="width: 90%;" type="text" class="form-control" id="lugar" name="lugar" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="fecha">Fecha:</label>
+                                                        <input required style="width: 40%;" value="<?php echo $estado['fecha']; ?>" type="date" class="form-control datetimepicker-input" id="fecha" name="fecha" min="<?php echo $hoy; ?>" disabled />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="nacta">No. Acta:</label>
+                                                        <input minlength="4" onkeyup="mayus(this);" value="<?php echo $estado['num_acta']; ?>" style="width: 90%;" type="text" class="form-control" id="nacta" name="nacta" placeholder="Ingrese numero o codigo del acta">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="horainicio">Hora Inicio: </label>
+                                                        <input required style="width: 30%;" type="time" value="<?php echo $estado['hora_inicio']; ?>" class="form-control" id="horainicio" name="horainicio" min="7:00:00" max="23:00:00">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="horafinal">Hora Final: </label>
+                                                        <input required style="width: 30%;" type="time" value="<?php echo $estado['hora_final']; ?>" class="form-control" id="horafinal" name="horafinal" min="7:30:00" max="24:00:00">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label id="enlaces" for="enlace">Enlace de la Reunión:</label>
+                                                        <input disabled value="<?php echo $estado['enlace']; ?>" minlength="10" type="text" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
+                                                    </div>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+                                            <!-- /.card -->
+                                        </div>
+                                        <!--/.col (left) -->
+                                        <!-- right column -->
+                                        <div class="col-md-6">
+                                            <!-- Form Element sizes -->
+                                            <div class="card card-success">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Asistencia</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <table class="table table-bordered table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nombre Participante</th>
+                                                                <th>Editar Asistencia</th>
+                                                                <th>Estado Asistencia Actual</th>
+                                                            </tr>
+                                                        </thead>
 
-            <div class="card card-primary card-outline card-tabs">
-                <div class="card-header p-0 pt-1 border-bottom-0">
-                    <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="datosgenerales-tab" data-toggle="pill" href="#datosgenerales" role="tab" aria-controls="datosgenerales" aria-selected="false">Datos Generales y Asistencia</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " id="datosreunion-tab" data-toggle="pill" href="#datosreunion" role="tab" aria-controls="datosreunion" aria-selected="true">Datos Reunion</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="archivos-tab" data-toggle="pill" href="#archivos" role="tab" aria-controls="archivos" aria-selected="false">Adjuntar archivos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-three-settings-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-settings" aria-selected="false">Settings</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card-body">
-                    <div class="tab-content" id="custom-tabs-three-tabContent">
-                        <div class="tab-pane fade active show" id="datosgenerales" role="tabpanel" aria-labelledby="datosgenerales-tab">
-                        <div class="row">
-                    <!-- left column -->
-                    <div class="col-md-6">
-                        <!-- general form elements -->
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h3 class="card-title">Datos Generales</h3>
-                            </div>
-                            <form role="form" name="editar-actas" id="editar-actas-archivo" method="post" action="../Modelos/modelo_acta.php" enctype="multipart/form-data">
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="nombre">Nombre Reunión:</label>
-                                        <input required minlength="5" type="text" value="<?php echo $estado['nombre_reunion']; ?>" class="form-control" id="nombre" name="nombre" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tipo">Tipo de Reunión</label>
-                                        <select class="form-control" onchange="showInp()" style="width: 50%;" id="tipo" name="tipo" disabled>
-                                            <option value="0">-- Selecione un Tipo --</option>
-                                            <?php
-                                            try {
-                                                $tipo_actual = $estado['id_tipo'];
-                                                $sql = "SELECT * FROM tbl_tipo_reunion_acta ";
-                                                $resultado = $mysqli->query($sql);
-                                                while ($tipo_reunion = $resultado->fetch_assoc()) {
-                                                    if ($tipo_reunion['id_tipo'] == $tipo_actual) { ?>
-                                                        <option value="<?php echo $tipo_reunion['id_tipo']; ?>" selected>
-                                                            <?php echo $tipo_reunion['tipo']; ?>
-                                                        </option>
-                                                    <?php } else { ?>
-                                                        <option value="<?php echo $tipo_reunion['id_tipo']; ?>">
-                                                            <?php echo $tipo_reunion['tipo']; ?>
-                                                        </option>
-                                            <?php }
-                                                }
-                                            } catch (Exception $e) {
-                                                echo "Error: " . $e->getMessage();
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="lugar">Lugar:</label>
-                                        <input required minlength="4" value="<?php echo $estado['lugar']; ?>" style="width: 90%;" type="text" class="form-control" id="lugar" name="lugar" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="fecha">Fecha:</label>
-                                        <input required style="width: 40%;" value="<?php echo $estado['fecha']; ?>" type="date" class="form-control datetimepicker-input" id="fecha" name="fecha" min="<?php echo $hoy; ?>" disabled />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nacta">No. Acta:</label>
-                                        <input minlength="4" value="<?php echo $estado['num_acta']; ?>" style="width: 90%;" type="text" class="form-control" id="nacta" name="nacta" placeholder="Ingrese numero o codigo del acta">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="horainicio">Hora Inicio: </label>
-                                        <input required style="width: 30%;" type="time" value="<?php echo $estado['hora_inicio']; ?>" class="form-control" id="horainicio" name="horainicio" min="7:00:00" max="23:00:00">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="horafinal">Hora Final: </label>
-                                        <input required style="width: 30%;" type="time" value="<?php echo $estado['hora_final']; ?>" class="form-control" id="horafinal" name="horafinal" min="7:30:00" max="24:00:00">
-                                    </div>
-                                    <div class="form-group">
-                                        <label id="enlaces" for="enlace">Enlace de la Reunión:</label>
-                                        <input disabled value="<?php echo $estado['enlace']; ?>" minlength="10" type="text" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
+                                                        <body>
+                                                            <?php
+                                                            try {
+                                                                $sql = "SELECT
+                                                                        CONCAT_WS(' ', t4.nombres, t4.apellidos) AS nombres,
+                                                                        t1.id_persona,
+                                                                        t1.id_participante,
+                                                                        t1.id_estado_participante,
+                                                                        t3.estado,
+                                                                        t1.descripcion,
+                                                                        t2.nombre_reunion,
+                                                                        t5.id_acta,
+                                                                        t2.id_reunion
+                                                                    FROM
+                                                                        tbl_participantes t1
+                                                                    LEFT JOIN tbl_reunion t2 ON
+                                                                        t2.id_reunion = t1.id_reunion
+                                                                    LEFT JOIN tbl_estado_participante t3 ON
+                                                                        t3.id_estado = t1.id_estado_participante
+                                                                    LEFT JOIN tbl_personas t4 ON
+                                                                        t4.id_persona = t1.id_persona
+                                                                    LEFT JOIN tbl_acta t5 ON
+                                                                        t5.id_reunion = t1.id_reunion
+                                                                    WHERE
+                                                                        t5.id_acta = $id";
+                                                                $resultado = $mysqli->query($sql);
+                                                            } catch (Exception $e) {
+                                                                $error = $e->getMessage();
+                                                                echo $error;
+                                                            }
+                                                            while ($estadoacta = $resultado->fetch_assoc()) { ?>
+                                                                <tr>
+                                                                    <td>
+                                                                        <label for="">
+                                                                            <?php echo $estadoacta['nombres']; ?>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <select class="form-control" name="asistencia[<?php echo $estadoacta['id_persona'] ?>]" id="<?php echo $estadoacta['id_persona']; ?>">
+                                                                                <option value="0">--------</option>
+                                                                                <option value="1">ASISTIO</option>
+                                                                                <option value="2">INASISTENCIA</option>
+                                                                                <option value="3">EXCUSA</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label for="">
+                                                                            <?php echo $estadoacta['estado']; ?>
+                                                                        </label>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php  }  ?>
+                                                        </body>
+                                                    </table>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+                                        </div>
+                                        <!--/.col (right) -->
                                     </div>
                                 </div>
-                                <!-- /.card-body -->
+                                <div class="tab-pane fade " id="datosreunion" role="tabpanel" aria-labelledby="datosreunion-tab">
+                                    <div class="card card-warning">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Datos de la Reunión</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="col-12">
+                                                <!-- /.card -->
+                                                <!-- /.card-header -->
+                                                <div class="card-body">
+                                                    <div class="col-12">
+                                                        <!-- /.card -->
+                                                        <!-- /.card-header -->
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label for="asunto">Agenda Propuesta:</label>
+                                                                <input type="hidden" name="id_reunion" id="id_reunion" value="<?php echo $estado['id_reunion']; ?>">
+                                                                <textarea required minlength="4" class="form-control" id="agenda" name="agenda" rows="5" placeholder="Ingrese Agenda Propuesta" disabled><?php echo $estado['agenda_propuesta']; ?></textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="agenda">Desarrollo de la reunión</label>
+                                                                <textarea onkeyup="mayus(this);" minlength="10" class="form-control" id="desarrollo" name="desarrollo" rows="10" placeholder="Ingrese lo que se hablo en la reunión"><?php echo $estado['desarrollo']; ?></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.card -->
+                                                    </div>
+                                                </div>
+                                                <!-- /.card -->
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="archivos" role="tabpanel" aria-labelledby="archivos-tab">
+                                    <div class="card card-danger">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Adjuntar Archivos</h3>
+                                        </div>
+                                        <?php
+                                        $sql = "SELECT
+                                                    Valor
+                                                FROM
+                                                    `tbl_parametros`
+                                                WHERE
+                                                    Parametro = 'acta_archivo_permitidos'";
+                                        $resultado = $mysqli->query($sql);
+                                        $aceptados = $resultado->fetch_assoc();
+                                        ?>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="archivo_acta">Archivo:</label>
+                                                <input class="form-control" type="file" id="archivo_acta" name="archivo_acta" accept="<?php echo $aceptados['Valor']; ?>">
+                                                <p class="help-block">añada el archivo aqui</p>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <table class="table table-bordered table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nombre Archivo</th>
+                                                            <th>Formato</th>
+                                                            <th>Accion</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <body>
+                                                        <?php
+                                                        try {
+                                                            $sql = "SELECT  id_recursos,id_acta,url, formato, nombre FROM tbl_acta_recursos WHERE id_acta = $id";
+                                                            $resultado = $mysqli->query($sql);
+                                                        } catch (Exception $e) {
+                                                            $error = $e->getMessage();
+                                                            echo $error;
+                                                        }
+                                                        while ($estadoacta = $resultado->fetch_assoc()) { ?>
+                                                            <tr>
+                                                                <td>
+                                                                    <label for="<?php echo $estadoacta['nombre']; ?>">
+                                                                        <a target="_blank" href="<?php echo $estadoacta['url'] . $estadoacta['nombre']; ?>"><?php echo $estadoacta['nombre']; ?></a>
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <?php echo $estadoacta['formato']; ?>
+                                                                </td>
+                                                                <td><a href="#" data-id="<?php echo $estadoacta['id_recursos']; ?>" data-tipo="acta" class="borrar_recursoacta btn btn-danger">Borrar</a></td>
+                                                            </tr>
+                                                        <?php  }  ?>
+                                                    </body>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.card -->
                     </div>
-                    <!--/.col (left) -->
-                    <!-- right column -->
-                    <div class="col-md-6">
-                        <!-- Form Element sizes -->
-                        <div class="card card-success">
-                            <div class="card-header">
-                                <h3 class="card-title">Asistencia</h3>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Nombre Participante</th>
-                                            <th>Editar Asistencia</th>
-                                            <th>Estado Asistencia Actual</th>
-                                        </tr>
-                                    </thead>
-
-                                    <body>
-                                        <?php
-                                        try {
-                                            $sql = "SELECT
-                                            CONCAT_WS(' ', t4.nombres, t4.apellidos) AS nombres,
-                                            t1.id_persona,
-                                            t1.id_participante,
-                                            t1.id_estado_participante,
-                                            t3.estado,
-                                            t1.descripcion,
-                                            t2.nombre_reunion,
-                                            t5.id_acta,
-                                            t2.id_reunion
-                                        FROM
-                                            tbl_participantes t1
-                                        LEFT JOIN tbl_reunion t2 ON
-                                            t2.id_reunion = t1.id_reunion
-                                        LEFT JOIN tbl_estado_participante t3 ON
-                                            t3.id_estado = t1.id_estado_participante
-                                        LEFT JOIN tbl_personas t4 ON
-                                            t4.id_persona = t1.id_persona
-                                        LEFT JOIN tbl_acta t5 ON
-                                            t5.id_reunion = t1.id_reunion
-                                        WHERE
-                                            t5.id_acta = $id";
-                                            $resultado = $mysqli->query($sql);
-                                        } catch (Exception $e) {
-                                            $error = $e->getMessage();
-                                            echo $error;
-                                        }
-
-                                        while ($estadoacta = $resultado->fetch_assoc()) { ?>
-                                            <tr>
-                                                <td>
-                                                    <label for="">
-                                                        <?php echo $estadoacta['nombres']; ?>
-                                                    </label>
-                                                </td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <select class="form-control" name="asistencia[<?php echo $estadoacta['id_persona'] ?>]" id="<?php echo $estadoacta['id_persona']; ?>">
-                                                            <option value="0">--------</option>
-                                                            <option value="1">ASISTIO</option>
-                                                            <option value="2">INASISTENCIA</option>
-                                                            <option value="3">EXCUSA</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <label for="">
-                                                        <?php echo $estadoacta['estado']; ?>
-                                                    </label>
-                                                </td>
-
-                                            </tr>
-                                        <?php  }  ?>
-                                    </body>
-                                </table>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                    </div>
-                    <!--/.col (right) -->
-                </div>
-                    </div>
-                        <div class="tab-pane fade " id="datosreunion" role="tabpanel" aria-labelledby="datosreunion-tab">
-                        <div class="card card-warning">
-                    <div class="card-header">
-                        <h3 class="card-title">Datos de la Reunión</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="col-12">
-                            <!-- /.card -->
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <div class="col-12">
-                                    <!-- /.card -->
-                                    <!-- /.card-header -->
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="asunto">Agenda Propuesta:</label>
-                                            <input type="hidden" name="id_reunion" id="id_reunion" value="<?php echo $estado['id_reunion']; ?>">
-                                            <textarea required minlength="4" class="form-control" id="agenda" name="agenda" rows="5" placeholder="Ingrese Agenda Propuesta" disabled><?php echo $estado['agenda_propuesta']; ?></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="agenda">Desarrollo de la reunión</label>
-                                            <textarea minlength="10" class="form-control" id="desarrollo" name="desarrollo" rows="10" placeholder="Ingrese lo que se hablo en la reunión"><?php echo $estado['desarrollo']; ?></textarea>
-                                        </div>
-                                    </div>
-                                    <!-- /.card -->
-                                </div>
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>                       </div>
-                        <div class="tab-pane fade" id="archivos" role="tabpanel" aria-labelledby="archivos-tab">
-                        <div class="card card-danger">
-                    <div class="card-header">
-                        <h3 class="card-title">Adjunar Archivos</h3>
-                    </div>
-                    <?php
-                    $sql = "SELECT
-                    Valor
-                FROM
-                    `tbl_parametros`
-                WHERE
-                    Parametro = 'acta_archivo_permitidos'";
-                    $resultado = $mysqli->query($sql);
-                    $aceptados = $resultado->fetch_assoc();
-                    ?>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="archivo_acta">Archivo:</label>
-                            <input class="form-control" type="file" id="archivo_acta" name="archivo_acta" accept="<?php echo $aceptados['Valor']; ?>">
-                            <p class="help-block">añada el archivo aqui</p>
-                        </div>
-
-
-                        <div class="col-md-8">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre Archivo</th>
-                                        <th>Formato</th>
-                                        <th>Accion</th>
-                                    </tr>
-                                </thead>
-
-                                <body>
-                                    <?php
-                                    try {
-                                        $sql = "SELECT  id_recursos,id_acta,url, formato, nombre FROM tbl_acta_recursos WHERE id_acta = $id";
-                                        $resultado = $mysqli->query($sql);
-                                    } catch (Exception $e) {
-                                        $error = $e->getMessage();
-                                        echo $error;
-                                    }
-
-                                    while ($estadoacta = $resultado->fetch_assoc()) { ?>
-                                        <tr>
-                                            <td>
-                                                <label for="<?php echo $estadoacta['nombre']; ?>">
-                                                    <a target="_blank" href="<?php echo $estadoacta['url'] . $estadoacta['nombre']; ?>"><?php echo $estadoacta['nombre']; ?></a>
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <?php echo $estadoacta['formato']; ?>
-                                            </td>
-                                            <td><a href="#" data-id="<?php echo $estadoacta['id_recursos']; ?>" data-tipo="acta" class="borrar_recursoacta btn btn-danger">Borrar</a></td>
-                                        </tr>
-                                    <?php  }  ?>
-                                </body>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>                     </div>
-                        <div class="tab-pane fade" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
-4                        </div>
-                    </div>
-                </div>
-                <!-- /.card -->
-            </div>
-
-
-                <!-- /.row -->
-
-
-                <div style="padding: 0px 0 25px 0;">
-                    <input type="hidden" name="id_registro" value="<?php echo $id; ?>">
-                    <input type="hidden" name="acta" value="actualizar">
-                    <button style="padding-right: 15px;" type="submit" class="btn btn-success float-left" id="editar_registro" <?php echo $_SESSION['btn_crear']; ?>>Guardar Como Borrador</button>
-                    <a style="color: white !important; margin: 0px 0px 0px 10px;" class="cancelar-acta btn btn-danger" href="actas_pendientes_vista.php">Cancelar</a>
-                </div>
+                    <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
             </form>
@@ -394,6 +365,10 @@ ob_end_flush();
     <!-- /.content-wrapper -->
     </div>
     <script type="text/javascript">
+        function mayus(e) {
+            e.value = e.value.toUpperCase();
+        }
+
         $(function() {
             $('#table1').DataTable({
                 "paging": true,
@@ -418,14 +393,11 @@ ob_end_flush();
     ?>
     <script>
         const MAXIMO_TAMANIO_BYTES = <?php echo $aceptados['Valor']; ?>; // 1MB = 1 millón de bytes
-
         // Obtener referencia al elemento
         const $miInput = document.querySelector("#archivo_acta");
-
         $miInput.addEventListener("change", function() {
             // si no hay archivos, regresamos
             if (this.files.length <= 0) return;
-
             // Validamos el primer archivo únicamente
             const archivo = this.files[0];
             if (archivo.size > MAXIMO_TAMANIO_BYTES) {
@@ -465,7 +437,6 @@ ob_end_flush();
         inicio.addEventListener("change", comparaHoras);
         final.addEventListener("change", comparaHoras);
     </script>
-
     <script type="text/javascript">
         function marcar(source) {
             checkboxes = document.getElementsByTagName('input'); //obtenemos todos los controles del tipo Input
@@ -482,7 +453,6 @@ ob_end_flush();
             document.getElementById("enlaces").style.display = "none";
             document.getElementById("enlace").required = false;
         }
-
         $(function() {
             $('input:checkbox').change(function() {
                 $('button:submit').prop({
@@ -510,13 +480,11 @@ ob_end_flush();
 </html>
 <script type="text/javascript" src="../js/funciones_registro_docentes.js"></script>
 <script type="text/javascript" src="../js/validar_registrar_docentes.js"></script>
-
 <script type="text/javascript" src="../js/pdf_mantenimientos.js"></script>
 <script src="../plugins/select2/js/select2.min.js"></script>
 <!-- Select2 -->
 <script src="../plugins/select2/js/select2.full.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
 <script src="../js/tipoacta-ajax.js"></script>
 <!-- datatables JS -->
 <script type="text/javascript" src="../plugins/datatables/datatables.min.js"></script>

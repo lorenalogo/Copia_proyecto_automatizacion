@@ -62,6 +62,7 @@ ob_end_flush();
 <html>
 
 <head>
+    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
     <link rel=" stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js">
     <title></title>
@@ -206,7 +207,6 @@ ob_end_flush();
                     "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "infoFiltered": "(filtrado de un total de _MAX_ registros)",
                     "search": "Buscar:",
-                    "infoThousands": ",",
                     "loadingRecords": "Cargando...",
                     "paginate": {
                         "first": "Primero",

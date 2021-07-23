@@ -60,10 +60,10 @@ ob_end_flush();
         </section>
         <!--Pantalla 2-->
 
-        
+
         <div class="card card-default">
             <div class="card-header">
-            <h3 class="card-title">Listado de todas las Actas</h3>
+                <h3 class="card-title">Listado de todas las Actas</h3>
                 <!--BOTON AGENDAR REUNIÓN-->
                 <!-- <div class="px-1">
                     <a href="../vistas/agendar_reunion_vista.php" class="btn btn-warning"><i class="fas fa-arrow"></i>Agendar Nueva Reunión</a>
@@ -120,7 +120,8 @@ ob_end_flush();
                                                     <td><?php echo $reunion['hora_inicial']; ?></td>
                                                     <td><?php echo $reunion['hora_final']; ?></td>
                                                     <td>
-                                                    <a target="_blank" href="../vistas/archivos_acta_vista.php?id=<?php echo $reunion['id_acta'] ?>">archivos</a></td>
+                                                        <a target="_blank" href="../vistas/archivos_acta_vista.php?id=<?php echo $reunion['id_acta'] ?>">archivos</a>
+                                                    </td>
                                                     <td><a target="_blank" href="../vistas/reporte_acta.php?id=<?php echo $reunion['id_acta'] ?>">VER ACTA</a></td>
                                                 </tr>
                                             <?php
@@ -155,6 +156,26 @@ ob_end_flush();
                 "info": true,
                 "autoWidth": true,
                 "responsive": true,
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
             });
         });
     </script>

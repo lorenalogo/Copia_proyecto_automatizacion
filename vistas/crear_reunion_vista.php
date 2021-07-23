@@ -74,166 +74,175 @@ ob_end_flush();
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" >
-                    <li class="nav-item"  >
-                         <a  class="nav-link active danger" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">1<br>Datos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">2<br>Participantes</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <div class="row">
-                            <!-- left column -->
-                            <div class="col-md-6">
-                                <!-- general form elements -->
-                                <div class="card card-primary">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Datos Generales</h3>
-                                    </div>
-                                    <form role="form" name="guardar-reunion" id="guardar-reunion" method="post" action="../Modelos/modelo_reunion.php">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="nombre">Nombre:</label>
-                                                <input minlength="5" type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese nombre de la Reunion">
+                <div class="card card-primary card-outline card-tabs">
+                    <div class="card-header p-0 pt-1 border-bottom-0">
+                        <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="datosgenerales-tab" data-toggle="pill" href="#datosgenerales" role="tab" aria-controls="datosgenerales" aria-selected="false">Datos Generales y Datos Reunion</a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="display: none;" class="nav-link " id="datosreunion-tab" data-toggle="pill" href="#datosreunion" role="tab" aria-controls="datosreunion" aria-selected="true">Participantes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="color: white !important; margin: 0px 0px 0px 10px;" class="cancelar-reunion btn btn-danger" href="reuniones_pendientes_vista.php">Cancelar</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="custom-tabs-three-tabContent">
+                            <div class="tab-pane fade active show" id="datosgenerales" role="tabpanel" aria-labelledby="datosgenerales-tab">
+                                <div class="row">
+                                    <!-- left column -->
+                                    <div class="col-md-6">
+                                        <!-- general form elements -->
+                                        <div class="card card-primary">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Datos Generales</h3>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="tipo">Tipo de Reunión</label>
-                                                <select class="form-control" onchange="showInp()" style="width: 50%;" id="tipo" name="tipo">
-                                                    <option value="0">-- Selecione un Tipo --</option>
-                                                    <?php
-                                                    try {
-                                                        $sql = "SELECT * FROM tbl_tipo_reunion_acta ";
-                                                        $resultado = $mysqli->query($sql);
-                                                        while ($tipo_reunion = $resultado->fetch_assoc()) { ?>
-                                                            <option value="<?php echo $tipo_reunion['id_tipo']; ?>">
-                                                                <?php echo $tipo_reunion['tipo']; ?>
-                                                            </option>
-                                                    <?php }
-                                                    } catch (Exception $e) {
-                                                        echo "Error: " . $e->getMessage();
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="lugar">Lugar:</label>
-                                                <input required minlength="4" style="width: 90%;" type="text" class="form-control" id="lugar" name="lugar" placeholder="Lugar donde se dearrollara la Reunion">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fecha">Fecha:</label>
-                                                <input required style="width: 40%;" type="date" class="form-control datetimepicker-input" id="fecha" name="fecha" min="<?php echo $hoy; ?>" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="horainicio">Hora Inicio: </label>
-                                                <input required style="width: 30%;" type="time" class="form-control" id="horainicio" name="horainicio" min="7:00" max="23:00" value="00:00">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="horafinal">Hora Final: </label>
-                                                <input required style="width: 30%;" type="time" class="form-control" id="horafinal" name="horafinal" min="7:30" max="24:00" value="00:00">
-                                            </div>
-                                            <div class="form-group">
-                                                <label style="display: none;" id="enlaces" for="enlace">Enlace de la Reunión:</label>
-                                                <input style="display: none;" minlength="10" type="url" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
-                                            </div>
+                                            <form role="form" name="guardar-reunion" id="guardar-reunion" method="post" action="../Modelos/modelo_reunion.php">
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label for="nombre">Nombre:</label>
+                                                        <input minlength="5" onchange="showdatos()" type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese nombre de la Reunion" onkeyup="PasarValor()">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="tipo">Tipo de Reunión</label>
+                                                        <select class="form-control" onChange="showInp();showdatos()" style="width: 50%;" id="tipo" name="tipo">
+                                                            <option value="0">-- Selecione un Tipo --</option>
+                                                            <?php
+                                                            try {
+                                                                $sql = "SELECT * FROM tbl_tipo_reunion_acta ";
+                                                                $resultado = $mysqli->query($sql);
+                                                                while ($tipo_reunion = $resultado->fetch_assoc()) { ?>
+                                                                    <option value="<?php echo $tipo_reunion['id_tipo']; ?>">
+                                                                        <?php echo $tipo_reunion['tipo']; ?>
+                                                                    </option>
+                                                            <?php }
+                                                            } catch (Exception $e) {
+                                                                echo "Error: " . $e->getMessage();
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="lugar">Lugar:</label>
+                                                        <input required minlength="4" onkeyup="mayus(this);" onchange="showdatos()" style="width: 90%;" type="text" class="form-control" id="lugar" name="lugar" placeholder="Lugar donde se dearrollara la Reunion">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="fecha">Fecha:</label>
+                                                        <input required style="width: 40%;" onchange="showdatos()" type="date" class="form-control datetimepicker-input" id="fecha" name="fecha" min="<?php echo $hoy; ?>" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="horainicio">Hora Inicio: </label>
+                                                        <input required style="width: 30%;" onchange="showdatos()" type="time" class="form-control" id="horainicio" name="horainicio" min="7:00" max="23:00" value="00:00">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="horafinal">Hora Final: </label>
+                                                        <input required style="width: 30%;" onchange="showdatos()" type="time" class="form-control" id="horafinal" name="horafinal" min="7:30" max="24:00">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label style="display: none;" id="enlaces" for="enlace">Enlace de la Reunión:</label>
+                                                        <input style="display: none;" minlength="10" type="url" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
+                                                    </div>
+                                                </div>
+                                                <!-- /.card-body -->
                                         </div>
-                                        <!-- /.card-body -->
+                                        <!-- /.card -->
+                                    </div>
+                                    <!--/.col (left) -->
+                                    <!-- right column -->
+                                    <div class="col-md-6">
+                                        <!-- Form Element sizes -->
+                                        <div class="card card-success">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Datos de la Reunión</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="asunto">Asunto:</label>
+                                                    <textarea required minlength="4" onchange="showdatos()" onkeyup="mayus(this);" class="form-control" id="asunto" name="asunto" rows="3" placeholder="Ingrese el asunto de la Reunión"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="agenda">Agenda Propuesta</label>
+                                                    <textarea required minlength="10" onchange="showdatos()" onkeyup="mayus(this);" class="form-control" id="agenda" name="agenda" rows="13" placeholder="Ingrese Agenda Propuesta"></textarea>
+                                                </div>
+                                            </div>
+                                            <!-- /.card-body -->
+                                        </div>
+                                    </div>
+                                    <!--/.col (right) -->
                                 </div>
-                                <!-- /.card -->
+                                <!-- /.row -->
                             </div>
-                            <!--/.col (left) -->
-                            <!-- right column -->
-                            <div class="col-md-6">
-                                <!-- Form Element sizes -->
-                                <div class="card card-success">
+                            <div class="tab-pane fade " id="datosreunion" role="tabpanel" aria-labelledby="datosreunion-tab">
+                                <div class="card card-warning">
                                     <div class="card-header">
-                                        <h3 class="card-title">Datos de la Reunión</h3>
+                                        <h3 class="card-title">Participantes</h3>
                                     </div>
                                     <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="asunto">Asunto:</label>
-                                            <textarea required minlength="4" class="form-control" id="asunto" name="asunto" rows="3" placeholder="Ingrese el asunto de la Reunión"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="agenda">Agenda Propuesta</label>
-                                            <textarea required minlength="10" class="form-control" id="agenda" name="agenda" rows="13" placeholder="Ingrese Agenda Propuesta"></textarea>
+                                        <div class="col-12">
+                                            <!-- /.card -->
+                                            <div class="card">
+                                                <div style="padding: 0px 0 0px 0; margin: 15px 0px 5px 10px;">
+                                                    <input type="hidden" name="estado" value="1">
+                                                    <input type="hidden" name="reunion" value="nuevo">
+                                                    <button style="float: right; " type="submit" class="btn btn-success float-left" <?php echo $_SESSION['btn_crear']; ?> disabled onclick="return Llamarswal()">Agendar</button>
+                                                </div>
+                                                <div class="icheck-danger d-inline" style="padding: 15px 0px 0px 15px;">
+                                                    <input type="checkbox" id="checkboxPrimary10" name="selectall" onclick="marcar(this);">
+                                                    <label for="checkboxPrimary10">
+                                                        Seleccionar/Deseleccionar Todo
+                                                    </label>
+                                                </div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body">
+                                                    <table class="table table-bordered table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nombre Participante</th>
+                                                                <th>Tipo Contrado</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <body>
+                                                            <?php
+                                                            try {
+                                                                $sql = "SELECT t1.id_persona,concat_ws(' ', t1.nombres, t1.apellidos) as nombres, t3.jornada FROM tbl_personas t1 INNER JOIN tbl_horario_docentes t2 ON t2.id_persona = t1.id_persona INNER JOIN tbl_jornadas t3 ON t2.id_jornada = t3.id_jornada ORDER BY nombres ASC";
+                                                                $resultado = $mysqli->query($sql);
+                                                            } catch (Exception $e) {
+                                                                $error = $e->getMessage();
+                                                                echo $error;
+                                                            }
+                                                            while ($estadoacta = $resultado->fetch_assoc()) { ?>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="icheck-danger d-inline">
+                                                                            <input type="checkbox" id="<?php echo $estadoacta['id_persona']; ?>" name="chk[]" value="<?php echo $estadoacta['id_persona']; ?>">
+                                                                            <label for="<?php echo $estadoacta['id_persona']; ?>">
+                                                                                <?php echo $estadoacta['nombres']; ?>
+                                                                            </label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><?php echo $estadoacta['jornada']; ?></td>
+                                                                </tr>
+                                                            <?php  }  ?>
+                                                        </body>
+                                                    </table>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+                                            <!-- /.card -->
                                         </div>
                                     </div>
                                     <!-- /.card-body -->
                                 </div>
+                                <!-- /.container-fluid -->
                             </div>
-                            <!--/.col (right) -->
-                        </div>
-                        <!-- /.row -->
-                    </div>
-                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                        <div class="card card-warning">
-                            <div class="card-header">
-                                <h3 class="card-title">Participantes</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="col-12">
-                                    <!-- /.card -->
-
-                                    <div class="card">
-                                        <div class="icheck-danger d-inline" style="padding: 15px 0px 0px 15px;">
-                                            <input type="checkbox" id="checkboxPrimary10" name="selectall" onclick="marcar(this);">
-                                            <label for="checkboxPrimary10">
-                                                Seleccionar/Deseleccionar Todo
-                                            </label>
-                                        </div>
-                                        <!-- /.card-header -->
-                                        <div class="card-body">
-                                            <table class="table table-bordered table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Nombre Participante</th>
-                                                        <th>Tipo Contrado</th>
-                                                    </tr>
-                                                </thead>
-                                                <body>
-                                                <?php
-                                                try {
-                                                    $sql = "SELECT t1.id_persona,concat_ws(' ', t1.nombres, t1.apellidos) as nombres, t3.jornada FROM tbl_personas t1 INNER JOIN tbl_horario_docentes t2 ON t2.id_persona = t1.id_persona INNER JOIN tbl_jornadas t3 ON t2.id_jornada = t3.id_jornada ORDER BY nombres ASC";
-                                                    $resultado = $mysqli->query($sql);
-                                                } catch (Exception $e) {
-                                                    $error = $e->getMessage();
-                                                    echo $error;
-                                                }
-                                                while ($estadoacta = $resultado->fetch_assoc()) { ?>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="icheck-danger d-inline">
-                                                                <input type="checkbox" id="<?php echo $estadoacta['id_persona']; ?>" name="chk[]" value="<?php echo $estadoacta['id_persona']; ?>">
-                                                                <label for="<?php echo $estadoacta['id_persona']; ?>">
-                                                                    <?php echo $estadoacta['nombres']; ?>
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td><?php echo $estadoacta['jornada']; ?></td>
-                                                    </tr>
-                                                <?php  }  ?>
-                                                </body>
-                                            </table>
-                                        </div>
-                                        <!-- /.card-body -->
-                                    </div>
-                                    <!-- /.card -->
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
                         </div>
                     </div>
+                    <!-- /.card -->
                 </div>
             </div>
-            <!-- /.container-fluid -->
-                            <div style="padding: 0px 0 25px 0;">
-                    <input type="hidden" name="estado" value="1">
-                    <input type="hidden" name="reunion" value="nuevo">
-                    <button style="padding-right: 15px;" type="submit" class="btn btn-success float-left" <?php echo $_SESSION['btn_crear']; ?> disabled onclick="return Llamarswal()">Crear</button>
-                    <a style="color: white !important; margin: 0px 0px 0px 10px;" class="cancelar-reunion btn btn-danger" href="reuniones_pendientes_vista.php">Cancelar</a>
-                </div>
             </form>
         </section>
         <!-- /.content -->
@@ -241,6 +250,9 @@ ob_end_flush();
     <!-- /.content-wrapper -->
     </div>
     <script type="text/javascript">
+    function mayus(e) {
+    e.value = e.value.toUpperCase();
+}
         $(function() {
             $('#example1').DataTable({
                 "paging": true,
@@ -256,6 +268,8 @@ ob_end_flush();
 
 
     <script type="text/javascript">
+
+
         function marcar(source) {
             checkboxes = document.getElementsByTagName('input'); //obtenemos todos los controles del tipo Input
             for (i = 0; i < checkboxes.length; i++) //recoremos todos los controles
@@ -274,6 +288,25 @@ ob_end_flush();
                 });
             });
         });
+
+        function showdatos() {
+            getnombre = document.getElementById("nombre").value;
+            getlugar = document.getElementById("lugar").value;
+            getagenda = document.getElementById("agenda").value;
+            getasunto = document.getElementById("asunto").value;
+            getfecha = document.getElementById("fecha").value;
+            gettipo = document.getElementById("tipo").value;
+            getinicio = document.getElementById("horainicio").value;
+            getfinal = document.getElementById("horafinal").value;
+
+            if (getnombre == "" || getlugar == "" || getagenda == "" || getasunto == "" || getfecha == "" || gettipo == "0" || getinicio == "" || getfinal == "") {
+                document.getElementById("datosreunion-tab").style.display = "none";
+                document.getElementById("archivos-tab").style.display = "none";
+            } else {
+                document.getElementById("datosreunion-tab").style.display = "block";
+                document.getElementById("archivos-tab").style.display = "block";
+            }
+        }
 
         function showInp() {
             getSelectValue = document.getElementById("tipo").value;
@@ -316,14 +349,14 @@ ob_end_flush();
         final.addEventListener("change", comparaHoras);
     </script>
     <script>
-    if (document.getElementById('nombre').value === '' || document.getElementById('lugar').value === '') {
-    swal({
-      title: 'Oooops...',
-      text: 'Llena todos los campos!',
-      type: 'error',
-    });
-    return false;
-}
+        if (document.getElementById('nombre').value === '' || document.getElementById('lugar').value === '') {
+            swal({
+                title: 'Oooops...',
+                text: 'Llena todos los campos!',
+                type: 'error',
+            });
+            return false;
+        }
     </script>
 </body>
 

@@ -126,7 +126,7 @@ ob_end_flush();
                                                     <td><?php echo $reunion['lugar']; ?></td>
                                                     <td><?php echo $reunion['tipo']; ?></td>
                                                     <td><?php echo $reunion['estado']; ?></td>
-                                                    <td><a target="_blank" href="../vistas/reporte_memorandum.php?id=<?php echo $reunion['id_reunion'] ?>">VER MEMORANDUM</a></td>
+                                                    <td><a target="_blank" href="../pdf/reporte_memorandum.php?id=<?php echo $reunion['id_reunion'] ?>">VER MEMORANDUM</a></td>
                                                 </tr>
                                             <?php
                                             }  ?>

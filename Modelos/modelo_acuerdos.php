@@ -3,7 +3,7 @@
 include_once '../clases/Conexion.php';
 $acta = $_POST['acta'];
 $responsable = $_POST['responsable'];
-$estado = 1;
+$estado = $_POST['estado'];
 $nombre_acuerdo = $_POST['nombre_acuerdo'];
 $descripcion = $_POST['descripcion'];
 $fecha_res = 'PENDIENTE';
@@ -12,12 +12,12 @@ $fecha_formato = date('Y-m-d', strtotime($fecha_exp));
 $id_registro = $_POST['id_registro'];
 
 if ($_POST['acuerdo'] == 'nuevo') {
+    $estado = 1;
     try {
         $stmt = $mysqli->prepare("INSERT INTO tbl_acuerdos (id_acta, id_participante, id_estado, nombre_acuerdo, descripcion, resolucion, fecha_expiracion) VALUES (?,?,?,?,?,?,?)");
         $stmt->bind_param("iiissss", $acta, $responsable, $estado, $nombre_acuerdo, $descripcion, $fecha_res, $fecha_exp);
         $stmt->execute();
         $id_registro = $stmt->insert_id;
-
         if ($id_registro > 0) {
             $respuesta = array(
                 'respuesta' => 'exito',
@@ -38,6 +38,7 @@ if ($_POST['acuerdo'] == 'nuevo') {
 
 
 if ($_POST['acuerdo'] == 'actualizar') {
+    $estado = 1;
     try {
         $stmt = $mysqli->prepare('UPDATE tbl_acuerdos SET id_acta=?,id_participante=?,id_estado=?,nombre_acuerdo=?,descripcion=?,resolucion=?,fecha_expiracion=? WHERE id_acuerdo=?');
         $stmt->bind_param("iiissssi", $acta, $responsable, $estado, $nombre_acuerdo, $descripcion, $fecha_res, $fecha_exp, $id_registro);

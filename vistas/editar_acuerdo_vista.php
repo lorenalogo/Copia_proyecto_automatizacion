@@ -88,7 +88,6 @@ ob_end_flush();
         <section class="content">
             
             <?php
-            echo $id;
             $sql = "SELECT * FROM `tbl_acuerdos` WHERE `id_acuerdo` = $id ";
             $resultado = $mysqli->query($sql);
             $estado = $resultado->fetch_assoc();
@@ -103,12 +102,12 @@ ob_end_flush();
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Seleccione el acta:</label>
-                                <select class="form-control " style="width: 35%;" name="acta" id="acta">
+                                <select class="form-control " style="width: 35%;" name="acta" id="acta" disabled>
                                     <option value="0">-- Seleccione --</option>
                                     <?php
                                     try {
                                         $tipo_actual = $estado['id_acta'];
-                                        $sql = "SELECT * FROM tbl_acta WHERE id_estado = 3 ";
+                                        $sql = "SELECT * FROM tbl_acta WHERE id_estado = 2 ";
                                         $resultado = $mysqli->query($sql);
                                         while ($tipo_reunion = $resultado->fetch_assoc()) {
                                             if ($tipo_reunion['id_acta'] == $tipo_actual) { ?>
@@ -129,7 +128,7 @@ ob_end_flush();
                             </div>
                             <div class="form-group">
                                 <label>Responsable:</label>
-                                <select class="form-control" style="width: 50%;" name="responsable" id="responsable">
+                                <select class="form-control" style="width: 50%;" name="responsable" id="responsable" disabled>
                                     <option value="0">-- Seleccione --</option>
                                     <?php
                                     try {

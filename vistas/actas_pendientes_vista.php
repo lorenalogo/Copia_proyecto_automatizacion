@@ -11,23 +11,24 @@ require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
 
 
-$Id_objeto = 7;
+$Id_objeto = 149;
 $visualizacion = permiso_ver($Id_objeto);
-
 
 
 if ($visualizacion == 0) {
     header('location:  ../vistas/pagina_principal_vista.php');
 } else {
 
-    bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A Gestion de Parametros');
-
-
     if (permisos::permiso_modificar($Id_objeto) == '1') {
-        $_SESSION['btn_modificar_parametro'] = "";
+        $_SESSION['btn_editar'] = "";
     } else {
-        $_SESSION['btn_modificar_parametro'] = "disabled";
+        $_SESSION['btn_editar'] = "disabled";
     }
+
+    bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A Actas Pendientes');
+
+
+
 
 
     /* Manda a llamar todos las datos de la tabla para llenar el gridview  */
@@ -180,23 +181,23 @@ ob_end_flush();
 
                             <!-- /.card-header -->
                             <div class="card-body ">
-
-                                <table id="tabla11" class="table table-bordered table-striped ">
-                                    <thead>
-                                        <tr>
-                                            <th>Num Acta</th>
-                                            <th>Nombre Reunión</th>
-                                            <th>Modalidad</th>
-                                            <th>Fecha</th>
-                                            <th>Hora Inicio</th>
-                                            <th>Hora Final</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        try {
-                                            $sql = "SELECT
+                                <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_acta.php">
+                                    <table id="tabla7" class="table table-bordered table-striped ">
+                                        <thead>
+                                            <tr>
+                                                <th>No. Acta</th>
+                                                <th>Nombre Reunión</th>
+                                                <th>Modalidad</th>
+                                                <th>Fecha</th>
+                                                <th>Hora Inicio</th>
+                                                <th>Hora Final</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            try {
+                                                $sql = "SELECT
                                             a.id_acta,
                                             a.num_acta,
                                             ta.tipo,
@@ -214,29 +215,33 @@ ob_end_flush();
                                             ta.id_tipo = a.id_tipo
                                         WHERE
                                             a.id_estado = 2";
-                                            $resultado = $mysqli->query($sql);
-                                            while ($actap = $resultado->fetch_assoc()) {
-                                        ?>
-                                                <tr>
-                                                    <td><?php echo $actap['num_acta']; ?></td>
-                                                    <td><?php echo $actap['nombre_reunion']; ?></td>
-                                                    <td><?php echo $actap['tipo']; ?></td>
-                                                    <td><?php echo $actap['fecha']; ?></td>
-                                                    <td><?php echo $actap['hora_inicial']; ?></td>
-                                                    <td><?php echo $actap['hora_final']; ?></td>
-                                                    <td>
-                                                   
-                                                        <a href="editar_acta_vista.php?id=<?php echo $actap['id_acta'] ?>" type="button" class="btn btn-block btn-success btn-sm"><i class="fas fa-edit"><br /></i>Continuar Editando</a>
-                                                    </td>
-                                                </tr>
-                                        <?php
-                                            }
-                                        } catch (Exception $e) {
-                                            $error = $e->getMessage();
-                                            echo $error;
-                                        } ?>
-                                        </tfoot>
-                                </table>
+                                                $resultado = $mysqli->query($sql);
+                                                while ($actap = $resultado->fetch_assoc()) {
+                                            ?>
+                                                    <tr>
+                                                        <td><?php echo $actap['num_acta']; ?></td>
+                                                        <td><?php echo $actap['nombre_reunion']; ?></td>
+                                                        <td><?php echo $actap['tipo']; ?></td>
+                                                        <td><?php echo $actap['fecha']; ?></td>
+                                                        <td><?php echo $actap['hora_inicial']; ?></td>
+                                                        <td><?php echo $actap['hora_final']; ?></td>
+                                                        <td>
+
+                                                            <a style="min-width: 10px; max-width: 190px; max-height: 300px; margin: 0 0 8px 0;" href="editar_acta_vista.php?id=<?php echo $actap['id_acta'] ?>" type="button" class="btn btn-block btn-success btn-sm"><i class="fas fa-edit"></i> Continuar Editando
+                                                            </a>
+                                                            <a style="height: 35px; width: 190px;" href="#" data-id="<?php echo $actap['id_acta'] ?>" data-tipo="acta" class="finalizar_registroacta btn btn-primary"><i class="fas fa-check-circle"></i> FINALIZAR
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                            <?php
+                                                }
+                                            } catch (Exception $e) {
+                                                $error = $e->getMessage();
+                                                echo $error;
+                                            } ?>
+                                            </tfoot>
+                                    </table>
+                                </form>
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -263,31 +268,74 @@ ob_end_flush();
 
 
 
-    <script type="text/javascript" language="javascript">
-            function ventana() {
-                window.open("../Controlador/reporte_mantenimiento_estadoactareunion_controlador.php", "REPORTE");
-            }
-        </script>
-        <script type="text/javascript">
-            $(function() {
-                $('#tabla11').DataTable({
-                    "paging": true,
-                    "lengthChange": true,
-                    "searching": true,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": true,
-                    "responsive": true,
-                });
-            });
-        </script>
+
+
+
 
 </body>
-
-</html>
 <script type="text/javascript" src="../js/funciones_registro_docentes.js"></script>
 <script type="text/javascript" src="../js/validar_registrar_docentes.js"></script>
-<script type="text/javascript" src="../js/pdf_mantenimientos.js"></script>
+
+<script type="text/javascript">
+    /********** finalizar acta ***********/
+    $('.finalizar_registroacta').on('click', function(e) {
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        var tipo = $(this).attr('data-tipo');
+        swal({
+            title: '¿Está Seguro en finalizar el acta?',
+            text: 'Por favor asegurese de llenar el acta, de lo contrario no podra revertirlo!!',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtontext: 'Si, Finalizarla!',
+            cancelButtontext: 'Cancelar'
+        }).then(function() {
+            $.ajax({
+                type: 'post',
+                data: {
+                    'id': id,
+                    'actas': 'finalizar'
+                },
+                url: '../Modelos/modelo_' + tipo + '.php',
+                success: function(data) {
+                    var resultado = JSON.parse(data);
+                    if (resultado.respuesta == 'exito') {
+                        swal({
+                            title: "Correcto",
+                            text: "Se Finalizo con Exito!",
+                            type: "success"
+                        }).then(function() {
+                            location.href = "../Vistas/actas_pendientes_vista.php";
+                        });
+                    } else {
+                        swal(
+                            'Error!',
+                            'No se pudo Finalizar faltan campos Importantes',
+                            'error'
+                        )
+                    }
+                }
+            })
+        });
+    });
+    $(function() {
+
+        $('#tabla7').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": true,
+            "responsive": true
+
+        });
+    });
+</script>
+
+<script type="text/javascript" src="../js/pdf_reportes_actas.js"></script>
 <script src="../plugins/select2/js/select2.min.js"></script>
 <!-- datatables JS -->
 <script type="text/javascript" src="../plugins/datatables/datatables.min.js"></script>
@@ -297,4 +345,5 @@ ob_end_flush();
 <script src="../plugins/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
 <script src="../plugins/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
 <script src="../plugins/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
-<script src="../js/tipoacta-ajax.js"></script>
+
+</html>

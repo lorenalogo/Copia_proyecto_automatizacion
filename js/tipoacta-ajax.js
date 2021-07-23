@@ -1,38 +1,38 @@
 $(document).ready(function () {
-    /********** editar acta ***********/
-    $('#editar-actas-archivo').on('submit', function (e) {
-        e.preventDefault();
-        var datos = new FormData(this);
-        $.ajax({
-            type: $(this).attr('method'),
-            data: datos,
-            url: $(this).attr('action'),
-            dataType: 'json',
-            contentType: false,
-            processData: false,
-            async: true,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                var resultado = data;
-                if (resultado.respuesta == 'exito') {
-                    swal({
-                        title: "Correcto", text: "Se guardo el borrador correctamente!", type:
-                            "success"
-                    }).then(function () {
-                        location.href = "../Vistas/actas_pendientes_vista.php";
-                    }
-                    );
-                } else {
-                    swal(
-                        'Error',
-                        'Hubo un error!',
-                        'error'
-                    )
+   /********** editar acta ***********/
+   $('#editar-actas-archivo').on('submit', function (e) {
+    e.preventDefault();
+    var datos = new FormData(this);
+    $.ajax({
+        type: $(this).attr('method'),
+        data: datos,
+        url: $(this).attr('action'),
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        async: true,
+        cache: false,
+        success: function (data) {
+            console.log(data);
+            var resultado = data;
+            if (resultado.respuesta == 'exito') {
+                swal({
+                    title: "Correcto", text: "Borrador guardado correctamente!", type:
+                        "success"
+                }).then(function () {
+                    location.href = "../Vistas/actas_pendientes_vista.php";
                 }
+                );
+            } else {
+                swal(
+                    'Error',
+                    'Hubo un error!',
+                    'error'
+                )
             }
-        })
-    });
+        }
+    })
+});
     /********** editar reunion ***********/
     $('#editar-reunion').on('submit', function (e) {
         e.preventDefault();
@@ -173,14 +173,15 @@ $(document).ready(function () {
                 var resultado = data;
                 if (resultado.respuesta == 'exito') {
                     swal({
-                        title: "Correcto", text: "Se guardo correctamente!",
+                        title: "Correcto",
+                        text: "Se Agendo correctamente!",
                         type: "success",
                         confirmButtonText: "Ir a Reuniones Pendientes",
-                        html: `<h3>La reunión se guardo con Exito!</h3>
+                        html: `<h3>La reunión se Agendo con Exito!</h3>
                                 <br>
                                 ¿Ahora que desea hacer?
                                 <br>
-                                <b><a href="../Vistas/reuniones_reporte_vista.php">Ver Reporte</a></b>`,
+                                <b><a href="../pdf/reporte_memorandum.php?id=31">Ver Reporte</a></b>`,
                     }).then(function () {
                         location.href = "../Vistas/reuniones_pendientes_vista.php";
                     }
@@ -188,7 +189,7 @@ $(document).ready(function () {
                 } else {
                     swal(
                         'Error',
-                        'Hubo un error el nombre de la reunión ya existe o falta un campo por llenar!',
+                        'Hubo un error falta campos por llenar!',
                         'error'
                     )
                 }
@@ -378,48 +379,48 @@ $(document).ready(function () {
         });
     });
 
-/********** borrar recursos***********/
-$('.borrar_recursoacta').on('click', function (e) {
-    e.preventDefault();
-    var id = $(this).attr('data-id');
-    var estado = $(this).attr('data-tipo');
-    swal({
-        title: '¿Está Seguro?',
-        text: 'Desea elimar el archivo',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtontext: 'Si, Eliminarlo!',
-        cancelButtontext: 'Cancelar'
-    }).then(function () {
-        $.ajax({
-            type: 'post',
-            data: {
-                'id': id,
-                'recurso': 'borrar'
-            },
-            url: '../Modelos/modelo_' + estado + '.php',
-            success: function (data) {
-                var resultado = JSON.parse(data);
-                if (resultado.respuesta == 'exito') {
-                    swal(
-                        'Eliminado!',
-                        'Eliminado con Exito!',
-                        'success'
-                    )
-                    jQuery('[data-id="' + resultado.id_eliminado + '"]').parents('tr').remove();
-                } else {
-                    swal(
-                        'Error!',
-                        'No se pudo eliminar',
-                        'error'
-                    )
+    /********** borrar recursos***********/
+    $('.borrar_recursoacta').on('click', function (e) {
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        var estado = $(this).attr('data-tipo');
+        swal({
+            title: '¿Está Seguro?',
+            text: 'Desea elimar el archivo',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtontext: 'Si, Eliminarlo!',
+            cancelButtontext: 'Cancelar'
+        }).then(function () {
+            $.ajax({
+                type: 'post',
+                data: {
+                    'id': id,
+                    'recurso': 'borrar'
+                },
+                url: '../Modelos/modelo_' + estado + '.php',
+                success: function (data) {
+                    var resultado = JSON.parse(data);
+                    if (resultado.respuesta == 'exito') {
+                        swal(
+                            'Eliminado!',
+                            'Eliminado con Exito!',
+                            'success'
+                        )
+                        jQuery('[data-id="' + resultado.id_eliminado + '"]').parents('tr').remove();
+                    } else {
+                        swal(
+                            'Error!',
+                            'No se pudo eliminar',
+                            'error'
+                        )
+                    }
                 }
-            }
-        })
+            })
+        });
     });
-});
 
     /********** borrar estado acta ***********/
     $('.borrar_estadoacta').on('click', function (e) {
@@ -673,121 +674,127 @@ $('.borrar_recursoacta').on('click', function (e) {
     });
 
 
- /********** guardar acuerdo ***********/
- $('#editar-acuerdo').on('submit', function (e) {
-    e.preventDefault();
-    var datos = $(this).serializeArray();
-    $.ajax({
-        type: $(this).attr('method'),
-        data: datos,
-        url: $(this).attr('action'),
-        dataType: 'json',
-        success: function (data) {
-            console.log(data);
-            var resultado = data;
-            if (resultado.respuesta == 'exito') {
-                swal({
-                    title: "Correcto", text: "Se guardo correctamente!",
-                    type: "success",
-                }).then(function () {
-                    location.href = "../vistas/acuerdos_pendientes_vista.php";
-                }
-                );
-            } else {
-                swal(
-                    'Error',
-                    'Hubo un error, no se modifico nada o falta un campo por llenar!',
-                    'error'
-                )
-            }
-        }
-    })
-});
-
-$('.finalizar_registroacuerdo').on('click', function (e) {
-    e.preventDefault();
-    var id = $(this).attr('data-id');
-    var estado = $(this).attr('data-tipo');
-    swal({
-        title: '¿Está Seguro?',
-        text: 'El responsable cumplio con la tarea asignada?',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtontext: 'Si, Finalizar!',
-        cancelButtontext: 'Cancelar'
-    }).then(function () {
+    /********** guardar acuerdo ***********/
+    $('#editar-acuerdo').on('submit', function (e) {
+        e.preventDefault();
+        var datos = $(this).serializeArray();
         $.ajax({
-            type: 'post',
-            data: {
-                'id': id,
-                'acuerdos': 'finalizar'
-            },
-            url: '../Modelos/modelo_' + estado + '.php',
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            dataType: 'json',
             success: function (data) {
-                var resultado = JSON.parse(data);
+                console.log(data);
+                var resultado = data;
                 if (resultado.respuesta == 'exito') {
-                    swal(
-                        'Finalizada!',
-                        'Finalizada con Exito!',
-                        'success'
-                    )
-                    jQuery('[data-id="' + resultado.id_eliminado + '"]').parents('tr').remove();
+                    swal({
+                        title: "Correcto", text: "Se guardo correctamente!",
+                        type: "success",
+                    }).then(function () {
+                        location.href = "../vistas/acuerdos_pendientes_vista.php";
+                    }
+                    );
                 } else {
                     swal(
-                        'Error!',
-                        'No se pudo Finalizada',
+                        'Error',
+                        'Hubo un error, no se modifico nada o falta un campo por llenar!',
                         'error'
                     )
                 }
             }
         })
     });
-});
 
-
-$('.cancelar_registroacuerdo').on('click', function (e) {
-    e.preventDefault();
-    var id = $(this).attr('data-id');
-    var estado = $(this).attr('data-tipo');
-    swal({
-        title: '¿Está Seguro?',
-        text: 'Si lo cancelar no podra revertirlo y se notificara al responsable!!',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtontext: 'Si, Cancelarlo!',
-        cancelButtontext: 'Cancelar'
-    }).then(function () {
-        $.ajax({
-            type: 'post',
-            data: {
-                'id': id,
-                'acuerdo': 'cancelar'
-            },
-            url: '../Modelos/modelo_' + estado + '.php',
-            success: function (data) {
-                var resultado = JSON.parse(data);
-                if (resultado.respuesta == 'exito') {
-                    swal(
-                        'Cancelarlo!',
-                        'Cancelarlo con Exito!',
-                        'success'
-                    )
-                    jQuery('[data-id="' + resultado.id_eliminado + '"]').parents('tr').remove();
-                } else {
-                    swal(
-                        'Error!',
-                        'No se pudo Cancelar',
-                        'error'
-                    )
+    $('.finalizar_registroacuerdo').on('click', function (e) {
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        var estado = $(this).attr('data-tipo');
+        swal({
+            title: '¿Está Seguro?',
+            text: 'El responsable cumplio con la tarea asignada?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtontext: 'Si, Finalizar!',
+            cancelButtontext: 'Cancelar'
+        }).then(function () {
+            $.ajax({
+                type: 'post',
+                data: {
+                    'id': id,
+                    'acuerdos': 'finalizar'
+                },
+                url: '../Modelos/modelo_' + estado + '.php',
+                success: function (data) {
+                    var resultado = JSON.parse(data);
+                    if (resultado.respuesta == 'exito') {
+                        swal({
+                            title: 'Finalizada!',
+                            text: 'Finalizada con Exito!',
+                            type: 'success'
+                        }).then(function () {
+                            location.href = "../Vistas/acuerdos_pendientes_vista.php";
+                        }
+                        );
+                    } else {
+                        swal(
+                            'Error!',
+                            'No se pudo Finalizada',
+                            'error'
+                        )
+                    }
                 }
-            }
-        })
+            })
+        });
     });
-});
+
+
+
+
+    $('.cancelar_registroacuerdo').on('click', function (e) {
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        var estado = $(this).attr('data-tipo');
+        swal({
+            title: '¿Está Seguro?',
+            text: 'Si lo cancelar no podra revertirlo y se notificara al responsable!!',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtontext: 'Si, Cancelarlo!',
+            cancelButtontext: 'Cancelar'
+        }).then(function () {
+            $.ajax({
+                type: 'post',
+                data: {
+                    'id': id,
+                    'acuerdo': 'cancelar'
+                },
+                url: '../Modelos/modelo_' + estado + '.php',
+                success: function (data) {
+                    var resultado = JSON.parse(data);
+                    if (resultado.respuesta == 'exito') {
+                        swal({
+                            title: 'Cancelado!',
+                            text: 'cancelado con Exito!',
+                            type: 'success'
+                        }).then(function () {
+                            location.href = "../Vistas/acuerdos_pendientes_vista.php";
+                        }
+                        );
+                    } else {
+                        swal(
+                            'Error!',
+                            'No se pudo Cancelar',
+                            'error'
+                        )
+                    }
+                }
+            })
+        });
+    });
 
 
 
