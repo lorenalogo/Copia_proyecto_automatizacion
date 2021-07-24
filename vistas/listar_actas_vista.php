@@ -82,7 +82,7 @@ ob_end_flush();
                         <div class="tab-content" id="custom-tabs-four-tabContent">
                             <div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
                                 <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_manactareunion.php">
-                                    <table id="tabla11" class="table table-bordered table-striped">
+                                    <table id="listar_actas" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th>No. Acta</th>
@@ -122,7 +122,7 @@ ob_end_flush();
                                                     <td>
                                                         <a target="_blank" href="../vistas/archivos_acta_vista.php?id=<?php echo $reunion['id_acta'] ?>">archivos</a>
                                                     </td>
-                                                    <td><a target="_blank" href="../vistas/reporte_acta.php?id=<?php echo $reunion['id_acta'] ?>">VER ACTA</a></td>
+                                                    <td><a target="_blank" href="../Controlador/reporte_acta.php?id=<?php echo $reunion['id_acta'] ?>">VER ACTA</a></td>
                                                 </tr>
                                             <?php
                                             }  ?>
@@ -148,34 +148,14 @@ ob_end_flush();
     </div>
     <script type="text/javascript">
         $(function() {
-            $('#tabla11').DataTable({
+            $('#listar_actas').DataTable({
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,
                 "ordering": true,
                 "info": true,
                 "autoWidth": true,
-                "responsive": true,
-                language: {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Entradas",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                },
+                "responsive": true
             });
         });
     </script>
@@ -193,3 +173,4 @@ ob_end_flush();
 <script src="../plugins/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
 <script src="../plugins/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
 <script src="../js/tipoacta-ajax.js"></script>
+<script src="../js/pdf_mantenimientos.js"></script>
