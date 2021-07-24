@@ -217,7 +217,7 @@ class myPDF extends FPDF
 
         global $instancia_conexion;
         $sql="SELECT Concat_ws(' ', pe.nombres, pe.apellidos)nombres, ac.nombre_acuerdo, ac.descripcion,
-                ac.fecha_expiracion, ac.fecha_resolucion
+                ac.fecha_expiracion, ac.resolucion
                 FROM tbl_acta a
                 INNER JOIN tbl_acuerdos ac ON ac.id_acta = a.id_acta
                 INNER JOIN tbl_participantes pa ON pa.id_participante = ac.id_participante
@@ -232,7 +232,7 @@ class myPDF extends FPDF
             $this->Cell(50, 7, utf8_decode($acuerdo->nombre_acuerdo), 1, 0,'L');
             $this->Cell(100, 7, utf8_decode($acuerdo->descripcion), 1, 0, 'L');
             $this->Cell(40, 7, utf8_decode($acuerdo->fecha_expiracion), 1, 0, 'C');
-            $this->Cell(40, 7, utf8_decode($acuerdo->fecha_resolucion), 1, 0, 'C');            
+            $this->Cell(40, 7, utf8_decode($acuerdo->resolucion), 1, 0, 'C');            
             $this->Ln();
 
             
@@ -255,16 +255,16 @@ class myPDF extends FPDF
         $this->Ln();
 
         global $instancia_conexion;
-        $sql="SELECT ar.resumen, tr.tipo_recurso FROM tbl_acta a
+        $sql="SELECT ar.formato, tr.tipo_recurso FROM tbl_acta a
                 INNER JOIN tbl_acta_recursos ar ON ar.id_acta = a.id_acta
-                INNER JOIN tbl_tipo_recurso tr ON tr.id_tipo_recurso = ar.id_tipo_recurso
+                INNER JOIN tbl_tipo_recurso tr ON tr.id_recurso = ar.id_recursos
                 WHERE a.id_acta= '$_GET[id];'";
         $stmt = $instancia_conexion->ejecutarConsulta($sql);
 
         while ($archivos = $stmt->fetch_object()) {
            
             $this->SetFont('Times', '', 8);
-            $this->Cell(70, 7, utf8_decode($archivos->resumen), 1, 0, 'L');
+            $this->Cell(70, 7, utf8_decode($archivos->formato), 1, 0, 'L');
             $this->Cell(60, 7, utf8_decode($archivos->tipo_recurso), 1, 0,'L');        
             $this->Ln();
 
