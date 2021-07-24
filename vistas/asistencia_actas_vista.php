@@ -81,7 +81,7 @@ ob_end_flush();
                         <div class="tab-content" id="custom-tabs-four-tabContent">
                             <div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
                                 <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_manactareunion.php">
-                                    <table id="tabla11" class="table table-bordered table-striped">
+                                    <table id="asistencia_acta" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th>No. Acta</th>
@@ -116,7 +116,7 @@ ob_end_flush();
                                             INNER JOIN tbl_reunion t3 ON
                                                 t3.id_reunion = t1.id_reunion
                                             WHERE
-                                                t1.id_estado=3 
+                                                t1.id_estado=1
                                             GROUP BY
                                                 t1.id_acta";
                                                 $resultado = $mysqli->query($sql);
@@ -131,7 +131,7 @@ ob_end_flush();
                                                     <td style="color: green;"><?php echo $reunion['asistio']; ?>%</td>
                                                     <td style="color: red;"><?php echo $reunion['inasistencia']; ?>%</td>
                                                     <td style="color:rgb(129, 129, 40);"><?php echo $reunion['excusa']; ?>%</td>
-                                                    <td><a target="_blank" href="../vistas/reporte_asistenciaxacta_vista.php?id=<?php echo $reunion['id_reunion'] ?>">VER REPORTE</a></td>
+                                                    <td><a target="_blank" href="../Controlador/reporte_asistencia_acta.php?id=<?php echo $reunion['id_reunion'] ?>">VER REPORTE</a></td>
                                                 </tr>
                                             <?php
                                             }  ?>
@@ -156,11 +156,9 @@ ob_end_flush();
     <!-- /.content-wrapper -->
     </div>
     <script type="text/javascript">
-           function ventana() {
-            window.open("../Controlador/reporte_controlador.php", "REPORTE");
-        }
+           
         $(function() {
-            $('#tabla11').DataTable({
+            $('#asistencia_acta').DataTable({
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,
@@ -186,7 +184,6 @@ ob_end_flush();
 <script src="../js/tipoacta-ajax.js"></script>
 <script type="text/javascript" src="../js/funciones_registro_docentes.js"></script>
 <script type="text/javascript" src="../js/validar_registrar_docentes.js"></script>
-
 <script type="text/javascript" src="../js/pdf_mantenimientos.js"></script>
 
 
