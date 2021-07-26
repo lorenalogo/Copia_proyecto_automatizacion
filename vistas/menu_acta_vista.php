@@ -14,7 +14,7 @@ if (permiso_ver('150') == '1') {
 
     $_SESSION['listar_actas'] = "...";
 } else {
-    $_SESSION['listar_Actas'] = "No tiene permisos para visualizar";
+    $_SESSION['listar_actas'] = "No tiene permisos para visualizar";
 }
 
 ?>
