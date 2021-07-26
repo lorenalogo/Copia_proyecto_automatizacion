@@ -7,7 +7,7 @@ require_once('../clases/Conexion.php');
 require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
-$Id_objeto = 103;
+$Id_objeto = 153;
 $visualizacion = permiso_ver($Id_objeto);
 if ($visualizacion == 0) {
     echo '<script type="text/javascript">
@@ -18,10 +18,10 @@ if ($visualizacion == 0) {
                                    showConfirmButton: false,
                                    timer: 3000
                                 });
-                           window.location = "../vistas/menu_roles_vista.php";
+                           window.location = "../vistas/menu_acuerdo_vista.php";
                             </script>';
 } else {
-    bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A Lista de Reuniones');
+    bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A Lista de Acuerdos');
 }
 
 ob_end_flush();
