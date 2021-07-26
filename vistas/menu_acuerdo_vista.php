@@ -17,7 +17,7 @@ if (permiso_ver('152') == '1') {
     $_SESSION['acuerdos_pendientes_menu'] = "No tiene permisos para visualizar";
 }
 
-if (permiso_ver('152') == '1') {
+if (permiso_ver('153') == '1') {
 
     $_SESSION['listar_acuerdos_menu'] = "...";
 } else {
