@@ -116,13 +116,10 @@ class myPDF extends FPDF
        
     }
     function viewTable()
-    {
-
-    
-      
-        
+    {  
+         
         global $instancia_conexion;
-        $sql="SELECT concat_ws(' ', pe.nombres, pe.apellidos)nombres, (ep.estado)'asistencia' 
+        $sql="SELECT DISTINCT concat_ws(' ', pe.nombres, pe.apellidos)nombres, (ep.estado)'asistencia' 
                 FROM tbl_acta a 
                 INNER JOIN tbl_participantes pa ON pa.id_reunion = a.id_reunion
                 INNER JOIN tbl_personas pe ON pe.id_persona = pa.id_persona
