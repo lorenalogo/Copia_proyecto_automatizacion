@@ -222,7 +222,7 @@ class myPDF extends FPDF
                 INNER JOIN tbl_acuerdos ac ON ac.id_acta = a.id_acta
                 INNER JOIN tbl_participantes pa ON pa.id_participante = ac.id_participante
                 INNER JOIN tbl_personas pe ON pe.id_persona = pa.id_persona
-                WHERE a.id_acta= '$_GET[id]'";
+                WHERE ac.id_acta= '$_GET[id]'";
         $stmt = $instancia_conexion->ejecutarConsulta($sql);
 
         while ($acuerdo = $stmt->fetch_object()) {
@@ -249,16 +249,12 @@ class myPDF extends FPDF
         $this->Cell(70, 7, utf8_decode('Archivo'), 1, 0, 'C');
         $this->Cell(60, 7, utf8_decode('Tipo Archivo'), 1, 0, 'C');
         $this->Ln();
-        $this->SetFont('Times', '', 10);             
-        $this->Cell(70, 7, utf8_decode(' REU-0104.mp4'), 1, 0, 'C');
-        $this->Cell(60, 7, utf8_decode('Asistencia-teams-0104.svc'), 1, 0, 'C');
-        $this->Ln();
 
         global $instancia_conexion;
         $sql="SELECT ar.formato, tr.tipo_recurso FROM tbl_acta a
                 INNER JOIN tbl_acta_recursos ar ON ar.id_acta = a.id_acta
                 INNER JOIN tbl_tipo_recurso tr ON tr.id_recurso = ar.id_recursos
-                WHERE a.id_acta= '$_GET[id];'";
+                WHERE ar.id_acta= '$_GET[id];'";
         $stmt = $instancia_conexion->ejecutarConsulta($sql);
 
         while ($archivos = $stmt->fetch_object()) {
