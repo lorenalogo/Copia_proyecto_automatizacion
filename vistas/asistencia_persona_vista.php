@@ -102,9 +102,9 @@ ob_end_flush();
                                             <?php
                                             try {
                                                 $sql = "SELECT pe.id_persona, concat_ws(' ', pe.nombres, pe.apellidos)nombres, 
-                                                ROUND((SUM(pa.id_estado_participante = 1)/COUNT(pa.id_estado_participante))*100,2)asistencia, 
-                                                ROUND((SUM(pa.id_estado_participante = 2)/COUNT(pa.id_estado_participante))*100,2)inasistencia,
-                                                ROUND((SUM(pa.id_estado_participante = 3)/COUNT(pa.id_estado_participante))*100,2)excusa,
+                                                ROUND((SUM(pa.id_estado_participante = 1)/COUNT(pa.id_estado_participante))*100)asistencia, 
+                                                ROUND((SUM(pa.id_estado_participante = 2)/COUNT(pa.id_estado_participante))*100)inasistencia,
+                                                ROUND((SUM(pa.id_estado_participante = 3)/COUNT(pa.id_estado_participante))*100)excusa,
                                                 j.jornada
                                                 from tbl_personas pe
                                                 INNER JOIN tbl_participantes pa ON pa.id_persona = pe.id_persona
