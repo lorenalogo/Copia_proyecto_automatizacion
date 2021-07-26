@@ -235,8 +235,7 @@ ob_end_flush();
                                                                 $sql = "SELECT
                                                     t1.id_persona,
                                                     CONCAT_WS(' ', t1.nombres, t1.apellidos) AS nombres,
-                                                    t3.jornada,
-                                                    t4.invitado
+                                                    t3.jornada
                                                 FROM
                                                     tbl_personas t1
                                                 INNER JOIN tbl_horario_docentes t2 ON
