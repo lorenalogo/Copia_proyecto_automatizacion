@@ -9,7 +9,7 @@ require_once('../clases/funcion_permisos.php');
 $dtz = new DateTimeZone("America/Tegucigalpa");
 $dt = new DateTime("now", $dtz);
 $anio = $dt->format("Y-m");
-$Id_objeto = 103;
+$Id_objeto = 154;
 $visualizacion = permiso_ver($Id_objeto);
 if ($visualizacion == 0) {
     echo '<script type="text/javascript">
@@ -20,10 +20,10 @@ if ($visualizacion == 0) {
                                    showConfirmButton: false,
                                    timer: 3000
                                 });
-                           window.location = "../vistas/menu_roles_vista.php";
+                           window.location = "../vistas/menu_asistencia_vista.php";
                             </script>';
 } else {
-    bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A Lista de Reuniones');
+    bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'Asistencia por actas');
 }
 
 ob_end_flush();
