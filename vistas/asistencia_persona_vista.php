@@ -67,10 +67,10 @@ ob_end_flush();
         </section>
         <!--Pantalla 2-->
 
-        
+
         <div class="card card-default">
             <div class="card-header">
-            <h3 class="card-title">Lista Asistencia por persona</h3>
+                <h3 class="card-title">Lista Asistencia por persona</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
@@ -86,48 +86,89 @@ ob_end_flush();
                         <div class="tab-content" id="custom-tabs-four-tabContent">
                             <div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
                                 <form role="form" name="guardar-tiporeu" id="guardar-tiporeu" method="post" action="../Modelos/modelo_manactareunion.php">
-                                   
-                                <table id="asistencia_persona" class="table table-bordered table-striped" >
+
+                                    <table id="asistencia_persona" class="table table-bordered table-striped">
                                         <thead class="text-center">
                                             <tr>
                                                 <th>Nombre Persona</th>
+                                                <th>No. reuniones</th>
                                                 <th>Asistencia</th>
                                                 <th>Inasistencia</th>
                                                 <th>Excusados</th>
                                                 <th>Tipo Contrato</th>
-                                            
+
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
+                                            $dtz = new DateTimeZone("America/Tegucigalpa");
+                                            $dt = new DateTime("now", $dtz);
+                                            $hoy = $dt->format("Y");
                                             try {
-                                                $sql = "SELECT pe.id_persona, concat_ws(' ', pe.nombres, pe.apellidos)nombres, 
-                                                ROUND((SUM(pa.id_estado_participante = 1)/COUNT(pa.id_estado_participante))*100)asistencia, 
-                                                ROUND((SUM(pa.id_estado_participante = 2)/COUNT(pa.id_estado_participante))*100)inasistencia,
-                                                ROUND((SUM(pa.id_estado_participante = 3)/COUNT(pa.id_estado_participante))*100)excusa,
-                                                j.jornada
-                                                from tbl_personas pe
-                                                INNER JOIN tbl_participantes pa ON pa.id_persona = pe.id_persona
-                                                INNER JOIN tbl_horario_docentes hrd ON hrd.id_persona = pe.id_persona
-                                                INNER JOIN tbl_jornadas j ON j.id_jornada = hrd.id_jornada
-                                                group by nombres";
+                                                $sql = "SELECT
+                                                pe.id_persona,
+                                                CONCAT_WS(' ', pe.nombres, pe.apellidos) nombres,
+                                                COUNT(pa.id_estado_participante) reuniones,
+                                                ROUND(
+                                                    (
+                                                        SUM(pa.id_estado_participante = 1) / COUNT(pa.id_estado_participante)
+                                                    ) * 100
+                                                ) asistencia,
+                                                ROUND(
+                                                    (
+                                                        SUM(pa.id_estado_participante = 2) / COUNT(pa.id_estado_participante)
+                                                    ) * 100
+                                                ) inasistencia,
+                                                ROUND(
+                                                    (
+                                                        SUM(pa.id_estado_participante = 3) / COUNT(pa.id_estado_participante)
+                                                    ) * 100
+                                                ) excusa
+                                            FROM
+                                                tbl_personas pe
+                                            INNER JOIN tbl_participantes pa ON
+                                                pa.id_persona = pe.id_persona
+                                            INNER JOIN tbl_horario_docentes hrd ON
+                                                hrd.id_persona = pe.id_persona
+                                            INNER JOIN tbl_jornadas j ON
+                                                j.id_jornada = hrd.id_jornada
+                                            INNER JOIN tbl_reunion t1 ON
+                                                t1.id_reunion = pa.id_reunion
+                                            WHERE
+                                                t1.fecha LIKE '%$hoy%'
+                                            GROUP BY
+                                                pe.id_persona
+                                            ORDER BY
+                                                nombres ASC";
                                                 $resultado = $mysqli->query($sql);
-                                       
-                                            while ($asistencia = $resultado->fetch_assoc()) { ?>
-                                                <tr>
-                                                    <td><strong><?php echo $asistencia['nombres']; ?></strong></td>
-                                                    <td class="text-center" style="color:rgb(0, 193, 3 );"><?php echo $asistencia['asistencia']; ?>%</td>
-                                                    <td class="text-center" style="color:rgb(178, 0, 0);"><?php echo $asistencia['inasistencia']; ?>%</td>
-                                                    <td class="text-center" style="color:rgb(255, 135, 0);"><?php echo $asistencia['excusa']; ?>%</td>
-                                                    <td class="text-center"><?php echo $asistencia['jornada']; ?></td>
-                                                </tr>
-                                             <?php
-                                             }    
-                                         } catch (Exception $e) {
+
+                                                while ($asistencia = $resultado->fetch_assoc()) { ?>
+                                                    <tr>
+                                                        <td><strong><?php echo $asistencia['nombres']; ?></strong></td>
+                                                        <td><?php echo $asistencia['reuniones']; ?></td>
+                                                        <td class="text-center" style="color:rgb(0, 193, 3 );"><?php echo $asistencia['asistencia']; ?>%</td>
+                                                        <td class="text-center" style="color:rgb(178, 0, 0);"><?php echo $asistencia['inasistencia']; ?>%</td>
+                                                        <td class="text-center" style="color:rgb(255, 135, 0);"><?php echo $asistencia['excusa']; ?>%</td>
+                                                        <td class="text-center"><?php echo $asistencia['jornada']; ?></td>
+                                                    </tr>
+                                            <?php
+                                                }
+                                            } catch (Exception $e) {
                                                 $error = $e->getMessage();
                                                 echo $error;
                                             }  ?>
                                         </tbody>
+                                        <thead class="text-center">
+                                            <tr>
+                                                <th>Nombre Persona</th>
+                                                <th>No. reuniones</th>
+                                                <th>Asistencia</th>
+                                                <th>Inasistencia</th>
+                                                <th>Excusados</th>
+                                                <th>Tipo Contrato</th>
+
+                                            </tr>
+                                        </thead>
                                     </table>
                                 </form>
                             </div>
@@ -148,7 +189,6 @@ ob_end_flush();
     <!-- /.content-wrapper -->
     </div>
     <script type="text/javascript">
-           
         $(function() {
             $('#asistencia_persona').DataTable({
                 "paging": true,
@@ -178,10 +218,3 @@ ob_end_flush();
 <script type="text/javascript" src="../js/validar_registrar_docentes.js"></script>
 
 <script type="text/javascript" src="../js/pdf_mantenimientos.js"></script>
-
-
-
-
-
-
-

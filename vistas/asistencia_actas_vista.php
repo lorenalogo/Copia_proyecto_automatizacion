@@ -62,10 +62,10 @@ ob_end_flush();
         </section>
         <!--Pantalla 2-->
 
-        
+
         <div class="card card-default">
             <div class="card-header">
-            <h3 class="card-title">listado de Asistencia por acta</h3>
+                <h3 class="card-title">listado de Asistencia por acta</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
@@ -86,6 +86,7 @@ ob_end_flush();
                                             <tr>
                                                 <th>No. Acta</th>
                                                 <th>Nombre Reunión</th>
+                                                <th>No. participantes</th>
                                                 <th>Asistencia</th>
                                                 <th>Inasistencia</th>
                                                 <th>Excusados</th>
@@ -97,9 +98,10 @@ ob_end_flush();
                                             <?php
                                             try {
                                                 $sql = "SELECT
-                                                t1.id_reunion,
+                                                t1.id_acta,
                                                 t1.num_acta,
                                                 t3.nombre_reunion,
+                                                COUNT(t2.id_persona) as n_personas,
                                                 ROUND(
                                                     SUM(t2.id_estado_participante = 1) / COUNT(t2.id_persona) * 100
                                                 ) AS asistio,
@@ -116,7 +118,7 @@ ob_end_flush();
                                             INNER JOIN tbl_reunion t3 ON
                                                 t3.id_reunion = t1.id_reunion
                                             WHERE
-                                                t1.id_estado=3
+                                                t1.id_estado = 3
                                             GROUP BY
                                                 t1.id_acta";
                                                 $resultado = $mysqli->query($sql);
@@ -128,14 +130,27 @@ ob_end_flush();
                                                 <tr>
                                                     <td><?php echo $reunion['num_acta']; ?></td>
                                                     <td><?php echo $reunion['nombre_reunion']; ?></td>
+                                                    <td><?php echo $reunion['n_personas']; ?></td>
                                                     <td style="color: green;"><?php echo $reunion['asistio']; ?>%</td>
                                                     <td style="color: red;"><?php echo $reunion['inasistencia']; ?>%</td>
                                                     <td style="color:rgb(129, 129, 40);"><?php echo $reunion['excusa']; ?>%</td>
-                                                    <td><a target="_blank" href="../Controlador/reporte_asistencia_acta.php?id=<?php echo $reunion['id_reunion'] ?>">VER REPORTE</a></td>
+                                                    <td><a target="_blank" href="../Controlador/reporte_asistencia_acta.php?id=<?php echo $reunion['id_acta'] ?>">VER REPORTE</a></td>
                                                 </tr>
                                             <?php
                                             }  ?>
                                         </tbody>
+                                        <thead>
+                                            <tr>
+                                                <th>No. Acta</th>
+                                                <th>Nombre Reunión</th>
+                                                <th>No. participantes</th>
+                                                <th>Asistencia</th>
+                                                <th>Inasistencia</th>
+                                                <th>Excusados</th>
+                                                <th>Detalle</th>
+                                                <!-- <th>Acta</th>-->
+                                            </tr>
+                                        </thead>
                                     </table>
                                 </form>
                             </div>
@@ -156,7 +171,6 @@ ob_end_flush();
     <!-- /.content-wrapper -->
     </div>
     <script type="text/javascript">
-           
         $(function() {
             $('#asistencia_acta').DataTable({
                 "paging": true,
@@ -185,10 +199,3 @@ ob_end_flush();
 <script type="text/javascript" src="../js/funciones_registro_docentes.js"></script>
 <script type="text/javascript" src="../js/validar_registrar_docentes.js"></script>
 <script type="text/javascript" src="../js/pdf_mantenimientos.js"></script>
-
-
-
-
-
-
-
