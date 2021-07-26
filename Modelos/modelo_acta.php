@@ -48,23 +48,38 @@ if ($_POST['acta'] == 'actualizar') {
             $stmt->bind_param("iii", $id_estado_participante, $id_reunion, $id_persona);
             $stmt->execute();
         }
+
+        //almacenamos las propiedades de las imagenes
+        $name_array     = $_FILES['archivo_acta']['name'];
+        $tmp_name_array = $_FILES['archivo_acta']['tmp_name'];
+        $type_array     = $_FILES['archivo_acta']['type'];
+        $size_array     = $_FILES['archivo_acta']['size'];
+        $error_array    = $_FILES['archivo_acta']['error'];
+
         $directorio = "../archivos/archivoactas/$id_registro/";
         if (!is_dir($directorio)) {
             mkdir($directorio, 0755, true);
         }
-        if (move_uploaded_file($_FILES['archivo_acta']['tmp_name'], $directorio . $_FILES['archivo_acta']['name'])) {
-            $url = $directorio;
-            $nombrearchivo =$_FILES['archivo_acta']['name'];
-            $formato = pathinfo($nombrearchivo, PATHINFO_EXTENSION);  
-            $url_resultado = "se subio correctamente";
-        } else {
-            $respuesta = array(
-                'respuesta' => error_get_last()
-            );
+        for ($i = 0; $i < count($tmp_name_array); $i++) {
+            if (move_uploaded_file($tmp_name_array[$i], $directorio . $name_array[$i])) {
+                $url = $directorio;
+                $nombrearchivo = $name_array[$i];
+                $formato = pathinfo($nombrearchivo, PATHINFO_EXTENSION);
+                $url_resultado = "se subio correctamente";
+                $stmt = $mysqli->prepare('INSERT INTO tbl_acta_recursos(id_acta, url, fecha_carga, redactor,nombre,formato) VALUES (?,?,?,?,?,?)');
+                $stmt->bind_param("ississ", $id_registro, $url, $hoy, $redactor, $nombrearchivo, $formato);
+                $stmt->execute();
+
+
+                
+            } else {
+                $respuesta = array(
+                    'respuesta' => error_get_last()
+                );
+            }
         }
-        $stmt = $mysqli->prepare('INSERT INTO tbl_acta_recursos(id_acta, url, fecha_carga, redactor,nombre,formato) VALUES (?,?,?,?,?,?)');
-        $stmt->bind_param("ississ", $id_registro,$url,$hoy,$redactor,$nombrearchivo,$formato);
-        $stmt->execute();
+
+
         if ($stmt->affected_rows) {
             $respuesta = array(
                 'respuesta' => 'exito',
@@ -102,7 +117,7 @@ if ($_POST['recurso'] == 'borrar') {
                 'respuesta' => 'error'
             );
         }
-        
+
         $stmt->close();
         $mysqli->close();
     } catch (Exception $e) {

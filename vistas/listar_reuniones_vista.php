@@ -160,15 +160,6 @@ ob_end_flush();
                 "info": true,
                 "autoWidth": true,
                 "responsive": true,
-                "language": {
-                    "info": "Mostrando _START_ hasta _END_ de _TOTAL_ entradas",
-                    "lengthMenu": "Mostrar _MENU_ entradas",
-                    "search": "Buscar:",
-                    "paginate": {
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                },
             });
         });
     </script>

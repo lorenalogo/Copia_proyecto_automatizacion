@@ -310,7 +310,7 @@ ob_end_flush();
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label for="archivo_acta">Archivo:</label>
-                                                <input class="form-control" type="file" id="archivo_acta" name="archivo_acta" accept="<?php echo $aceptados['Valor']; ?>">
+                                                <input class="form-control" type="file" id="archivo_acta" multiple name="archivo_acta[]" accept="<?php echo $aceptados['Valor']; ?>">
                                                 <p class="help-block">añada el archivo aqui</p>
                                             </div>
                                             <div class="col-md-8">
