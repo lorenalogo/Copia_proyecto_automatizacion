@@ -3,46 +3,25 @@ require_once('../vistas/pagina_inicio_vista.php');
 require_once('../clases/Conexion.php');
 require_once('../clases/funcion_visualizar.php');
 
-if (permiso_ver('49') == '1') {
+if (permiso_ver('146') == '1') {
 
-    $_SESSION['menu_docentes_vista'] = "...";
+    $_SESSION['nueva_reunion'] = "...";
 } else {
-    $_SESSION['menu_docentes_vista'] = "No tiene permisos para visualizar";
+    $_SESSION['nueva_reunion'] = "No tiene permisos para visualizar";
 }
 
-if (permiso_ver('50') == '1') {
+if (permiso_ver('147') == '1') {
 
-    $_SESSION['registro_docentes_vista'] = "...";
+    $_SESSION['reuniones_pendientes'] = "...";
 } else {
-    $_SESSION['registro_docentes_vista'] = "No tiene permisos para visualizar";
+    $_SESSION['reuniones_pendientes'] = "No tiene permisos para visualizar";
 }
 
-if (permiso_ver('51') == '1') {
+if (permiso_ver('148') == '1') {
 
-    $_SESSION['gestion_docentes_vista'] = "...";
+    $_SESSION['lista_reunion'] = "...";
 } else {
-    $_SESSION['gestion_docentes_vista'] = "No tiene permisos para visualizar";
-}
-
-if (permiso_ver('52') == '1') {
-
-    $_SESSION['comisiones_actividades_docentes_vista'] = "...";
-} else {
-    $_SESSION['comisiones_actividades_docentes_vista'] = "No tiene permisos para visualizar";
-}
-
-if (permiso_ver('53') == '1') {
-
-    $_SESSION['reporte_carga_academica_docentes_vista'] = "...";
-} else {
-    $_SESSION['reporte_carga_academica_docentes_vista'] = "No tiene permisos para visualizar";
-}
-
-if (permiso_ver('54') == '1') {
-
-    $_SESSION['perfil_docentes_vista'] = "...";
-} else {
-    $_SESSION['perfil_docentes_vista'] = "No tiene permisos para visualizar";
+    $_SESSION['lista_reunion'] = "No tiene permisos para visualizar";
 }
 
 
@@ -87,7 +66,7 @@ if (permiso_ver('54') == '1') {
                             <div class="small-box bg-light">
                                 <div class="inner">
                                     <h4>Agendar Nueva Reunión </h4>
-                                    <p><?php echo $_SESSION['registro_docentes_vista']; ?></p>
+                                    <p><?php echo $_SESSION['nueva_reunion']; ?></p>
                                 </div>
                                 <div class="icon">
                                 <i class="far fa-calendar-plus"></i>
@@ -109,7 +88,7 @@ if (permiso_ver('54') == '1') {
                             <div class="small-box bg-primary">
                                 <div class="inner">
                                     <h4>Reuniones Pendientes</h4>
-                                    <p><?php echo $_SESSION['gestion_docentes_vista']; ?></p>
+                                    <p><?php echo $_SESSION['reuniones_pendientes']; ?></p>
                                 </div>
                                 <div class="icon">
                                 <i class="far fa-clock"></i>
@@ -134,7 +113,7 @@ if (permiso_ver('54') == '1') {
                             <div class="small-box bg-success">
                                 <div class="inner">
                                     <h4>Listar Reuniones</h4>
-                                    <p><?php echo $_SESSION['reporte_carga_academica_docentes_vista']; ?></p>
+                                    <p><?php echo $_SESSION['lista_reunion']; ?></p>
                                 </div>
                                 <div class="icon">
                                 <i class="fas fa-list-ol"></i>
