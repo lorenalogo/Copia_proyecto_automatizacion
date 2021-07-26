@@ -116,7 +116,7 @@ ob_end_flush();
                                             INNER JOIN tbl_reunion t3 ON
                                                 t3.id_reunion = t1.id_reunion
                                             WHERE
-                                                t1.id_estado=1
+                                                t1.id_estado=3
                                             GROUP BY
                                                 t1.id_acta";
                                                 $resultado = $mysqli->query($sql);

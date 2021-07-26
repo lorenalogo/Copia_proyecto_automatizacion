@@ -20,20 +20,18 @@ class myPDF extends FPDF
         //$fecha = date("Y-m-d ");
       
             $this->ln(7);
-            $this->Image('../dist/img/logo_ia.jpg', 30, 10, 35);
+            $this->Image('../dist/img/logo_ia.jpg', 30, 10, 40);
             $this->SetFont('Arial', 'B', 12);
-            $this->Cell(330, 10, utf8_decode("UNIVERSIDAD NACIONAL AUTÓNOMA DE HONDURAS"), 0, 0, 'C');
+            $this->Cell(300, 10, utf8_decode("UNIVERSIDAD NACIONAL AUTÓNOMA DE HONDURAS"), 0, 0, 'C');
             $this->ln(7);
-            $this->Cell(325, 10, utf8_decode("FACULTAD DE CIENCIAS ECONÓMICAS, ADMINISTRATIVAS Y CONTABLES"), 0, 0, 'C');
+            $this->Cell(295, 10, utf8_decode("FACULTAD DE CIENCIAS ECONÓMICAS, ADMINISTRATIVAS Y CONTABLES"), 0, 0, 'C');
             $this->ln(7);
-            $this->Cell(330, 10, utf8_decode("DEPARTAMENTO DE INFORMÁTICA "), 0, 0, 'C');
+            $this->Cell(300, 10, utf8_decode("DEPARTAMENTO DE INFORMÁTICA "), 0, 0, 'C');
             $this->ln(10);
-            $this->SetFont('times', 'B', 20);
-            $this->Cell(330, 10, utf8_decode("REPORTE DE ACTA"), 0, 0, 'C');
-            $this->ln(17);
             $this->SetFont('Arial', '', 12);
-            $this->Cell(265, 10, "FECHA: " . $fecha, 0, 0, 'R');
+            $this->Cell(280, 10, "FECHA: " . $fecha, 0, 0, 'R');
             $this->ln();
+
             $this->SetFont('Arial', 'B', 18);
 
             global $instancia_conexion;
@@ -46,24 +44,25 @@ class myPDF extends FPDF
            
             while ($datos = $stmt->fetch_object()) {
            
-            $this->Cell(330, 10, "Acta ".utf8_decode($datos-> num_acta), 0, 0, 'C');
+            $this->Cell(300, 10, "REPORTE DE ACTA ".utf8_decode($datos-> num_acta), 0, 0, 'C');
             $this->ln();
             $this->ln();
            
-            $this->SetX(120);
+            $this->SetX(90);
             $this->SetFont('Arial', '', 14);
-            $this->Cell(80, 7, utf8_decode("Acta N°.     : ".$datos->num_acta), 0, 0, 'L');
+            $this->Cell(110, 7, utf8_decode("Acta N°.     : ".$datos->num_acta), 0, 0, 'L');
             $this->Cell(80, 7, utf8_decode("Fecha        : ".$datos->fecha), 0, 0, 'L');
             $this->ln();
 
-            $this->SetX(120);
-            $this->Cell(80, 7, utf8_decode("Modalidad : ".$datos->tipo), 0, 0, 'L');
+            $this->SetX(90);
+            $this->Cell(110, 7, utf8_decode("Modalidad  : ".$datos->tipo), 0, 0, 'L');
             $this->Cell(80, 7, utf8_decode("Hora Inicio : ".$datos->hora_inicio), 0, 0, 'L');
             $this->ln();
 
-            $this->SetX(120);
-            $this->Cell(80, 7, utf8_decode("Lugar        : ".$datos->lugar), 0, 0, 'L');
+            $this->SetX(90);
+            $this->Cell(110, 7, utf8_decode("Lugar         : ".$datos->lugar), 0, 0, 'L');
             $this->Cell(80, 7, utf8_decode("Hora Final  : ".$datos->hora_final), 0, 0, 'L');
+            $this->ln();
             $this->ln();
             $this->ln();
 
@@ -82,13 +81,14 @@ class myPDF extends FPDF
     {
         $this->SetX(50);
         $this->SetFont('Times', 'B', 16);
+        $this->SetFillColor(150,125,255);
         $this->Cell(60, 7, utf8_decode("Promedio de Asistencia"), 0, 0, 'C');
         $this->Ln();
         $this->SetFont('Times', 'B', 12);
         $this->SetLineWidth(0.3);
         $this->SetX(50);
-        $this->Cell(60, 7, utf8_decode("N°. Acta"), 1, 0, 'C');
-        $this->Cell(60, 7, utf8_decode("Nombre reunión"), 1, 0, 'C');
+        $this->Cell(70, 7, utf8_decode("N°. Acta"), 1, 0, 'C');
+        $this->Cell(75, 7, utf8_decode("Nombre reunión"), 1, 0, 'C');
         $this->Cell(40, 7, "Asistencia", 1, 0, 'C');
         $this->Cell(40, 7, "Inasistencia", 1, 0, 'C');
         $this->Cell(40, 7, "Excusado", 1, 0, 'C');
@@ -118,8 +118,8 @@ class myPDF extends FPDF
   
         $this->SetX(50);
         $this->SetFont('Times', '', 12);
-        $this->Cell(60, 7, utf8_decode($total_asistencia-> num_acta), 1, 0, 'C');
-        $this->Cell(60, 7, utf8_decode($total_asistencia->nombre_reunion), 1, 0, 'C');
+        $this->Cell(70, 7, utf8_decode($total_asistencia-> num_acta), 1, 0, 'C');
+        $this->Cell(75, 7, utf8_decode($total_asistencia->nombre_reunion), 1, 0, 'C');
         $this->Cell(40, 7, utf8_decode($total_asistencia->asistio.'%'), 1, 0, 'C');
         $this->Cell(40, 7, utf8_decode($total_asistencia->inasistencia.'%'), 1, 0, 'C');
         $this->Cell(40, 7, utf8_decode($total_asistencia->excusa.'%'), 1, 0, 'C');
@@ -139,10 +139,11 @@ class myPDF extends FPDF
         $this->SetFont('Times', 'B', 12);
         $this->SetLineWidth(0.3);
         $this->SetX(50);
-        $this->Cell(90, 7, "Nombres", 1, 0, 'C');
-        $this->Cell(70, 7, "Asistencias", 1, 0, 'C');
-        $this->Cell(80, 7, "Firma", 1, 0, 'C');
+        $this->Cell(100, 7, "Nombres", 1, 0, 'C');
+        $this->Cell(70, 7, "Estado Asistencia", 1, 0, 'C');
+        $this->Cell(90, 7, "Firma", 1, 0, 'C');
         $this->ln();
+        
 
 
        
@@ -165,9 +166,9 @@ class myPDF extends FPDF
         while ($lista = $stmt->fetch_object()) {
             $this->SetX(50);
             $this->SetFont('Times', '', 12);
-            $this->Cell(90, 7, utf8_decode($lista->nombres), 1, 0, 'L');
-            $this->Cell(70, 7, utf8_decode($lista->asistencia), 1, 0, 'C');
-            $this->Cell(80, 7, '', 1, 0, 'C');
+            $this->Cell(100, 13, utf8_decode($lista->nombres), 1, 0, 'L');
+            $this->Cell(70, 13, utf8_decode($lista->asistencia), 1, 0, 'C');
+            $this->Cell(90, 13, '', 1, 0, 'C');
             $this->ln();
         }
     }
@@ -188,52 +189,61 @@ class myPDF extends FPDF
             $this->Ln();
         
             $this->SetFont('Times', 'B', 14);
-            $this->Cell(200, 7, utf8_decode('Asunto'), 0, 0, 'L');
+            $this->Cell(300, 7, utf8_decode('Asunto'), 0, 0, 'L');
             $this->ln();
-            $this->SetFont('Times', '', 12);
-            $this->MultiCell(300, 6, utf8_decode($agenda->asunto), 0,'L', false);
+            $this->SetFont('Times', '', 14);
+            $this->MultiCell(350, 7, utf8_decode($agenda->asunto), 0,'L', );
             $this->ln();
             $this->SetFont('Times', 'B', 14);
-            $this->Cell(200, 7, utf8_decode('Agenda Propuesta'), 0, 0, 'L');
+            $this->Cell(350, 7, utf8_decode('Agenda Propuesta'), 0, 0, 'L');
             $this->ln();
-            $this->SetFont('Times', '', 12);
-            $this->MultiCell(300, 6, utf8_decode($agenda->agenda_propuesta), 0, 'J', false);
+            $this->SetFont('Times', '', 14);
+            $this->MultiCell(300, 7, utf8_decode($agenda->agenda_propuesta), 0, 'J');
             $this->ln();
         }
     }
 
     function acuerdos()
     {  
-        $this->SetFont('Times', 'B', 14);             
+        $this->SetFont('Times', 'B', 16);             
         $this->Cell(60, 7, utf8_decode('Acuerdos'), 0, 0, 'L');
         $this->Ln();
         $this->SetFont('Times', 'B', 12);             
-        $this->Cell(70, 7, utf8_decode('Responsable'), 1, 0, 'C');
-        $this->Cell(50, 7, utf8_decode('Nombre de Acuerdo'), 1, 0, 'C');
+        $this->Cell(75, 7, utf8_decode('Responsable'), 1, 0, 'C');
+        $this->Cell(55, 7, utf8_decode('Nombre de Acuerdo'), 1, 0, 'C');
         $this->Cell(100, 7, utf8_decode('Descripción'), 1, 0, 'C');
-        $this->Cell(40, 7, utf8_decode('Fecha Expiración'), 1, 0, 'C');
-        $this->Cell(40, 7, utf8_decode('Fecha Resolución'), 1, 0, 'C');
+        $this->Cell(30, 7, utf8_decode('F. Expiración'), 1, 0, 'C');
+        $this->Cell(30, 7, utf8_decode('Estado'), 1, 0, 'C');
         $this->Ln();
+        
 
         global $instancia_conexion;
-        $sql="SELECT Concat_ws(' ', pe.nombres, pe.apellidos)nombres, ac.nombre_acuerdo, ac.descripcion,
-                ac.fecha_expiracion, ac.resolucion
-                FROM tbl_acta a
-                INNER JOIN tbl_acuerdos ac ON ac.id_acta = a.id_acta
-                INNER JOIN tbl_participantes pa ON pa.id_participante = ac.id_participante
-                INNER JOIN tbl_personas pe ON pe.id_persona = pa.id_persona
-                WHERE ac.id_acta= '$_GET[id]'";
+        $sql="SELECT
+        CONCAT_WS(' ', t3.nombres, t3.apellidos) nombres,
+        t1.nombre_acuerdo,
+        t1.descripcion,
+        t1.fecha_expiracion,
+        t2.estado_acuerdo
+    FROM
+        tbl_acuerdos t1
+    INNER JOIN tbl_estado_acuerdo t2 ON
+        t2.id_estado = t1.id_estado
+    INNER JOIN tbl_personas t3 ON
+        t3.id_persona = t1.id_participante
+    WHERE
+        t1.id_acta = '$_GET[id]'";
         $stmt = $instancia_conexion->ejecutarConsulta($sql);
 
         while ($acuerdo = $stmt->fetch_object()) {
            
             $this->SetFont('Times', '', 10);
-            $this->Cell(70, 7, utf8_decode($acuerdo->nombres), 1, 0, 'L');
-            $this->Cell(50, 7, utf8_decode($acuerdo->nombre_acuerdo), 1, 0,'L');
+            $this->Cell(75, 7, utf8_decode($acuerdo->nombres), 1, 0, 'L');
+            $this->Cell(55, 7, utf8_decode($acuerdo->nombre_acuerdo), 1, 0,'L');
             $this->Cell(100, 7, utf8_decode($acuerdo->descripcion), 1, 0, 'L');
-            $this->Cell(40, 7, utf8_decode($acuerdo->fecha_expiracion), 1, 0, 'C');
-            $this->Cell(40, 7, utf8_decode($acuerdo->resolucion), 1, 0, 'C');            
+            $this->Cell(30, 7, utf8_decode($acuerdo->fecha_expiracion), 1, 0, 'C');
+            $this->Cell(30, 7, utf8_decode($acuerdo->estado_acuerdo), 1, 0, 'C');            
             $this->Ln();
+            
 
             
         }
@@ -242,26 +252,32 @@ class myPDF extends FPDF
     function archivos()
     {  
         $this->Ln();
+        $this->Ln();
+        
         $this->SetFont('Times', 'B', 14);             
         $this->Cell(60, 7, utf8_decode('Archivos Adjuntos'), 0, 0, 'L');
         $this->Ln();
-        $this->SetFont('Times', 'B', 12);             
-        $this->Cell(70, 7, utf8_decode('Archivo'), 1, 0, 'C');
-        $this->Cell(60, 7, utf8_decode('Tipo Archivo'), 1, 0, 'C');
+        $this->SetFont('Times', 'B', 14);             
+        $this->Cell(230, 7, utf8_decode('Nombre del Archivo'), 1, 0, 'C');
+        $this->Cell(60, 7, utf8_decode('Formato del Archivo'), 1, 0, 'C');
         $this->Ln();
 
         global $instancia_conexion;
-        $sql="SELECT ar.formato, tr.tipo_recurso FROM tbl_acta a
-                INNER JOIN tbl_acta_recursos ar ON ar.id_acta = a.id_acta
-                INNER JOIN tbl_tipo_recurso tr ON tr.id_recurso = ar.id_recursos
-                WHERE ar.id_acta= '$_GET[id];'";
+        $sql="SELECT
+        t1.id_acta,
+        t1.nombre,
+        t1.formato
+    FROM
+        tbl_acta_recursos t1
+    WHERE
+        id_acta = '$_GET[id];'";
         $stmt = $instancia_conexion->ejecutarConsulta($sql);
 
         while ($archivos = $stmt->fetch_object()) {
            
-            $this->SetFont('Times', '', 8);
-            $this->Cell(70, 7, utf8_decode($archivos->formato), 1, 0, 'L');
-            $this->Cell(60, 7, utf8_decode($archivos->tipo_recurso), 1, 0,'L');        
+            $this->SetFont('Times', '', 14);
+            $this->Cell(230, 7, utf8_decode($archivos->nombre), 1, 0, 'L');
+            $this->Cell(60, 7, utf8_decode($archivos->formato), 1, 0,'L');        
             $this->Ln();
 
             
@@ -273,7 +289,7 @@ class myPDF extends FPDF
 $pdf = new myPDF();
 $pdf->AliasNbPages();
 $pdf->AddPage('C', 'Legal', 0);
-$pdf->SetMargins(25, 25, 30);
+$pdf->SetMargins(40, 30, 1);
 $pdf->SetAutoPageBreak(true,25);
 $pdf->encabezado();
 $pdf->headerTable1();
