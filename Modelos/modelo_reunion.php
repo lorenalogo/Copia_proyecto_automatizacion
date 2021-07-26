@@ -4,6 +4,12 @@ include_once '../clases/Conexion.php';
 require '../plugins/phpmailer/Exception.php';
 require '../plugins/phpmailer/PHPMailer.php';
 require '../plugins/phpmailer/SMTP.php';
+$enlace = $_POST['enlace'];
+if ($_POST['enlace'] == '') {
+    $enlace = $_POST['NULL'];
+}else{
+    $enlace = $_POST['enlace'];
+}
 $enlace = $_POST['NULL'];
 $agenda = $_POST['agenda'];
 $asunto = $_POST['asunto'];
@@ -108,6 +114,7 @@ if ($_POST['reunion'] == 'nuevo') {
 
 if ($_POST['reunion'] == 'actualizar') {
     $mail = new PHPMailer(true);
+
     try {
         $stmt = $mysqli->prepare('UPDATE tbl_reunion SET nombre_reunion=?,lugar=?,hora_inicio=?,hora_final=?,fecha=?,asunto=?,agenda_propuesta=?,enlace=?,id_tipo =? WHERE id_reunion=?');
         $stmt->bind_param("ssssssssii", $nombre, $lugar, $horainicio, $horafinal, $fecha_formateada, $asunto, $agenda, $enlace, $tipo, $id_registro);

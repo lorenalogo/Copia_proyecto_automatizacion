@@ -16,6 +16,8 @@ require_once('../clases/funcion_permisos.php');
     <link rel=" stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="../js/jquery.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css" rel="stylesheet" type="text/css" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.print.css " rel="stylesheet" type="text/css" media="print" />
 
     <script src="../js/moment.min.js"></script>
     <!-- full calendar-->
@@ -128,15 +130,23 @@ require_once('../clases/funcion_permisos.php');
                                                 <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel" aria-labelledby="custom-tabs-four-messages-tab">
                                                     <div class="card card-primary">
                                                         <!-- THE CALENDAR -->
-                                                        <div id="calendarioweb"></div>
+                                                        <div id="calendarioweb" class="updateSize"></div>
+                                                        <div style="margin: 15px 0;" class="container  align-center">
+                                                            <div class="row justify-content-start">
+                                                                <div style="background:#ff0000; color:white;font-weight:bold; margin: 10px; margin-left: 10%; text-align: center;" class="col-3">Reuniones del día</div>
+                                                                <div style="background:#1c4299; color:white; font-weight:bold; margin: 10px; text-align: center;" class="col-3">Reuniones más cercanas</div>
+                                                                <div style="background:#1d964f; color:white; font-weight:bold; margin: 10px; text-align: center;" class="col-3">Reuniones Próximas</div>
+                                                            </div>
+                                                        </div>
                                                         <script>
                                                             function sumarDias(fecha, dias) {
                                                                 fecha.setDate(fecha.getDate() + dias);
                                                                 return fecha;
                                                             }
-                                                            
+
                                                             $(document).ready(function() {
                                                                 var undia = (sumarDias(hoy, +1));
+                                                                console.log(undia);
                                                                 $('#calendarioweb').fullCalendar({
                                                                     header: {
                                                                         left: 'today,prev,next',
@@ -147,7 +157,7 @@ require_once('../clases/funcion_permisos.php');
                                                                     eventAfterRender: function(event, element, view) {
 
                                                                         var hoy = new Date();
-                                                                        
+
                                                                         if (event.start < hoy) {
                                                                             element.css('background-color', '#ff0000');
                                                                             element.css('color', 'white');
@@ -156,7 +166,7 @@ require_once('../clases/funcion_permisos.php');
                                                                             element.css('background-color', '#1d964f');
                                                                             element.css('color', 'white');
                                                                             element.css('border', 0);
-                                                                        }else{
+                                                                        } else {
                                                                             element.css('background-color', '#1c4299');
                                                                             element.css('color', 'white');
                                                                             element.css('border', 0);
@@ -176,6 +186,7 @@ require_once('../clases/funcion_permisos.php');
                                                                         $('#lugar').html(calEvent.lugar);
                                                                         $("#exampleModalLong").modal();
                                                                     }
+                                                                    
                                                                 });
                                                             });
                                                         </script>
@@ -201,36 +212,27 @@ require_once('../clases/funcion_permisos.php');
         <!-- /.content -->
 
         <script type="text/javascript" language="javascript">
-          
+
         </script>
-<script type="text/javascript">
-    $(function() {
+        <script type="text/javascript">
+            $(function() {
 
-        $('#tabla27').DataTable({
-            "paging": true,
-            "lengthChange": true,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "autoWidth": true,
-            "responsive": true,
-            "language": {
-                "info": "Mostrando _START_ hasta _END_ de _TOTAL_ entradas",
-                "lengthMenu": "Mostrar _MENU_ entradas",
-                "search": "Buscar:",
-                "paginate": {
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
-            }
-        })
+                $('#tabla27').DataTable({
+                    "paging": true,
+                    "lengthChange": true,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": true,
+                    "responsive": true,
+                })
 
-    });
-    </script>
+            });
+        </script>
 
         <!-- Modal -->
-        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+        <div class="modal fade bd-example-modal-xl" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="tituloReunion"></h5>

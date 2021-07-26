@@ -307,5 +307,3 @@ $pdf->SetFont('Arial', '', 15);
 
 
 $pdf->Output();
-
-?>

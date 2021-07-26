@@ -159,43 +159,6 @@ $(document).ready(function () {
 
 
 
-    /********** guardar reunion ***********/
-    $('#guardar-reunion').on('submit', function (e) {
-        e.preventDefault();
-        var datos = $(this).serializeArray();
-        $.ajax({
-            type: $(this).attr('method'),
-            data: datos,
-            url: $(this).attr('action'),
-            dataType: 'json',
-            success: function (data) {
-                console.log(data);
-                var resultado = data;
-                if (resultado.respuesta == 'exito') {
-                    swal({
-                        title: "Correcto",
-                        text: "Se Agendo correctamente!",
-                        type: "success",
-                        confirmButtonText: "Ir a Reuniones Pendientes",
-                        html: `<h3>La reunión se Agendo con Exito!</h3>
-                                <br>
-                                ¿Ahora que desea hacer?
-                                <br>
-                                <b><a href="../pdf/reporte_memorandum.php?id=31">Ver Reporte</a></b>`,
-                    }).then(function () {
-                        location.href = "../Vistas/reuniones_pendientes_vista.php";
-                    }
-                    );
-                } else {
-                    swal(
-                        'Error',
-                        'Hubo un error falta campos por llenar!',
-                        'error'
-                    )
-                }
-            }
-        })
-    });
 
 
     /********** guardarestado acta ***********/

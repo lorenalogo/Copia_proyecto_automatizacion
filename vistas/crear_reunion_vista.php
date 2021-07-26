@@ -142,7 +142,7 @@ ob_end_flush();
                                                     </div>
                                                     <div class="form-group">
                                                         <label style="display: none;" id="enlaces" for="enlace">Enlace de la Reunión:</label>
-                                                        <input style="display: none;" minlength="10" type="url" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
+                                                        <input style="display: none;" minlength="10" type="text" class="form-control" id="enlace" name="enlace" placeholder="Ingrese el Link de la Reunion">
                                                     </div>
                                                 </div>
                                                 <!-- /.card-body -->
@@ -250,9 +250,9 @@ ob_end_flush();
     <!-- /.content-wrapper -->
     </div>
     <script type="text/javascript">
-    function mayus(e) {
-    e.value = e.value.toUpperCase();
-}
+        function mayus(e) {
+            e.value = e.value.toUpperCase();
+        }
         $(function() {
             $('#example1').DataTable({
                 "paging": true,
@@ -266,9 +266,55 @@ ob_end_flush();
         });
     </script>
 
-
+    <?php
+    $sql = "SELECT
+    t1.id_reunion +1 AS valor
+FROM
+    tbl_reunion t1
+ORDER BY
+    t1.id_reunion
+DESC
+LIMIT 1";
+    $resultado = $mysqli->query($sql);
+    $ultimo = $resultado->fetch_assoc();
+    ?>
     <script type="text/javascript">
-
+        /********** guardar reunion ***********/
+        $('#guardar-reunion').on('submit', function(e) {
+            e.preventDefault();
+            var datos = $(this).serializeArray();
+            $.ajax({
+                type: $(this).attr('method'),
+                data: datos,
+                url: $(this).attr('action'),
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data);
+                    var resultado = data;
+                    if (resultado.respuesta == 'exito') {
+                        swal({
+                            title: "Correcto",
+                            text: "Se Agendo correctamente!",
+                            type: "success",
+                            confirmButtonText: "Ir a Reuniones Pendientes",
+                            html: `<h3>La reunión se Agendo con Exito!</h3>
+                                <br>
+                                ¿Ahora que desea hacer?
+                                <br>
+                                <b><a target="_blank" href="../pdf/reporte_memorandum.php?id=<?php echo $ultimo['valor']; ?>">Ver Reporte</a></b>`,
+                        }).then(function() {
+                            location.href = "../Vistas/reuniones_pendientes_vista.php";
+                        });
+                    } else {
+                        swal(
+                            'Error',
+                            'Hubo un error falta campos por llenar!',
+                            'error'
+                        )
+                    }
+                }
+            })
+        });
 
         function marcar(source) {
             checkboxes = document.getElementsByTagName('input'); //obtenemos todos los controles del tipo Input
