@@ -4,9 +4,6 @@ require_once('../clases/conexion_mantenimientos.php');
 require_once('../Reporte/pdf/fpdf.php');
 $instancia_conexion = new conexion();
 
-//$stmt = $instancia_conexion->query("SELECT tp.nombres FROM tbl_personas tp INNER JOIN tbl_usuarios us ON us.id_persona=tp.id_persona WHERE us.Id_usuario= 8");
-
-
 
 class myPDF extends FPDF
 {
@@ -46,12 +43,15 @@ class myPDF extends FPDF
         $this->cell(0, 10, 'Pagina' . $this->PageNo() . '/{nb}', 0, 0, 'C');
     }
 
-    function headerTable1()
+ 
+
+    function promedio_asistencia()
     {
         $this->SetX(50);
         $this->SetFont('Times', 'B', 16);
         $this->Cell(60, 7, utf8_decode("Promedio de Asistencia"), 0, 0, 'C');
-        $this->Ln();
+        $this->Ln(12);
+
         $this->SetFont('Times', 'B', 12);
         $this->SetLineWidth(0.3);
         $this->SetX(50);
@@ -62,12 +62,6 @@ class myPDF extends FPDF
         $this->Cell(40, 7, "Excusado", 1, 0, 'C');
 
         $this->ln();
-        
-        
-    }
-
-    function viewTable1()
-    {
 
   
         global $instancia_conexion;
@@ -86,23 +80,25 @@ class myPDF extends FPDF
   
         $this->SetX(50);
         $this->SetFont('Times', '', 12);
-        $this->Cell(60, 7, utf8_decode($total_asistencia-> num_acta), 1, 0, 'C');
-        $this->Cell(60, 7, utf8_decode($total_asistencia->nombre_reunion), 1, 0, 'C');
-        $this->Cell(40, 7, utf8_decode($total_asistencia->asistio.'%'), 1, 0, 'C');
-        $this->Cell(40, 7, utf8_decode($total_asistencia->inasistencia.'%'), 1, 0, 'C');
-        $this->Cell(40, 7, utf8_decode($total_asistencia->excusa.'%'), 1, 0, 'C');
+        $this->Cell(60, 10, utf8_decode($total_asistencia-> num_acta), 1, 0, 'C');
+        $this->Cell(60, 10, utf8_decode($total_asistencia->nombre_reunion), 1, 0, 'C');
+        $this->Cell(40, 10, utf8_decode($total_asistencia->asistio.'%'), 1, 0, 'C');
+        $this->Cell(40, 10, utf8_decode($total_asistencia->inasistencia.'%'), 1, 0, 'C');
+        $this->Cell(40, 10, utf8_decode($total_asistencia->excusa.'%'), 1, 0, 'C');
         $this->ln();
         $this->ln();
         }
         
     }
 
-    function headerTable()
-    {
+   
+    function lista_participantes()
+    {  
+
         $this->SetFont('Times', 'B', 16);
         $this->SetX(50);
         $this->Cell(60, 7, 'Lista de Participantes', 0, 0, 'L');
-        $this->ln();
+        $this->ln(12);
         
         $this->SetFont('Times', 'B', 12);
         $this->SetLineWidth(0.3);
@@ -111,12 +107,6 @@ class myPDF extends FPDF
         $this->Cell(70, 7, "Asistencias", 1, 0, 'C');
         $this->Cell(80, 7, "Firma", 1, 0, 'C');
         $this->ln();
-
-
-       
-    }
-    function viewTable()
-    {  
          
         global $instancia_conexion;
         $sql="SELECT DISTINCT concat_ws(' ', pe.nombres, pe.apellidos)nombres, (ep.estado)'asistencia' 
@@ -130,9 +120,9 @@ class myPDF extends FPDF
         while ($lista = $stmt->fetch_object()) {
             $this->SetX(50);
             $this->SetFont('Times', '', 12);
-            $this->Cell(90, 7, utf8_decode($lista->nombres), 1, 0, 'L');
-            $this->Cell(70, 7, utf8_decode($lista->asistencia), 1, 0, 'C');
-            $this->Cell(80, 7, '', 1, 0, 'C');
+            $this->Cell(90, 15, utf8_decode($lista->nombres), 1, 0, 'L');
+            $this->Cell(70, 15, utf8_decode($lista->asistencia), 1, 0, 'C');
+            $this->Cell(80, 15, '', 1, 0, 'C');
             $this->ln();
         }
     }
@@ -147,16 +137,9 @@ $pdf->AddPage('C', 'Legal', 0);
 $pdf->SetMargins(25, 30, 30);
 $pdf->SetAutoPageBreak(true,25);
 $pdf->encabezado();
-$pdf->headerTable1();
-$pdf->viewTable1();
-$pdf->headerTable();
-$pdf->viewTable();
+$pdf->promedio_asistencia();
+$pdf->lista_participantes();
 
-
-
-
-//$pdf->viewTable2($instancia_conexion);
-$pdf->SetFont('Arial', '', 15);
 
 
 $pdf->Output();
