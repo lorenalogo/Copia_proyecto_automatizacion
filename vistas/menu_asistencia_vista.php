@@ -5,16 +5,16 @@ require_once('../clases/funcion_visualizar.php');
 
 if (permiso_ver('154') == '1') {
 
-    $_SESSION['asistencia_acta_menu'] = "...";
+    $_SESSION['asistencia_acta'] = "...";
 } else {
-    $_SESSION['asistencia_acta_menu'] = "No tiene permisos para visualizar";
+    $_SESSION['asistencia_acta'] = "No tiene permisos para visualizar";
 }
 
 if (permiso_ver('155') == '1') {
 
-    $_SESSION['asistencia_persona_menu'] = "...";
+    $_SESSION['asistencia_persona'] = "...";
 } else {
-    $_SESSION['asistencia_persona_menu'] = "No tiene permisos para visualizar";
+    $_SESSION['asistencia_persona'] = "No tiene permisos para visualizar";
 }
 
 
@@ -61,7 +61,7 @@ if (permiso_ver('155') == '1') {
                             <div class="small-box bg-primary">
                                 <div class="inner">
                                     <h4>Asistencia por Acta</h4>
-                                    <p><?php echo $_SESSION['asistencia_acta_menu']; ?></p>
+                                    <p><?php echo $_SESSION['asistencia_acta']; ?></p>
                                 </div>
                                 <div class="icon"><i class="fas fa-file-alt"></i>
                                 </div>
@@ -85,7 +85,7 @@ if (permiso_ver('155') == '1') {
                             <div class="small-box bg-success">
                                 <div class="inner">
                                     <h4>Asistencia por Persona</h4>
-                                    <p><?php echo $_SESSION['asistencia_persona_menu']; ?></p>
+                                    <p><?php echo $_SESSION['asistencia_persona']; ?></p>
                                 </div>
                                 <div class="icon"><i class="fas fa-user"></i>
                                 </div>
