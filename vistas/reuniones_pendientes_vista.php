@@ -124,6 +124,17 @@ require_once('../clases/funcion_permisos.php');
                                                                     </tr>
                                                                 <?php  }  ?>
                                                             </tbody>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Nombre Reunión</th>
+                                                                    <th>Tipo</th>
+                                                                    <th>Lugar</th>
+                                                                    <th>Fecha</th>
+                                                                    <th>Hora Inicio</th>
+                                                                    <th>Hora Final</th>
+                                                                    <th>Acciones</th>
+                                                                </tr>
+                                                            </thead>
                                                         </table>
                                                     </form>
                                                 </div>
@@ -186,7 +197,7 @@ require_once('../clases/funcion_permisos.php');
                                                                         $('#lugar').html(calEvent.lugar);
                                                                         $("#exampleModalLong").modal();
                                                                     }
-                                                                    
+
                                                                 });
                                                             });
                                                         </script>

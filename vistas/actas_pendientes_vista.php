@@ -239,7 +239,17 @@ ob_end_flush();
                                                 $error = $e->getMessage();
                                                 echo $error;
                                             } ?>
-                                            </tfoot>
+                                            <thead>
+                                            <tr>
+                                                <th>No. Acta</th>
+                                                <th>Nombre Reunión</th>
+                                                <th>Modalidad</th>
+                                                <th>Fecha</th>
+                                                <th>Hora Inicio</th>
+                                                <th>Hora Final</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
                                     </table>
                                 </form>
                             </div>

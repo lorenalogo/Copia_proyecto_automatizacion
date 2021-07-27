@@ -122,6 +122,16 @@ require_once('../clases/funcion_permisos.php');
                                                         </tr>
                                                     <?php  }  ?>
                                                 </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th>No. Acta</th>
+                                                        <th>Responsable</th>
+                                                        <th>Nombre del Acuerdo</th>
+                                                        <th>Descripción</th>
+                                                        <th>Fecha de Vencimiento</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
                                             </table>
                                         </form>
                                     </div>
