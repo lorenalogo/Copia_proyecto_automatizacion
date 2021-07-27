@@ -391,7 +391,7 @@ if ($_SESSION['pantalla']>='34' and $_SESSION['pantalla']<='38' )
    }   
    
    /*Control de Actas Menu*/
-   if ($_SESSION['pantalla'] ='146' or $_SESSION['pantalla']=='147' or $_SESSION['pantalla']=='148' or $_SESSION['pantalla']='149' or $_SESSION['pantalla']='150' ){
+   if ($_SESSION['pantalla'] ='146' or $_SESSION['pantalla']=='147' or $_SESSION['pantalla']=='148' or $_SESSION['pantalla']='149' or $_SESSION['pantalla']='150' or $_SESSION['pantalla']='151' or $_SESSION['pantalla']='152' or $_SESSION['pantalla']='153' or $_SESSION['pantalla']='154' or $_SESSION['pantalla']='155' ){
       if ($_SESSION['confirmacion'] == 'block') {
          $_SESSION['btn_control_actas'] = "block";
       }
