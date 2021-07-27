@@ -16,7 +16,16 @@ $visualizacion = permiso_ver($Id_objeto);
 
 
 if ($visualizacion == 0) {
-    header('location:  ../vistas/pagina_principal_vista.php');
+    echo '<script type="text/javascript">
+            swal({
+                title:"",
+                text:"Lo sentimos no tiene permiso de visualizar la pantalla",
+                type: "error",
+                showConfirmButton: false,
+                timer: 3000
+            });
+                window.location = "../vistas/menu_acta_vista.php";
+        </script>';
 } else {
 
     if (permisos::permiso_modificar($Id_objeto) == '1') {
@@ -26,6 +35,9 @@ if ($visualizacion == 0) {
     }
 
     bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A Actas Pendientes');
+
+
+
 
 
 
@@ -161,7 +173,8 @@ ob_end_flush();
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="../vistas/menu_acta_vista.php">Inicio</a></li>
+                            <li class="breadcrumb-item"><a href="../vistas/pagina_principal_vista.php">Inicio</a></li>
+                            <li class="breadcrumb-item"><a href="../vistas/menu_acta_vista.php">Gestion Actas</a></li>
                             <li class="breadcrumb-item active">Actas Pendientes</li>
                         </ol>
                     </div>
@@ -227,9 +240,9 @@ ob_end_flush();
                                                         <td><?php echo $actap['hora_final']; ?></td>
                                                         <td>
 
-                                                            <a style="min-width: 10px; max-width: 190px; max-height: 300px; margin: 0 0 8px 0;" href="editar_acta_vista.php?id=<?php echo $actap['id_acta'] ?>" type="button" class="btn btn-block btn-success btn-sm"><i class="fas fa-edit"></i> Continuar Editando
+                                                            <a style="min-width: 10px; max-width: 190px; max-height: 300px; margin: 0 0 8px 0;" href="editar_acta_vista.php?id=<?php echo $actap['id_acta'] ?>" type="button" class="btn btn-block btn-success btn-sm  <?php echo $_SESSION['btn_editar'];?>"><i class="fas fa-edit"></i> Continuar Editando
                                                             </a>
-                                                            <a style="height: 35px; width: 190px;" href="#" data-id="<?php echo $actap['id_acta'] ?>" data-tipo="acta" class="finalizar_registroacta btn btn-primary"><i class="fas fa-check-circle"></i> FINALIZAR
+                                                            <a style="height: 35px; width: 190px;" href="#" data-id="<?php echo $actap['id_acta'] ?>" data-tipo="acta" class="finalizar_registroacta btn btn-primary <?php echo $_SESSION['btn_editar'];?>"><i class="fas fa-check-circle "></i> FINALIZAR
                                                             </a>
                                                         </td>
                                                     </tr>
