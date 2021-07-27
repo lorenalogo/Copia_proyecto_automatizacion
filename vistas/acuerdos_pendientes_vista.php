@@ -7,6 +7,43 @@ require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
 
+$Id_objeto = 152;
+$visualizacion = permiso_ver($Id_objeto);
+if ($visualizacion == 0) {
+    echo '<script type="text/javascript">
+                              swal({
+                                   title:"",
+                                   text:"Lo sentimos no tiene permiso de visualizar la pantalla",
+                                   type: "error",
+                                   showConfirmButton: false,
+                                   timer: 3000
+                                });
+                           window.location = "../vistas/menu_acuerdo_vista.php";
+                            </script>';
+} else {
+    bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A Acuerdos Pendientes');
+
+    
+    if (permisos::permiso_insertar($Id_objeto) == '1') {
+        $_SESSION['btn_crear'] = "";
+    } else {
+        $_SESSION['btn_crear'] = "disabled";
+    }
+
+    if (permisos::permiso_modificar($Id_objeto) == '1') {
+        $_SESSION['btn_editar'] = "";
+    } else {
+        $_SESSION['btn_editar'] = "disabled";
+    }
+
+    if (permisos::permiso_eliminar($Id_objeto) == '1') {
+        $_SESSION['btn_borrar'] = "";
+    } else {
+        $_SESSION['btn_borrar'] = "disabled";
+    }
+}
+
+ob_end_flush();
 ?>
 <!DOCTYPE html>
 <html>
@@ -40,7 +77,8 @@ require_once('../clases/funcion_permisos.php');
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                            <li class="breadcrumb-item"><a href="../vistas/pagina_principal_vista.php">Inicio</a></li>
+                            <li class="breadcrumb-item"><a href="../vistas/menu_acuerdo_vista.php">Gestión Acuerdos</a></li>
                             <li class="breadcrumb-item active">Acuerdos Pendientes</li>
                         </ol>
                     </div>
@@ -57,7 +95,7 @@ require_once('../clases/funcion_permisos.php');
                             <!-- /.card -->
                             <div class="card-header">
                                 <h3 class="card-title">Listado de Acuerdos pendientes</h3>
-                                <a href="crear_acuerdo_vista.php" type="button" class="btn btn-app bg-warning float-right derecha ">
+                                <a href="crear_acuerdo_vista.php" type="button" class="btn btn-app bg-warning float-right derecha <?php echo $_SESSION['btn_crear'];?>">
                                     <i class="fas fa-plus-circle"><br></i>Crear Nueva Acuerdo
                                 </a>
                             </div>
@@ -109,13 +147,13 @@ require_once('../clases/funcion_permisos.php');
                                                             <td><?php echo $reunion['descripcion']; ?></td>
                                                             <td><?php echo $reunion['fecha_expiracion']; ?></td>
                                                             <td>
-                                                                <a href="../vistas/editar_acuerdo_vista.php?id=<?php echo $reunion['id_acuerdo'] ?>" style="min-width:86px; margin-bottom: 5px;" class="btn btn-primary" style="color: while;">
+                                                                <a href="../vistas/editar_acuerdo_vista.php?id=<?php echo $reunion['id_acuerdo'] ?>" style="min-width:86px; margin-bottom: 5px;" class="btn btn-primary  <?php echo $_SESSION['btn_editar']?>" style="color: while;">
                                                                     <i class="far fa-edit"></i><br>Editar
                                                                 </a>
-                                                                <a href="#" data-id="<?php echo $reunion['id_acuerdo']; ?>" data-tipo="acuerdos"   style="min-width:86px; margin-bottom: 5px;" class="finalizar_registroacuerdo btn btn-success ">
+                                                                <a href="#" data-id="<?php echo $reunion['id_acuerdo']; ?>" data-tipo="acuerdos"   style="min-width:86px; margin-bottom: 5px;" class="finalizar_registroacuerdo btn btn-success  <?php echo $_SESSION['btn_editar']?>">
                                                                 <i class="far fa-check-square"></i><br>Finalizar
                                                                 </a>
-                                                                <a href="#" data-id="<?php echo $reunion['id_acuerdo']; ?>" data-tipo="acuerdos"   class="cancelar_registroacuerdo btn btn-danger ">
+                                                                <a href="#" data-id="<?php echo $reunion['id_acuerdo']; ?>" data-tipo="acuerdos"   class="cancelar_registroacuerdo btn btn-danger  <?php echo $_SESSION['btn_borrar']?> ">
                                                                     <i class="far fa-window-close"></i><br>Cancelar
                                                                 </a>
                                                             </td>
