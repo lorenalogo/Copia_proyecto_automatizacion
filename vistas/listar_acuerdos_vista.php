@@ -50,8 +50,8 @@ ob_end_flush();
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="../vistas/pagina_principal_vista.php">Inicio</a></li>
-                            <li class="breadcrumb-item"><a href="../vistas/menu_acuerdo_vista.php">Menu Gestión acuerdos</a></li>
-                            <li class="breadcrumb-item"><a href="#">Lista de Acuerdos</a></li>
+                            <li class="breadcrumb-item"><a href="../vistas/menu_acuerdo_vista.php">Gestión acuerdos</a></li>
+                            <li class="breadcrumb-item active">Lista de Acuerdos</li>
                         </ol>
                     </div>
                     <div class="RespuestaAjax"></div>
