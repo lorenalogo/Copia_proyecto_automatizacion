@@ -255,10 +255,12 @@ if ($_POST['invitados']) {
 if ($_POST['reunion'] == 'cancelar') {
     $estadocancelar = 2;
     $id_cancelar = $_POST['id'];
+    $mensaje = $_POST['mensaje'];
+    $motivo = ' -- motivo: '.$_POST['mensaje'];
     $mail = new PHPMailer(true);
     try {
-        $stmt = $mysqli->prepare('UPDATE tbl_reunion SET id_estado = ? WHERE id_reunion = ?');
-        $stmt->bind_param('ii', $estadocancelar, $id_cancelar);
+        $stmt = $mysqli->prepare('UPDATE tbl_reunion SET id_estado = ?, mensaje =? WHERE id_reunion = ?');
+        $stmt->bind_param('isi', $estadocancelar,$motivo, $id_cancelar);
         $stmt->execute();
         if ($stmt->affected_rows) {
             $respuesta = array(
@@ -281,7 +283,7 @@ if ($_POST['reunion'] == 'cancelar') {
         $mail->Port       = 465;
         //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
         //Recipients
-        $mail->setFrom('informaticaunah21@gmail.com', 'Depto. Informatica Administrativa');
+        $mail->setFrom('informaticaunah21@gmail.com', 'Jefatura Depto. Informática Administrativa');
         $sql = "SELECT t1.valor AS participantes FROM tbl_contactos t1 INNER JOIN tbl_personas t2 ON t2.id_persona = t1.id_persona INNER JOIN tbl_participantes t3 ON t3.id_persona = t2.id_persona WHERE t1.id_tipo_contacto = 4 and t3.id_reunion = $id_cancelar";
         $res = $mysqli->query($sql);
         while ($destino = $res->fetch_assoc()) {
@@ -306,7 +308,7 @@ if ($_POST['reunion'] == 'cancelar') {
         $body .= " lugar en que se iba a realizar: <strong>$lugar</strong><br>";
         $body .= " en el horario de <strong>$inicio</strong>";
         $body .= " a <strong>$final</strong>";
-        $body .= " HA SIDO <strong>CANCELADA</strong>.<br><br>";
+        $body .= " HA SIDO <strong>CANCELADA</strong> por el siguiente motivo: <strong>$mensaje</strong>.<br><br>";
         $body .= "Este es un correo automático favor no responder a esta dirección<br> si quiere contactarse con nosotros por algún motivo escribanos a:<br>";
         $body .= "iaunah@unah.edu.hn";
         $body .= "<br>";

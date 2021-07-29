@@ -109,7 +109,7 @@ ob_end_flush();
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">Listado de reuniones que se desarrollaran pronto</h3>
-                                    <a href="crear_reunion_vista.php" type="button" class="btn btn-app bg-warning float-right derecha <?php echo $_SESSION['btn_crear'];?>">
+                                    <a href="crear_reunion_vista.php" type="button" class="btn btn-app bg-warning float-right derecha <?php echo $_SESSION['btn_crear']; ?>">
                                         <i class="fas fa-plus-circle"><br></i>Agendar Nueva Reunión
                                     </a>
                                 </div>
@@ -163,10 +163,10 @@ ob_end_flush();
                                                                         <td><?php echo $reunion['hora_inicio']; ?></td>
                                                                         <td><?php echo $reunion['hora_final']; ?></td>
                                                                         <td>
-                                                                            <a href="../vistas/editar_reunion_vista.php?id=<?php echo $reunion['id_reunion'] ?>" style="min-width:80px;" class="btn btn-success <?php echo $_SESSION['btn_editar'];?>" style="color: while;">
+                                                                            <a href="../vistas/editar_reunion_vista.php?id=<?php echo $reunion['id_reunion'] ?>" style="max-width:55px; padding: 7px;" class="btn btn-success <?php echo $_SESSION['btn_editar']; ?>">
                                                                                 <i class="far fa-edit"></i><br>Editar
                                                                             </a>
-                                                                            <a href="#" data-id="<?php echo $reunion['id_reunion']; ?>" data-tipo="reunion" style="max-width: 80px;" style="ma" class="cancelar_registro btn btn-danger <?php echo $_SESSION['btn_borrar'];?>  ">
+                                                                            <a href="#" data-id="<?php echo $reunion['id_reunion']; ?>" data-tipo="reunion" style="max-width: 70px; padding: 7px;" class="cancelar_registrooo btn btn-danger <?php echo $_SESSION['btn_borrar']; ?>  ">
                                                                                 <i class="far fa-window-close"></i><br>Cancelar
                                                                             </a>
                                                                         </td>
@@ -272,9 +272,50 @@ ob_end_flush();
         <!-- /.content -->
 
         <script type="text/javascript" language="javascript">
-
-        </script>
-        <script type="text/javascript">
+            /********** borrar acta/reunion ***********/
+            $('.cancelar_registrooo').on('click', function(e) {
+                e.preventDefault();
+                var id = $(this).attr('data-id');
+                var tipo = $(this).attr('data-tipo');
+                swal({
+                    title: '¿Está Seguro?',
+                    text: 'Si la cancela no podra revertirlo!!<br><br><b>Escriba el motivo por lo cual cancela la reunion</b><br><br><input class="form-control" id="mensaje" style="width: 65%; margin-left: 17%;" required name="mensaje" type="text">',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtontext: 'Si, cancelarla!',
+                    cancelButtontext: 'Cancelar'
+                }).then(function() {
+                    $.ajax({
+                        type: 'post',
+                        data: {
+                            'id': id,
+                            'reunion': 'cancelar',
+                            'mensaje': $('#mensaje').val()
+                        },
+                        url: '../Modelos/modelo_' + tipo + '.php',
+                        success: function(data) {
+                            var resultado = JSON.parse(data);
+                            if (resultado.respuesta == 'exito') {
+                                swal({
+                                    title: "cancelado",
+                                    text: "cancelada con Exito!",
+                                    type: "success"
+                                }).then(function() {
+                                    location.href = "../Vistas/reuniones_pendientes_vista.php";
+                                });
+                            } else {
+                                swal(
+                                    'Error!',
+                                    'No se pudo cancelar',
+                                    'error'
+                                )
+                            }
+                        }
+                    })
+                });
+            });
             $(function() {
 
                 $('#tabla27').DataTable({

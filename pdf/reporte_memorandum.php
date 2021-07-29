@@ -33,7 +33,8 @@ t1.asunto,
 t1.agenda_propuesta,
 t1.enlace,
 t2.estado_reunion,
-t3.tipo
+t3.tipo,
+T1.mensaje
 FROM
 tbl_reunion t1
 INNER JOIN tbl_estado_reunion t2 ON
@@ -132,7 +133,7 @@ $resultado = mysqli_query($connection, $sql);
 	$pdf->SetX(20);
 	$pdf->multicell(170,5,utf8_decode('Link: ' ). $estado['enlace'],0);
 	$pdf->SetX(20);
-	$pdf->multicell(170,7,utf8_decode('Estado: ' . $estado['estado_reunion']),0);
+	$pdf->multicell(170,7,utf8_decode('Estado: ' . $estado['estado_reunion'].$estado['mensaje']),0);
 	$pdf->ln(2);
     
 
