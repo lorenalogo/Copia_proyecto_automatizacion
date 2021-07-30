@@ -1,38 +1,87 @@
 $(document).ready(function () {
-   /********** editar acta ***********/
-   $('#editar-actas-archivo').on('submit', function (e) {
-    e.preventDefault();
-    var datos = new FormData(this);
-    $.ajax({
-        type: $(this).attr('method'),
-        data: datos,
-        url: $(this).attr('action'),
-        dataType: 'json',
-        contentType: false,
-        processData: false,
-        async: true,
-        cache: false,
-        success: function (data) {
-            console.log(data);
-            var resultado = data;
-            if (resultado.respuesta == 'exito') {
-                swal({
-                    title: "Correcto", text: "Borrador guardado correctamente!", type:
-                        "success"
-                }).then(function () {
-                    location.href = "../Vistas/actas_pendientes_vista.php";
+      /********** finalizar acta ***********/
+      $('.finalizar_registroacta').on('click', function(e) {
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        var tipo = $(this).attr('data-tipo');
+        swal({
+            title: '¿Está Seguro en finalizar el acta?',
+            text: 'Por favor asegurese de llenar el acta, de lo contrario no podra revertirlo!!',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtontext: 'Si, Finalizarla!',
+            cancelButtontext: 'Cancelar'
+        }).then(function() {
+            $.ajax({
+                type: 'post',
+                data: {
+                    'id': id,
+                    'acta': 'finalizar'
+                },
+                url: '../Modelos/modelo_' + tipo + '.php',
+                success: function(data) {
+                    var resultado = JSON.parse(data);
+                    if (resultado.respuesta == 'exito') {
+                        swal({
+                            title: "Correcto",
+                            text: "Se Finalizo con Exito!",
+                            type: "success"
+                        }).then(function() {
+                            location.href = "../Vistas/actas_pendientes_vista.php";
+                        });
+                    } else {
+                        swal(
+                            'Error!',
+                            'No se pudo Finalizar faltan campos Importantes',
+                            'error'
+                        )
+                    }
                 }
-                );
-            } else {
-                swal(
-                    'Error',
-                    'Hubo un error!',
-                    'error'
-                )
+            })
+        });
+    });
+    /********** editar acta ***********/
+    $('#editar-actas-archivo').on('submit', function (e) {
+        e.preventDefault();
+        var datos = new FormData(this);
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            async: true,
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                var resultado = data;
+                if (resultado.respuesta == 'exito') {
+                    swal({
+                        title: "Correcto",
+                        text: "Borrador guardado correctamente!",
+                        type: "success",
+                        confirmButtonText: "Ir a Actas Pendientes",
+                        html: `<br>
+                                ¿Ahora que desea hacer?
+                                <br>
+                                <b><a target="_blank" href="../vistas/crear_acuerdo_vista.php">Crear Un acuerdo</a></b>`,
+                    }).then(function () {
+                        location.href = "../Vistas/actas_pendientes_vista.php";
+                    }
+                    );
+                } else {
+                    swal(
+                        'Error',
+                        'Hubo un error!',
+                        'error'
+                    )
+                }
             }
-        }
-    })
-});
+        })
+    });
     /********** editar reunion ***********/
     $('#editar-reunion').on('submit', function (e) {
         e.preventDefault();
