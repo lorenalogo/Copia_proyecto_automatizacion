@@ -240,9 +240,9 @@ ob_end_flush();
                                                         <td><?php echo $actap['hora_final']; ?></td>
                                                         <td>
 
-                                                            <a style="min-width: 10px; max-width: 190px; max-height: 300px; margin: 0 0 8px 0;" href="editar_acta_vista.php?id=<?php echo $actap['id_acta'] ?>" type="button" class="btn btn-block btn-success btn-sm  <?php echo $_SESSION['btn_editar'];?>"><i class="fas fa-edit"></i> Continuar Editando
+                                                            <a style="min-width: 10px; max-width: 190px; max-height: 300px; margin: 0 0 8px 0;" href="editar_acta_vista.php?id=<?php echo $actap['id_acta'] ?>" type="button" class="btn btn-block btn-success btn-sm  <?php echo $_SESSION['btn_editar']; ?>"><i class="fas fa-edit"></i> Continuar Editando
                                                             </a>
-                                                            <a style="height: 35px; width: 190px;" href="#" data-id="<?php echo $actap['id_acta'] ?>" data-tipo="acta" class="finalizar_registroacta btn btn-primary <?php echo $_SESSION['btn_editar'];?>"><i class="fas fa-check-circle "></i> FINALIZAR
+                                                            <a style="height: 35px; width: 190px;" href="#" data-id="<?php echo $actap['id_acta'] ?>" data-tipo="acta" class="finalizar_registroacta btn btn-primary <?php echo $_SESSION['btn_editar']; ?>"><i class="fas fa-check-circle "></i> FINALIZAR
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -252,7 +252,8 @@ ob_end_flush();
                                                 $error = $e->getMessage();
                                                 echo $error;
                                             } ?>
-                                            <thead>
+                                        </tbody>
+                                        <thead>
                                             <tr>
                                                 <th>No. Acta</th>
                                                 <th>Nombre Reunión</th>
@@ -266,14 +267,17 @@ ob_end_flush();
                                     </table>
                                 </form>
                             </div>
-                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card -->
                     </div>
-                    <!-- /.col -->
                 </div>
-                <!-- /.row -->
+                <!-- /.card-body -->
             </div>
+            <!-- /.card -->
+
+            <!-- /.col -->
+
+            <!-- /.row -->
+
             <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
@@ -285,7 +289,7 @@ ob_end_flush();
         <!-- Control sidebar content goes here -->
     </aside>
     <!-- /.control-sidebar -->
-    </div>
+
 
     <!-- ./wrapper -->
 
@@ -300,49 +304,7 @@ ob_end_flush();
 <script type="text/javascript" src="../js/validar_registrar_docentes.js"></script>
 
 <script type="text/javascript">
-    /********** finalizar acta ***********/
-    $('.finalizar_registroacta').on('click', function(e) {
-        e.preventDefault();
-        var id = $(this).attr('data-id');
-        var tipo = $(this).attr('data-tipo');
-        swal({
-            title: '¿Está Seguro en finalizar el acta?',
-            text: 'Por favor asegurese de llenar el acta, de lo contrario no podra revertirlo!!',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtontext: 'Si, Finalizarla!',
-            cancelButtontext: 'Cancelar'
-        }).then(function() {
-            $.ajax({
-                type: 'post',
-                data: {
-                    'id': id,
-                    'actas': 'finalizar'
-                },
-                url: '../Modelos/modelo_' + tipo + '.php',
-                success: function(data) {
-                    var resultado = JSON.parse(data);
-                    if (resultado.respuesta == 'exito') {
-                        swal({
-                            title: "Correcto",
-                            text: "Se Finalizo con Exito!",
-                            type: "success"
-                        }).then(function() {
-                            location.href = "../Vistas/actas_pendientes_vista.php";
-                        });
-                    } else {
-                        swal(
-                            'Error!',
-                            'No se pudo Finalizar faltan campos Importantes',
-                            'error'
-                        )
-                    }
-                }
-            })
-        });
-    });
+
     $(function() {
 
         $('#tabla7').DataTable({
@@ -368,5 +330,6 @@ ob_end_flush();
 <script src="../plugins/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
 <script src="../plugins/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
 <script src="../plugins/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
+<script src="../js/tipoacta-ajax.js"></script>
 
 </html>
