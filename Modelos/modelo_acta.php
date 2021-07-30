@@ -29,14 +29,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 if ($_POST['acta'] == 'actualizar') {
-    /*
-    $respuesta = array(
-        'post' => $_POST,
-        'file' => $_FILES
-    );
-    die(json_encode($respuesta));
-*/
-
     try {
         $stmt = $mysqli->prepare('UPDATE tbl_acta SET num_acta =?,hora_inicial=?,hora_final=?,desarrollo=?,redactor=?,fecha_edicion=? WHERE id_acta=?');
         $stmt->bind_param("ssssisi", $nacta, $horainicio, $horafinal, $desarrollo, $redactor, $hoy, $id_registro);
@@ -69,8 +61,6 @@ if ($_POST['acta'] == 'actualizar') {
                 $stmt = $mysqli->prepare('INSERT INTO tbl_acta_recursos(id_acta, url, fecha_carga, redactor,nombre,formato) VALUES (?,?,?,?,?,?)');
                 $stmt->bind_param("ississ", $id_registro, $url, $hoy, $redactor, $nombrearchivo, $formato);
                 $stmt->execute();
-
-
                 
             } else {
                 $respuesta = array(
@@ -78,13 +68,38 @@ if ($_POST['acta'] == 'actualizar') {
                 );
             }
         }
-
-
         if ($stmt->affected_rows) {
             $respuesta = array(
                 'respuesta' => 'exito',
                 'id_actualizado' => $id_registro,
                 'resultado_archivo' => $url_resultado
+            );
+        } else {
+            $respuesta = array(
+                'respuesta' => 'error'
+            );
+        }
+        $stmt->close();
+        $mysqli->close();
+    } catch (Exception $e) {
+        $respuesta = array(
+            'respuesta' => 'error'
+        );
+    }
+    die(json_encode($respuesta));
+}
+
+if ($_POST['acta'] == 'finalizar') {
+    $estado = 3;
+    $id_finalizar = $_POST['id'];
+    try {
+        $stmt = $mysqli->prepare('UPDATE tbl_acta SET id_estado=? WHERE id_acta=?');
+        $stmt->bind_param("ii", $estado, $id_finalizar);
+        $stmt->execute();
+        if ($stmt->affected_rows) {
+            $respuesta = array(
+                'respuesta' => 'exito',
+                'id_actualizado' => $id_registro
             );
         } else {
             $respuesta = array(
