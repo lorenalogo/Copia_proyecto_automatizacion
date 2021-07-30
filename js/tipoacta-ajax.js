@@ -686,7 +686,8 @@ $(document).ready(function () {
                 type: 'post',
                 data: {
                     'id': id,
-                    'acuerdos': 'finalizar'
+                    'acuerdos': 'finalizar',
+                    'mensaje': $('#mensaje').val()
                 },
                 url: '../Modelos/modelo_' + estado + '.php',
                 success: function (data) {
@@ -721,7 +722,7 @@ $(document).ready(function () {
         var estado = $(this).attr('data-tipo');
         swal({
             title: '¿Está Seguro?',
-            text: 'Si lo cancelar no podra revertirlo y se notificara al responsable!!',
+            text: 'Si lo cancelar no podra revertirlo y se notificará al responsable!!<br><br><b>Escriba el motivo por lo cual cancela el acuerdo</b><br><br><input class="form-control" onkeyup="mayus(this);" id="mensaje" style="width: 65%; margin-left: 17%;" required name="mensaje" type="text">',
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -733,7 +734,8 @@ $(document).ready(function () {
                 type: 'post',
                 data: {
                     'id': id,
-                    'acuerdo': 'cancelar'
+                    'acuerdo': 'cancelar',
+                    'mensaje': $('#mensaje').val()
                 },
                 url: '../Modelos/modelo_' + estado + '.php',
                 success: function (data) {
@@ -741,7 +743,7 @@ $(document).ready(function () {
                     if (resultado.respuesta == 'exito') {
                         swal({
                             title: 'Cancelado!',
-                            text: 'cancelado con Exito!',
+                            text: 'acuerdo cancelado con Exito!',
                             type: 'success'
                         }).then(function () {
                             location.href = "../Vistas/acuerdos_pendientes_vista.php";

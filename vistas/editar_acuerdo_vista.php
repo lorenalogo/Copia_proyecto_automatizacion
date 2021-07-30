@@ -86,7 +86,7 @@ ob_end_flush();
         </section>
         <!-- Main content -->
         <section class="content">
-            
+
             <?php
             $sql = "SELECT * FROM `tbl_acuerdos` WHERE `id_acuerdo` = $id ";
             $resultado = $mysqli->query($sql);
@@ -102,12 +102,18 @@ ob_end_flush();
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Seleccione el acta:</label>
-                                <select class="form-control " style="width: 35%;" name="acta" id="acta" disabled>
+                                <select class="form-control " style="width: 35%;" name="acta" id="acta" >
                                     <option value="0">-- Seleccione --</option>
                                     <?php
                                     try {
                                         $tipo_actual = $estado['id_acta'];
-                                        $sql = "SELECT * FROM tbl_acta WHERE id_estado = 2 ";
+                                        $sql = "SELECT
+                                        t1.id_acta,
+                                        t2.num_acta
+                                    FROM
+                                        tbl_acuerdos t1
+                                    INNER JOIN tbl_acta t2 ON
+                                        t2.id_acta = t1.id_acta";
                                         $resultado = $mysqli->query($sql);
                                         while ($tipo_reunion = $resultado->fetch_assoc()) {
                                             if ($tipo_reunion['id_acta'] == $tipo_actual) { ?>
@@ -128,7 +134,7 @@ ob_end_flush();
                             </div>
                             <div class="form-group">
                                 <label>Responsable:</label>
-                                <select class="form-control" style="width: 50%;" name="responsable" id="responsable" disabled>
+                                <select class="form-control" style="width: 50%;" name="responsable" id="responsable" >
                                     <option value="0">-- Seleccione --</option>
                                     <?php
                                     try {
@@ -226,11 +232,11 @@ ob_end_flush();
         });
     });
 
-   /* jQuery(document).ready(function($) {
-        $(document).ready(function() {
-            $('#responsable').select2();
-        });
-    });*/
+    /* jQuery(document).ready(function($) {
+         $(document).ready(function() {
+             $('#responsable').select2();
+         });
+     });*/
 </script>
 
 </html>

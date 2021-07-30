@@ -244,6 +244,7 @@ ob_end_flush();
                                                                         $('#hora_inicio').html(calEvent.hora_inicio);
                                                                         $('#hora_final').html(calEvent.hora_final);
                                                                         $('#lugar').html(calEvent.lugar);
+                                                                        $('#id').html(calEvent.id);
                                                                         $("#exampleModalLong").modal();
                                                                     }
 
@@ -272,14 +273,17 @@ ob_end_flush();
         <!-- /.content -->
 
         <script type="text/javascript" language="javascript">
-            /********** borrar acta/reunion ***********/
+                function mayus(e) {
+            e.value = e.value.toUpperCase();
+        }
+            /********** cancelar acta/reunion ***********/
             $('.cancelar_registrooo').on('click', function(e) {
                 e.preventDefault();
                 var id = $(this).attr('data-id');
                 var tipo = $(this).attr('data-tipo');
                 swal({
                     title: '¿Está Seguro?',
-                    text: 'Si la cancela no podra revertirlo!!<br><br><b>Escriba el motivo por lo cual cancela la reunion</b><br><br><input class="form-control" id="mensaje" style="width: 65%; margin-left: 17%;" required name="mensaje" type="text">',
+                    text: 'Si la cancela no podra revertirlo!!<br><br><b>Escriba el motivo por lo cual cancela la reunion</b><br><br><input class="form-control" onkeyup="mayus(this);" id="mensaje" style="width: 65%; margin-left: 17%;" required name="mensaje" type="text">',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -299,8 +303,8 @@ ob_end_flush();
                             var resultado = JSON.parse(data);
                             if (resultado.respuesta == 'exito') {
                                 swal({
-                                    title: "cancelado",
-                                    text: "cancelada con Exito!",
+                                    title: "cancelada",
+                                    text: "Reunión cancelada con Exito!",
                                     type: "success"
                                 }).then(function() {
                                     location.href = "../Vistas/reuniones_pendientes_vista.php";

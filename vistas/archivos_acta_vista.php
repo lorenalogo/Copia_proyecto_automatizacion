@@ -88,7 +88,7 @@ ob_end_flush();
         <!-- Main content -->
         <section class="content">
 
-            <table id="tabla11" class="table table-bordered table-striped">
+            <table id="archivos" class="table table-bordered table-striped">
                 <thead>
                     <tr style="color: #3444d1;">
                         <th>Nombre Archivo</th>
@@ -141,12 +141,7 @@ ob_end_flush();
     <!-- /.row -->
 
 
-    <div style="padding: 0px 0 25px 0;">
-        <input type="hidden" name="id_registro" value="<?php echo $id; ?>">
-        <input type="hidden" name="acta" value="actualizar">
-        <button style="padding-right: 15px;" type="submit" class="btn btn-success float-left" id="editar_registro" <?php echo $_SESSION['btn_crear']; ?>>Guardar Como Borrador</button>
-        <a style="color: white !important; margin: 0px 0px 0px 10px;" class="cancelar-acta btn btn-danger" href="actas_pendientes_vista.php">Cancelar</a>
-    </div>
+
     </div>
     <!-- /.container-fluid -->
     </form>
@@ -157,7 +152,7 @@ ob_end_flush();
     </div>
     <script type="text/javascript">
         $(function() {
-            $('#tabla11').DataTable({
+            $('#archivos').DataTable({
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,
@@ -165,6 +160,24 @@ ob_end_flush();
                 "info": true,
                 "autoWidth": true,
                 "responsive": true,
+                language: {
+                    decimal: "",
+                    emptyTable: "No hay archivos adjuntados",
+                    info: "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
+                    infoFiltered: "(Filtrado de _MAX_ total entradas)",
+                    lengthMenu: "Mostrar _MENU_ Entradas",
+                    loadingRecords: "Cargando...",
+                    processing: "Procesando...",
+                    search: "Buscar:",
+                    zeroRecords: "Sin resultados encontrados",
+                    paginate: {
+                        first: "Primero",
+                        last: "Ultimo",
+                        next: "Siguiente",
+                        previous: "Anterior"
+                    }
+                },
             });
         });
     </script>

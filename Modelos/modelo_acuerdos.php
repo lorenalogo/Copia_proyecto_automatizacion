@@ -129,9 +129,11 @@ if ($_POST['acuerdos'] == 'finalizar') {
     $estadofinalizar = 2;
     $fecha_res = 'FINALIZADO';
     $id_registrof = $_POST['id'];
+    $mensaje = $_POST['mensaje'];
+    $motivo = ' -- motivo: '.$_POST['mensaje'];
     try {
-        $stmt = $mysqli->prepare('UPDATE tbl_acuerdos SET id_estado = ?, resolucion = ? WHERE id_acuerdo = ?');
-        $stmt->bind_param("isi", $estadofinalizar, $fecha_res, $id_registrof);
+        $stmt = $mysqli->prepare('UPDATE tbl_acuerdos SET id_estado = ?, resolucion = ?, mensaje =? WHERE id_acuerdo = ?');
+        $stmt->bind_param("issi", $estadofinalizar, $fecha_res,$motivo, $id_registrof);
         $stmt->execute();
         if ($stmt->affected_rows) {
             $respuesta = array(
@@ -157,9 +159,11 @@ if ($_POST['acuerdo'] == 'cancelar') {
     $id_registroc = $_POST['id'];
     $estadocancelar = 3;
     $fecha_res = 'CANCELADO';
+    $mensaje = $_POST['mensaje'];
+    $motivo = ' -- motivo: '.$_POST['mensaje'];
     try {
-        $stmt = $mysqli->prepare('UPDATE tbl_acuerdos SET id_estado = ?, resolucion = ? WHERE id_acuerdo = ?');
-        $stmt->bind_param("isi", $estadocancelar, $fecha_res, $id_registroc);
+        $stmt = $mysqli->prepare('UPDATE tbl_acuerdos SET id_estado = ?, resolucion = ?, mensaje =? WHERE id_acuerdo = ?');
+        $stmt->bind_param("issi", $estadocancelar, $fecha_res,$motivo, $id_registroc);
         $stmt->execute();
         if ($stmt->affected_rows) {
             $respuesta = array(
