@@ -103,7 +103,7 @@ ob_end_flush();
                             <div class="form-group">
                                 <label>Seleccione el acta:</label>
                                 <select class="form-control " style="width: 35%;" name="acta" id="acta" >
-                                    <option value="0">-- Seleccione --</option>
+                                    <option value="selected">-- Seleccione --</option>
                                     <?php
                                     try {
                                         $tipo_actual = $estado['id_acta'];
@@ -135,32 +135,8 @@ ob_end_flush();
                             <div class="form-group">
                                 <label>Responsable:</label>
                                 <select class="form-control" style="width: 50%;" name="responsable" id="responsable" >
-                                    <option value="0">-- Seleccione --</option>
-                                    <?php
-                                    try {
-                                        $responsable_actual = $estado['id_participante'];
-                                        $sql = "SELECT 
-                                        t1.id_persona,concat_ws(' ', t1.nombres, t1.apellidos) as nombres
-                                        FROM tbl_personas t1 
-                                        INNER JOIN tbl_horario_docentes t2 ON t2.id_persona = t1.id_persona 
-                                        INNER JOIN tbl_jornadas t3 ON t2.id_jornada = t3.id_jornada 
-                                        ORDER BY nombres ASC";
-                                        $resultado = $mysqli->query($sql);
-                                        while ($tipo_reunion = $resultado->fetch_assoc()) {
-                                            if ($tipo_reunion['id_persona'] == $responsable_actual) { ?>
-                                                <option value="<?php echo $tipo_reunion['id_persona']; ?>" selected>
-                                                    <?php echo $tipo_reunion['nombres']; ?>
-                                                </option>
-                                            <?php } else { ?>
-                                                <option value="<?php echo $tipo_reunion['id_persona']; ?>">
-                                                    <?php echo $tipo_reunion['nombres']; ?>
-                                                </option>
-                                    <?php }
-                                        }
-                                    } catch (Exception $e) {
-                                        echo "Error: " . $e->getMessage();
-                                    }
-                                    ?>
+                                    <!--Participantes por acta-->
+                                  
                                 </select>
                             </div>
                             <div class="form-group">
@@ -257,3 +233,28 @@ ob_end_flush();
 <script src="../plugins/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
 <script src="../plugins/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
 <script src="../plugins/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
+<script>
+ /********** Listar Responsable ***********/
+
+ $(document).ready(function(){
+         
+          var responsable = $('#responsable');
+  $("#acta").on("change", function () {
+    
+    var acta = $(this).val();
+    console.log(acta);    
+    $.ajax({
+        type: 'POST',
+        url: "../Controlador/cargar_responsable_acta.php",
+        data: {acta: acta}
+    })
+        .done(function (data) {
+            responsable.html(data);
+            console.log(responsable)
+        })
+        .fail(() => {
+            alert("Error al cargar lista de responsables")
+        });
+  });
+});
+</script>
