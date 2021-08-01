@@ -8,6 +8,7 @@ include_once '../clases/Conexion.php';
     <select class="form-control select2" style="width: 35%;" name="responsable" id="responsable" required>
                                         <option value="-1">-- Seleccione --</option>
                                         <?php
+                                        
                                                 try {
                                                     $sql = "SELECT DISTINCT
                                                     pe.id_persona,

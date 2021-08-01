@@ -103,7 +103,7 @@ ob_end_flush();
                                                 <div class="card-body">
                                                     <div class="form-group">
                                                         <label for="nombre">Nombre:</label>
-                                                        <input minlength="5" onchange="showdatos()" type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese nombre de la Reunion" onkeyup="PasarValor()">
+                                                        <input minlength="5" onchange="showdatos()" onkeyup="mayus(this);" type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese nombre de la Reunion" onkeyup="PasarValor()">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="tipo">Tipo de Reunión</label>

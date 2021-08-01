@@ -125,6 +125,7 @@ class myPDF extends FPDF
         $this->Cell(40, 7, utf8_decode($total_asistencia->excusa.'%'), 1, 0, 'C');
         $this->ln();
         $this->ln();
+        $this->ln();
         }
         
     }
@@ -251,6 +252,7 @@ class myPDF extends FPDF
 
     function archivos()
     {  
+        $this->Ln();
         $this->Ln();
         $this->Ln();
         

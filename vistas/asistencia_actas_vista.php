@@ -117,8 +117,6 @@ ob_end_flush();
                                                 t2.id_reunion = t1.id_reunion
                                             INNER JOIN tbl_reunion t3 ON
                                                 t3.id_reunion = t1.id_reunion
-                                            WHERE
-                                                t1.id_estado = 3
                                             GROUP BY
                                                 t1.id_acta";
                                                 $resultado = $mysqli->query($sql);
@@ -133,7 +131,7 @@ ob_end_flush();
                                                     <td><?php echo $reunion['n_personas']; ?></td>
                                                     <td style="color: green;"><?php echo $reunion['asistio']; ?>%</td>
                                                     <td style="color: red;"><?php echo $reunion['inasistencia']; ?>%</td>
-                                                    <td style="color:rgb(129, 129, 40);"><?php echo $reunion['excusa']; ?>%</td>
+                                                    <td style="color:rgb(255, 135, 0);"><?php echo $reunion['excusa']; ?>%</td>
                                                     <td><a target="_blank" href="../Controlador/reporte_asistencia_acta.php?id=<?php echo $reunion['id_acta'] ?>">VER REPORTE</a></td>
                                                 </tr>
                                             <?php

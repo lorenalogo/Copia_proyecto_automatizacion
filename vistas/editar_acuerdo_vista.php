@@ -108,21 +108,25 @@ ob_end_flush();
                                     try {
                                         $tipo_actual = $estado['id_acta'];
                                         $sql = "SELECT
-                                        t1.id_acta,
-                                        t2.num_acta
+                                        id_acta,
+                                        id_reunion,
+                                        IF(
+                                            num_acta IS NULL or '',
+                                            'SIN No. ACTUALMENTE',
+                                            num_acta
+                                        ) AS acta
                                     FROM
-                                        tbl_acuerdos t1
-                                    INNER JOIN tbl_acta t2 ON
-                                        t2.id_acta = t1.id_acta";
+                                        tbl_acta
+                                        WHERE id_estado = 2";
                                         $resultado = $mysqli->query($sql);
                                         while ($tipo_reunion = $resultado->fetch_assoc()) {
                                             if ($tipo_reunion['id_acta'] == $tipo_actual) { ?>
                                                 <option value="<?php echo $tipo_reunion['id_acta']; ?>" selected>
-                                                    <?php echo $tipo_reunion['num_acta']; ?>
+                                                    <?php echo $tipo_reunion['acta']; ?>
                                                 </option>
                                             <?php } else { ?>
                                                 <option value="<?php echo $tipo_reunion['id_acta']; ?>">
-                                                    <?php echo $tipo_reunion['num_acta']; ?>
+                                                    <?php echo $tipo_reunion['acta']; ?>
                                                 </option>
                                     <?php }
                                         }
@@ -136,7 +140,44 @@ ob_end_flush();
                                 <label>Responsable:</label>
                                 <select class="form-control" style="width: 50%;" name="responsable" id="responsable" >
                                     <!--Participantes por acta-->
-                                  
+                                    <?php
+                                    try {
+                                        $responsable_actual = $estado['id_participante'];
+                                        $sql = "SELECT
+                                        t1.id_persona,
+                                        CONCAT_WS(' ', t1.nombres, t1.apellidos) AS nombres
+                                    FROM
+                                        tbl_personas t1
+                                    LEFT JOIN tbl_horario_docentes t2 ON
+                                        t2.id_persona = t1.id_persona
+                                    LEFT JOIN tbl_jornadas t3 ON
+                                        t2.id_jornada = t3.id_jornada
+                                    LEFT JOIN tbl_participantes t4 ON
+                                        t4.id_persona = t1.id_persona
+                                    LEFT JOIN tbl_acta t5 ON
+                                        t5.id_reunion = t4.id_reunion
+                                    LEFT JOIN tbl_acuerdos t6 ON
+                                        t6.id_acta = t5.id_acta
+                                    WHERE
+                                        t6.id_acuerdo =  $id
+                                    ORDER BY
+                                        nombres ASC";
+                                        $resultado = $mysqli->query($sql);
+                                        while ($tipo_reunion = $resultado->fetch_assoc()) {
+                                            if ($tipo_reunion['id_persona'] == $responsable_actual) { ?>
+                                                <option value="<?php echo $tipo_reunion['id_persona']; ?>" selected>
+                                                    <?php echo $tipo_reunion['nombres']; ?>
+                                                </option>
+                                            <?php } else { ?>
+                                                <option value="<?php echo $tipo_reunion['id_persona']; ?>">
+                                                    <?php echo $tipo_reunion['nombres']; ?>
+                                                </option>
+                                    <?php }
+                                        }
+                                    } catch (Exception $e) {
+                                        echo "Error: " . $e->getMessage();
+                                    }
+                                    ?>
                                 </select>
                             </div>
                             <div class="form-group">

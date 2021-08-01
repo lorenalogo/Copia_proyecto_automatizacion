@@ -1,6 +1,6 @@
 $(document).ready(function () {
-      /********** finalizar acta ***********/
-      $('.finalizar_registroacta').on('click', function(e) {
+    /********** finalizar acta ***********/
+    $('.finalizar_registroacta').on('click', function (e) {
         e.preventDefault();
         var id = $(this).attr('data-id');
         var tipo = $(this).attr('data-tipo');
@@ -13,7 +13,7 @@ $(document).ready(function () {
             cancelButtonColor: '#d33',
             confirmButtontext: 'Si, Finalizarla!',
             cancelButtontext: 'Cancelar'
-        }).then(function() {
+        }).then(function () {
             $.ajax({
                 type: 'post',
                 data: {
@@ -21,14 +21,14 @@ $(document).ready(function () {
                     'acta': 'finalizar'
                 },
                 url: '../Modelos/modelo_' + tipo + '.php',
-                success: function(data) {
+                success: function (data) {
                     var resultado = JSON.parse(data);
                     if (resultado.respuesta == 'exito') {
                         swal({
                             title: "Correcto",
                             text: "Se Finalizo con Exito!",
                             type: "success"
-                        }).then(function() {
+                        }).then(function () {
                             location.href = "../Vistas/actas_pendientes_vista.php";
                         });
                     } else {
@@ -65,7 +65,7 @@ $(document).ready(function () {
                         type: "success",
                         confirmButtonText: "Ir a Actas Pendientes",
                         html: `<br>
-                                ¿Ahora que desea hacer?
+                                ¿Desea gestionar los acuerdos ahora?
                                 <br>
                                 <b><a target="_blank" href="../vistas/crear_acuerdo_vista.php">Crear Un acuerdo</a></b>`,
                     }).then(function () {

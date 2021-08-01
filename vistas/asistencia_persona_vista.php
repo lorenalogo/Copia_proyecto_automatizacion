@@ -95,7 +95,6 @@ ob_end_flush();
                                                 <th>Asistencia</th>
                                                 <th>Inasistencia</th>
                                                 <th>Excusados</th>
-                                                <th>Tipo Contrato</th>
 
                                             </tr>
                                         </thead>
@@ -126,20 +125,20 @@ ob_end_flush();
                                                 ) excusa
                                             FROM
                                                 tbl_personas pe
-                                            INNER JOIN tbl_participantes pa ON
+                                            LEFT JOIN tbl_participantes pa ON
                                                 pa.id_persona = pe.id_persona
-                                            INNER JOIN tbl_horario_docentes hrd ON
+                                            LEFT JOIN tbl_horario_docentes hrd ON
                                                 hrd.id_persona = pe.id_persona
-                                            INNER JOIN tbl_jornadas j ON
+                                            LEFT JOIN tbl_jornadas j ON
                                                 j.id_jornada = hrd.id_jornada
-                                            INNER JOIN tbl_reunion t1 ON
+                                             LEFT JOIN tbl_reunion t1 ON
                                                 t1.id_reunion = pa.id_reunion
                                             WHERE
-                                                t1.fecha LIKE '%$hoy%'
+                                                pe.Estado = 'ACTIVO' AND t1.fecha LIKE '%$hoy%' AND pe.id_tipo_persona != 2
                                             GROUP BY
                                                 pe.id_persona
                                             ORDER BY
-                                                nombres ASC";
+                                                `nombres` ASC";
                                                 $resultado = $mysqli->query($sql);
 
                                                 while ($asistencia = $resultado->fetch_assoc()) { ?>
@@ -147,9 +146,8 @@ ob_end_flush();
                                                         <td><strong><?php echo $asistencia['nombres']; ?></strong></td>
                                                         <td><?php echo $asistencia['reuniones']; ?></td>
                                                         <td class="text-center" style="color:rgb(0, 193, 3 );"><?php echo $asistencia['asistencia']; ?>%</td>
-                                                        <td class="text-center" style="color:rgb(178, 0, 0);"><?php echo $asistencia['inasistencia']; ?>%</td>
+                                                        <td class="text-center" style="color:red;"><?php echo $asistencia['inasistencia']; ?>%</td>
                                                         <td class="text-center" style="color:rgb(255, 135, 0);"><?php echo $asistencia['excusa']; ?>%</td>
-                                                        <td class="text-center"><?php echo $asistencia['jornada']; ?></td>
                                                     </tr>
                                             <?php
                                                 }
@@ -165,7 +163,6 @@ ob_end_flush();
                                                 <th>Asistencia</th>
                                                 <th>Inasistencia</th>
                                                 <th>Excusados</th>
-                                                <th>Tipo Contrato</th>
 
                                             </tr>
                                         </thead>

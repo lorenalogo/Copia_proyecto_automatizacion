@@ -95,7 +95,17 @@ ob_end_flush();
                                     <option value="-1">-- Seleccione --</option>
                                     <?php
                                             try {
-                                                $sql = "SELECT * FROM tbl_acta WHERE id_estado = 2";
+                                                $sql = "SELECT
+                                                id_acta,
+                                                id_reunion,
+                                                IF(
+                                                    num_acta IS NULL or '',
+                                                    'SIN No. ACTUALMENTE',
+                                                    num_acta
+                                                ) AS num_acta
+                                            FROM
+                                                tbl_acta
+                                                WHERE id_estado = 2";
                                                 $resultado = $mysqli->query($sql);
                                                 while ($acta = $resultado->fetch_assoc()) { ?>
                                                     <option value="<?php echo $acta['id_acta']; ?>">  

@@ -59,8 +59,69 @@ ob_end_flush();
             </div><!-- /.container-fluid -->
         </section>
         <!--Pantalla 2-->
+        <?php
+        $dtz = new DateTimeZone("America/Tegucigalpa");
+        $dt = new DateTime("now", $dtz);
+        $hoy = $dt->format("Y");
+            $sql = "SELECT
+            ROUND(
+                SUM(t1.id_estado_participante = 1) / COUNT(t1.id_estado_participante) * 100
+            ) AS asistio,
+            ROUND(
+                SUM(t1.id_estado_participante = 2) / COUNT(t1.id_estado_participante) * 100
+            ) AS falto,
+            ROUND(
+                SUM(t1.id_estado_participante = 3) / COUNT(t1.id_estado_participante) * 100
+            ) AS excusa
+        FROM
+            tbl_participantes t1
+        INNER JOIN tbl_reunion t2 ON
+            t2.id_reunion = t1.id_reunion
+        WHERE
+            t2.fecha LIKE '%$hoy%' ";
+            $resultado = $mysqli->query($sql);
+            $estado = $resultado->fetch_assoc();
+            ?>
+        <div class="row" style="padding: 0 30px;">
+            <div class="col-4 ">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3><?php echo $estado['asistio']?><sup style="font-size: 20px">%</sup></h3>
+                        <p>Porcentaje de Asistencia</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <a href="menu_asistencia_vista.php" class="small-box-footer">Más Información <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
 
+            <div class="col-4">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3><?php echo $estado['excusa']?><sup style="font-size: 20px">%</sup></h3>
+                        <p>Porcentaje de Excusados</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <a href="menu_asistencia_vista.php" class="small-box-footer">Más Información <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
 
+            <div class="col-4">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3><?php echo $estado['falto']?><sup style="font-size: 20px">%</sup></h3>
+                        <p>Porcentaje de Inasistencia</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user-times"></i>
+                    </div>
+                    <a href="menu_asistencia_vista.php" class="small-box-footer">Más Información <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
         <div class="card card-default">
             <div class="card-header">
                 <h3 class="card-title">Listado de todas las Actas</h3>

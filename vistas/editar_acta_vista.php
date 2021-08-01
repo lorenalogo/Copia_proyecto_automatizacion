@@ -368,7 +368,11 @@ ob_end_flush();
         function mayus(e) {
             e.value = e.value.toUpperCase();
         }
-
+        $("#nacta").keyup(function(){              
+        var ta      =   $("#nacta");
+        letras      =   ta.val().replace(/ /g, "");
+        ta.val(letras)
+}); 
         $(function() {
             $('#table1').DataTable({
                 "paging": true,
