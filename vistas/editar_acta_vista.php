@@ -310,9 +310,13 @@ ob_end_flush();
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label for="archivo_acta">Archivo:</label>
-                                                <input class="form-control" type="file" id="archivo_acta" multiple name="archivo_acta[]" accept="<?php echo $aceptados['Valor']; ?>">
-                                                <p class="help-block">añada el archivo aqui</p>
+                                                <input style="background-color: #FFC107; border: 0;" class="form-control" type="file" id="archivo_acta" multiple name="archivo_acta[]" accept="<?php echo $aceptados['Valor']; ?>">
+                                                <div style="border: 0;" class="alert alert-warning alert-dismissable">
+                                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                    <strong><i class="fas fa-upload fa-2x"></i>⠀⠀Añada el archivo aqui para subir</strong>
+                                                </div>
                                             </div>
+
                                             <div class="col-md-8">
                                                 <table class="table table-bordered table-striped">
                                                     <thead>
@@ -368,11 +372,11 @@ ob_end_flush();
         function mayus(e) {
             e.value = e.value.toUpperCase();
         }
-        $("#nacta").keyup(function(){              
-        var ta      =   $("#nacta");
-        letras      =   ta.val().replace(/ /g, "");
-        ta.val(letras)
-}); 
+        $("#nacta").keyup(function() {
+            var ta = $("#nacta");
+            letras = ta.val().replace(/ /g, "");
+            ta.val(letras)
+        });
         $(function() {
             $('#table1').DataTable({
                 "paging": true,

@@ -12,57 +12,48 @@ $dt = new DateTime("now", $dtz);
 $hoy = $dt->format("Y-m-d");
 $Id_objeto = 146;
 bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A crear Reunion');
-
 $visualizacion = permiso_ver($Id_objeto);
-
-
 if ($visualizacion == 0) {
     echo '<script type="text/javascript">
-                              swal({
-                                   title:"",
-                                   text:"Lo sentimos no tiene permiso de visualizar la pantalla",
-                                   type: "error",
-                                   showConfirmButton: false,
-                                   timer: 3000
+                            swal({
+                            title:"",
+                            text:"Lo sentimos no tiene permiso de visualizar la pantalla",
+                            type: "error",
+                            showConfirmButton: false,
+                            timer: 3000
                                 });
-                           window.location = "../vistas/menu_reunion_vista.php";
+                            window.location = "../vistas/menu_reunion_vista.php";
 
                             </script>';
     // header('location:  ../vistas/menu_usuarios_vista.php');
 } else {
-
-
     if (permisos::permiso_insertar($Id_objeto) == '1') {
         $_SESSION['btn_crear'] = "";
     } else {
         $_SESSION['btn_crear'] = "disabled='disabled'";
     }
 }
-
 ob_end_flush();
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
     <link rel="stylesheet" type="text/css" href="../plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
     <link rel=" stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js">
     <title></title>
 </head>
-
 <body>
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="padding: 0 15px 40px 15px;">
         <?php
         $sql = "SELECT
             num_acta
         FROM
-             tbl_acta t1 
+            tbl_acta t1 
         WHERE
             id_acta  = $id ";
         $resultado = $mysqli->query($sql);
         $estado = $resultado->fetch_assoc();
-
         ?>
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -80,14 +71,8 @@ ob_end_flush();
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
-
-
-
-
         <!-- Main content -->
         <section class="content">
-
             <table id="archivos" class="table table-bordered table-striped">
                 <thead>
                     <tr style="color: #3444d1;">
@@ -96,7 +81,6 @@ ob_end_flush();
                         <th>Descargar</th>
                     </tr>
                 </thead>
-
                 <body>
                     <?php
                     try {
@@ -116,7 +100,6 @@ ob_end_flush();
                         $error = $e->getMessage();
                         echo $error;
                     }
-
                     while ($estadoacta = $resultado->fetch_assoc()) { ?>
                         <tr>
                             <td>
@@ -135,21 +118,7 @@ ob_end_flush();
                 </body>
             </table>
     </div>
-
-
-
-    <!-- /.row -->
-
-
-
-    </div>
-    <!-- /.container-fluid -->
-    </form>
     </section>
-    <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-    </div>
     <script type="text/javascript">
         $(function() {
             $('#archivos').DataTable({
@@ -182,17 +151,14 @@ ob_end_flush();
         });
     </script>
 </body>
-
 </html>
 <script type="text/javascript" src="../js/funciones_registro_docentes.js"></script>
 <script type="text/javascript" src="../js/validar_registrar_docentes.js"></script>
-
 <script type="text/javascript" src="../js/pdf_mantenimientos.js"></script>
 <script src="../plugins/select2/js/select2.min.js"></script>
 <!-- Select2 -->
 <script src="../plugins/select2/js/select2.full.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
 <script src="../js/tipoacta-ajax.js"></script>
 <!-- datatables JS -->
 <script type="text/javascript" src="../plugins/datatables/datatables.min.js"></script>

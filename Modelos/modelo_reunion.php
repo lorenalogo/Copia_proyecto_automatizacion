@@ -162,8 +162,8 @@ if ($_POST['reunion'] == 'actualizar') {
         }
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'Modificacion de la reunión';
-        $body  = "<h3>Por medio de la presente se le notifica que la reunion $nombre";
+        $mail->Subject = 'Modificación de la reunión';
+        $body  = "<h3>Por medio de la presente se le notifica que la reunión $nombre";
         $body .= " ha recibido cambios por favor verificar las nuevas modificaciones.</h3><br>";
         $body .= "<h2><b>MEMORÁNDUM IA-$id_registro/$anio_formateada</b></h2><br>";
         $body .= "Nombre Reunión: <strong>$nombre</strong><br>";
@@ -290,8 +290,6 @@ if ($_POST['reunion'] == 'cancelar') {
             $email = $destino['participantes'];
             $mail->addAddress($email);
         }
-
-
         $sql = "SELECT nombre_reunion,lugar,hora_inicio,hora_final FROM tbl_reunion where id_reunion = $id_cancelar";
         $datosreunion = $mysqli->query($sql);
         while ($datos = $datosreunion->fetch_assoc()) {
@@ -302,18 +300,18 @@ if ($_POST['reunion'] == 'cancelar') {
         }
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'CANCELACION reunión';
+        $mail->Subject = 'CANCELACIÓN reunión';
         $body .= "<br>";
-        $body .= "Por medio de la presente se notifica que la Reunion: <strong>$nom</strong>";
+        $body .= "Por medio de la presente se notifica que la Reunión: <strong>$nom</strong>";
         $body .= " lugar en que se iba a realizar: <strong>$lugar</strong><br>";
         $body .= " en el horario de <strong>$inicio</strong>";
         $body .= " a <strong>$final</strong>";
         $body .= " HA SIDO <strong>CANCELADA</strong> por el siguiente motivo: <strong>$mensaje</strong>.<br><br>";
-        $body .= "Este es un correo automático favor no responder a esta dirección<br> si quiere contactarse con nosotros por algún motivo escribanos a:<br>";
-        $body .= "iaunah@unah.edu.hn";
+        $body .= "<b>Este es un correo automático favor no responder a esta dirección, si quiere contactarse con nosotros por algún motivo escribanos a:</b><br>";
+        $body .= "<b>iaunah@unah.edu.hn</b>";
         $body .= "<br>";
         $body .= "<br>";
-        $body .= "Saludos, <strong>Depto. IA</strong><br>";
+        $body .= "Saludos, <strong>Jefatura Depto. IA</strong><br>";
         $mail->Body = $body;
         $mail->CharSet = 'UTF-8';
         $mail->send();
