@@ -159,7 +159,7 @@ ob_end_flush();
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="nacta">No. Acta:</label>
-                                                        <input minlength="4" onkeyup="mayus(this);" value="<?php echo $estado['num_acta']; ?>" style="width: 90%;" type="text" class="form-control" id="nacta" name="nacta" placeholder="Ingrese numero o codigo del acta">
+                                                        <input minlength="4" onkeyup="mayus(this);" value="<?php echo $estado['num_acta']; ?>" style="width: 90%;" type="text" class="form-control" id="nacta" minlength="5" maxlength="25" name="nacta" placeholder="Ingrese numero o codigo del acta">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="horainicio">Hora Inicio: </label>
