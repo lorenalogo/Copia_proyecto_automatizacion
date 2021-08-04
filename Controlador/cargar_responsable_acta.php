@@ -10,18 +10,12 @@ include_once '../clases/Conexion.php';
                                         <?php
                                         
                                                 try {
-                                                    $sql = "SELECT DISTINCT
-                                                    pe.id_persona,
-                                                    CONCAT_WS(' ', pe.nombres, pe.apellidos) nombres
-                                                FROM
-                                                    tbl_participantes t1
-                                                INNER JOIN tbl_personas pe ON
-                                                    pe.id_persona = t1.id_persona
-                                                INNER JOIN tbl_reunion r ON
-                                                    r.id_reunion = t1.id_reunion
-                                                    INNER JOIN tbl_acta t2 ON t2.id_reunion = r.id_reunion
-                                                WHERE
-                                                    t2.id_acta = $acta";
+                                                    $sql = "SELECT 
+                                                    t1.id_persona,concat_ws(' ', t1.nombres, t1.apellidos) as nombres
+                                                    FROM tbl_personas t1 
+                                                    INNER JOIN tbl_horario_docentes t2 ON t2.id_persona = t1.id_persona 
+                                                    INNER JOIN tbl_jornadas t3 ON t2.id_jornada = t3.id_jornada 
+                                                    ORDER BY nombres ASC";
                                                     $resultado = $mysqli->query($sql);
                                                     while ($resp= $resultado->fetch_assoc()) { ?>
                                                         <option value="<?php echo $resp['id_persona']; ?>">  
