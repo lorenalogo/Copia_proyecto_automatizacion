@@ -61,6 +61,15 @@ ob_end_flush();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="../js/tipoacta-ajax.js"></script>
 
+    <script type="text/javascript">
+        $(window).on('load', function() {
+
+            $('.selectpicker').selectpicker({
+                'selectedText': 'cat'
+            });
+
+        });
+    </script>
     <title></title>
 </head>
 
@@ -102,8 +111,7 @@ ob_end_flush();
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Seleccione el acta:</label>
-                                <select class="form-control " style="width: 35%;" name="acta" id="acta" >
-                                    <option value="selected">-- Seleccione --</option>
+                                <select class="form-control " style="width: 35%;" name="acta" id="acta">
                                     <?php
                                     try {
                                         $tipo_actual = $estado['id_acta'];
@@ -116,8 +124,7 @@ ob_end_flush();
                                             num_acta
                                         ) AS acta
                                     FROM
-                                        tbl_acta
-                                        WHERE id_estado = 2";
+                                        tbl_acta";
                                         $resultado = $mysqli->query($sql);
                                         while ($tipo_reunion = $resultado->fetch_assoc()) {
                                             if ($tipo_reunion['id_acta'] == $tipo_actual) { ?>
@@ -125,9 +132,7 @@ ob_end_flush();
                                                     <?php echo $tipo_reunion['acta']; ?>
                                                 </option>
                                             <?php } else { ?>
-                                                <option value="<?php echo $tipo_reunion['id_acta']; ?>">
-                                                    <?php echo $tipo_reunion['acta']; ?>
-                                                </option>
+
                                     <?php }
                                         }
                                     } catch (Exception $e) {
@@ -138,30 +143,17 @@ ob_end_flush();
                             </div>
                             <div class="form-group">
                                 <label>Responsable:</label>
-                                <select class="form-control" style="width: 50%;" name="responsable" id="responsable" >
+                                <select class="form-control" class="selectpicker show-tick form-control" style="width: 50%;" name="responsable" id="responsable">
                                     <!--Participantes por acta-->
                                     <?php
                                     try {
                                         $responsable_actual = $estado['id_participante'];
-                                        $sql = "SELECT
-                                        t1.id_persona,
-                                        CONCAT_WS(' ', t1.nombres, t1.apellidos) AS nombres
-                                    FROM
-                                        tbl_personas t1
-                                    LEFT JOIN tbl_horario_docentes t2 ON
-                                        t2.id_persona = t1.id_persona
-                                    LEFT JOIN tbl_jornadas t3 ON
-                                        t2.id_jornada = t3.id_jornada
-                                    LEFT JOIN tbl_participantes t4 ON
-                                        t4.id_persona = t1.id_persona
-                                    LEFT JOIN tbl_acta t5 ON
-                                        t5.id_reunion = t4.id_reunion
-                                    LEFT JOIN tbl_acuerdos t6 ON
-                                        t6.id_acta = t5.id_acta
-                                    WHERE
-                                        t6.id_acuerdo =  $id
-                                    ORDER BY
-                                        nombres ASC";
+                                        $sql = "SELECT 
+                                        t1.id_persona,concat_ws(' ', t1.nombres, t1.apellidos) as nombres
+                                        FROM tbl_personas t1 
+                                        INNER JOIN tbl_horario_docentes t2 ON t2.id_persona = t1.id_persona 
+                                        INNER JOIN tbl_jornadas t3 ON t2.id_jornada = t3.id_jornada 
+                                        ORDER BY nombres ASC";
                                         $resultado = $mysqli->query($sql);
                                         while ($tipo_reunion = $resultado->fetch_assoc()) {
                                             if ($tipo_reunion['id_persona'] == $responsable_actual) { ?>
@@ -275,27 +267,29 @@ ob_end_flush();
 <script src="../plugins/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
 <script src="../plugins/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
 <script>
- /********** Listar Responsable ***********/
+    /********** Listar Responsable ***********/
 
- $(document).ready(function(){
-         
-          var responsable = $('#responsable');
-  $("#acta").on("change", function () {
-    
-    var acta = $(this).val();
-    console.log(acta);    
-    $.ajax({
-        type: 'POST',
-        url: "../Controlador/cargar_responsable_acta.php",
-        data: {acta: acta}
-    })
-        .done(function (data) {
-            responsable.html(data);
-            console.log(responsable)
-        })
-        .fail(() => {
-            alert("Error al cargar lista de responsables")
+    $(document).ready(function() {
+
+        var responsable = $('#responsable');
+        $("#acta").on("change", function() {
+
+            var acta = $(this).val();
+            console.log(acta);
+            $.ajax({
+                    type: 'POST',
+                    url: "../Controlador/cargar_responsable_acta.php",
+                    data: {
+                        acta: acta
+                    }
+                })
+                .done(function(data) {
+                    responsable.html(data);
+                    console.log(responsable)
+                })
+                .fail(() => {
+                    alert("Error al cargar lista de responsables")
+                });
         });
-  });
-});
+    });
 </script>
