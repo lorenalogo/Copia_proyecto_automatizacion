@@ -129,12 +129,12 @@ ob_end_flush();
                             <div class="form-group">
                                 <label>Nombre del Acuerdo:</label>
                                 <input style="width: 35%;" type="text" class="form-control" id="nombre_acuerdo" name="nombre_acuerdo"
-                                    placeholder="Ingrese nombre del acuerdo" minlength="5" required/>
+                                    placeholder="Ingrese nombre del acuerdo" minlength="5" maxlength="40" required/>
                             </div>
                             <div class="form-group">
                                 <label>Descripción:</label>
                                 <textarea class="form-control" placeholder="Ingrese la descripción del Acuerdo"
-                                    rows="5" id="descripcion" name="descripcion" minlength="5" required></textarea>
+                                    rows="5" id="descripcion" name="descripcion" minlength="5" maxlength="80" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Fecha Expiración:</label>
