@@ -83,14 +83,14 @@ class myPDF extends FPDF
               
         global $instancia_conexion;
         $sql="SELECT
-        r.asunto,
-        a.desarrollo
+        T1.desarrollo,
+        t2.agenda_propuesta
     FROM
-        tbl_reunion r
-    INNER JOIN tbl_acta a ON
-        a.id_reunion = r.id_reunion
+        tbl_acta t1
+    INNER JOIN tbl_reunion t2 ON
+        t2.id_reunion = t1.id_reunion
     WHERE
-        id_acta = '$_GET[id];'";
+        t1.id_acta = '$_GET[id];'";
         $stmt = $instancia_conexion->ejecutarConsulta($sql);
        
         while ($agenda = $stmt->fetch_object()) {
@@ -100,7 +100,7 @@ class myPDF extends FPDF
             $this->Cell(300, 7, utf8_decode('Asunto:'), 0, 0, 'L');
             $this->ln();
             $this->SetFont('Times', '', 14);
-            $this->MultiCell(350, 7, utf8_decode($agenda->asunto), 0,'L', );
+            $this->MultiCell(350, 7, utf8_decode($agenda->agenda_propuesta), 0,'L', );
             $this->ln();
             $this->ln();
             $this->SetFont('Times', 'B', 14);
@@ -204,7 +204,6 @@ class myPDF extends FPDF
     {
         $this->SetX(50);
         $this->SetFont('Times', 'B', 16);
-        $this->SetFillColor(150,125,255);
         $this->Cell(60, 7, utf8_decode("Promedio de Asistencia"), 0, 0, 'C');
         $this->Ln();
         $this->SetFont('Times', 'B', 12);
