@@ -97,7 +97,7 @@ class myPDF extends FPDF
             $this->Ln();
             $this->Ln();
             $this->SetFont('Times', 'B', 14);
-            $this->Cell(300, 7, utf8_decode('Asunto:'), 0, 0, 'L');
+            $this->Cell(300, 7, utf8_decode('Agenda Propuesta:'), 0, 0, 'L');
             $this->ln();
             $this->SetFont('Times', '', 14);
             $this->MultiCell(350, 7, utf8_decode($agenda->agenda_propuesta), 0,'L', );
