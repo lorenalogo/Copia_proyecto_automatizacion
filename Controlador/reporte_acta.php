@@ -64,7 +64,6 @@ class myPDF extends FPDF
             $this->Cell(80, 7, utf8_decode("Hora Final  : ".$datos->hora_final), 0, 0, 'L');
             $this->ln();
             $this->ln();
-            $this->ln();
 
 
             }
@@ -127,6 +126,7 @@ class myPDF extends FPDF
         $this->Cell(30, 7, utf8_decode('Estado'), 1, 0, 'C');
         $this->Ln();
         
+        
 
         global $instancia_conexion;
         $sql="SELECT
@@ -154,6 +154,7 @@ class myPDF extends FPDF
             $this->Cell(30, 7, utf8_decode($acuerdo->fecha_expiracion), 1, 0, 'C');
             $this->Cell(30, 7, utf8_decode($acuerdo->estado_acuerdo), 1, 0, 'C');            
             $this->Ln();
+            $this->Ln();
             
 
             
@@ -163,8 +164,6 @@ class myPDF extends FPDF
     function archivos()
     {  
         $this->Ln();
-        $this->Ln();
-        $this->Ln();
         
         $this->SetFont('Times', 'B', 14);             
         $this->Cell(60, 7, utf8_decode('Archivos Adjuntos'), 0, 0, 'L');
@@ -173,6 +172,7 @@ class myPDF extends FPDF
         $this->Cell(230, 7, utf8_decode('Nombre del Archivo'), 1, 0, 'C');
         $this->Cell(60, 7, utf8_decode('Formato del Archivo'), 1, 0, 'C');
         $this->Ln();
+        
 
         global $instancia_conexion;
         $sql="SELECT
@@ -191,12 +191,14 @@ class myPDF extends FPDF
             $this->Cell(230, 7, utf8_decode($archivos->nombre), 1, 0, 'L');
             $this->Cell(60, 7, utf8_decode($archivos->formato), 1, 0,'L');        
             $this->Ln();
-            $this->Ln();
-            $this->Ln();
-            $this->Ln();
-            $this->Ln();
+            
+
+
             
         }
+        $this->Ln();
+        $this->Ln();
+        $this->Ln();
     }
     function headerTable1()
     {
