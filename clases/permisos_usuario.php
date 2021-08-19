@@ -391,37 +391,37 @@ if ($_SESSION['pantalla']>='34' and $_SESSION['pantalla']<='38' )
    }   
    
    /*Control de Actas Menu*/
-   if ($_SESSION['pantalla'] ='146' or $_SESSION['pantalla']=='147' or $_SESSION['pantalla']=='148' or $_SESSION['pantalla']='149' or $_SESSION['pantalla']='150' or $_SESSION['pantalla']='151' or $_SESSION['pantalla']='152' or $_SESSION['pantalla']='153' or $_SESSION['pantalla']='154' or $_SESSION['pantalla']='155' ){
+   if ($_SESSION['pantalla']=='144' or $_SESSION['pantalla']=='145' or $_SESSION['pantalla']=='146' or $_SESSION['pantalla']='147' or $_SESSION['pantalla']='148' or $_SESSION['pantalla']='149' or $_SESSION['pantalla']='150' or $_SESSION['pantalla']='151' or $_SESSION['pantalla']='152' or $_SESSION['pantalla']='153' ){
       if ($_SESSION['confirmacion'] == 'block') {
          $_SESSION['btn_control_actas'] = "block";
       }
    }
    
-   if ($_SESSION['pantalla']=='146' or $_SESSION['pantalla']=='147' or $_SESSION['pantalla']=='148'){
+   if ($_SESSION['pantalla']='144' or $_SESSION['pantalla']=='145' or $_SESSION['pantalla']=='146'){
       if ($_SESSION['confirmacion'] == 'block') {
          $_SESSION['gestion_reunion'] = "block";
       }
    }
 
-   if ($_SESSION['pantalla']='149' or $_SESSION['pantalla']='150'){
+   if ($_SESSION['pantalla']='147' or $_SESSION['pantalla']='148'){
       if ($_SESSION['confirmacion'] == 'block') {
          $_SESSION['gestion_actas'] = "block";
       }
    } 
 
-   if ($_SESSION['pantalla']='151' or $_SESSION['pantalla']='152' or $_SESSION['pantalla']='153'){
+   if ($_SESSION['pantalla']='149' or $_SESSION['pantalla']='150' or $_SESSION['pantalla']='151'){
       if ($_SESSION['confirmacion'] == 'block') {
          $_SESSION['gestion_acuerdos_seguimientos'] = "block";
       }
    } 
 
-   if ($_SESSION['pantalla']='154' or $_SESSION['pantalla']='155'){
+   if ($_SESSION['pantalla']='152' or $_SESSION['pantalla']='153'){
       if ($_SESSION['confirmacion'] == 'block') {
          $_SESSION['gestion_lista_asistencia'] = "block";
       }
    } 
 
-   if ($_SESSION['pantalla']='156' or $_SESSION['pantalla']='157' or $_SESSION['pantalla']='158' or $_SESSION['pantalla']='159' or $_SESSION['pantalla']='160' or $_SESSION['pantalla']='161'){
+   if ($_SESSION['pantalla']='154' or $_SESSION['pantalla']='155' or $_SESSION['pantalla']='156' or $_SESSION['pantalla']='157' or $_SESSION['pantalla']='158' or $_SESSION['pantalla']='159'){
       if ($_SESSION['confirmacion'] == 'block') {
          $_SESSION['mantenimiento_actas'] = "block";
       }
