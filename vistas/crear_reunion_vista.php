@@ -9,7 +9,8 @@ require_once('../clases/funcion_permisos.php');
 $dtz = new DateTimeZone("America/Tegucigalpa");
 $dt = new DateTime("now", $dtz);
 $hoy = $dt->format("Y-m-d");
-$Id_objeto = 146;
+
+$Id_objeto = 144;
 
 bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A crear Reunion');
 
@@ -63,7 +64,7 @@ ob_end_flush();
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                            <li class="breadcrumb-item"><a href="../vistas/menu_reunion_vista.php">Inicio</a></li>
                             <li class="breadcrumb-item active">Crear Reunion</li>
                         </ol>
                     </div>
