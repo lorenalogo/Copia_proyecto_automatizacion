@@ -1,30 +1,31 @@
 <?php
+ob_start();
+session_start();
 require_once('../vistas/pagina_inicio_vista.php');
 require_once('../clases/Conexion.php');
 require_once('../clases/funcion_visualizar.php');
 
-if (permiso_ver('146') == '1') {
+if (permiso_ver('144') == '1') {
 
     $_SESSION['nueva_reunion'] = "...";
 } else {
     $_SESSION['nueva_reunion'] = "No tiene permisos para visualizar";
 }
 
-if (permiso_ver('147') == '1') {
+if (permiso_ver('145') == '1') {
 
     $_SESSION['reuniones_pendientes'] = "...";
 } else {
     $_SESSION['reuniones_pendientes'] = "No tiene permisos para visualizar";
 }
 
-if (permiso_ver('148') == '1') {
+if (permiso_ver('146') == '1') {
 
     $_SESSION['lista_reunion'] = "...";
 } else {
     $_SESSION['lista_reunion'] = "No tiene permisos para visualizar";
 }
-
-
+ob_end_flush();
 ?>
 <!DOCTYPE html>
 <html>
