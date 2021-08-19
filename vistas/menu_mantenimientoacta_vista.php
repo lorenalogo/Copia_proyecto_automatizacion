@@ -1,57 +1,51 @@
 <?php
+ob_start();
+session_start();
 require_once('../vistas/pagina_inicio_vista.php');
 require_once('../clases/Conexion.php');
 require_once('../clases/funcion_visualizar.php');
 
 
-if (permiso_ver('156') == '1') {
+if (permiso_ver('154') == '1') {
 
         $_SESSION['mantenimiento_tipo_reunion_vista'] = "...";
     } else {
         $_SESSION['mantenimiento_tipo_reunion_vista'] = "No tiene permisos para visualizar";
     }
 
-if (permiso_ver('157') == '1') {
+if (permiso_ver('155') == '1') {
 
         $_SESSION['mantenimiento_estado_acta_vista'] = "...";
     } else {
         $_SESSION['mantenimiento_estado_acta_vista'] = "No tiene permisos para visualizar";
     }
-if (permiso_ver('158') == '1') {
+if (permiso_ver('156') == '1') {
 
         $_SESSION['mantenimiento_estado_reunion_vista'] = "...";
     } else {
         $_SESSION['mantenimiento_estado_reunion_vista'] = "No tiene permisos para visualizar";
     }
 
-if (permiso_ver('159') == '1') {
+if (permiso_ver('157') == '1') {
 
         $_SESSION['mantenimiento_estado_acuerdo_vista'] = "...";
     } else {
         $_SESSION['mantenimiento_estado_acuerdo_vista'] = "No tiene permisos para visualizar";
     }
-if (permiso_ver('160') == '1') {
+if (permiso_ver('158') == '1') {
 
         $_SESSION['mantenimiento_estado_notificacion_vista'] = "...";
     } else {
         $_SESSION['mantenimiento_estado_notificacion_vista'] = "No tiene permisos para visualizar";
     }
 
-if (permiso_ver('161') == '1') {
+if (permiso_ver('159') == '1') {
 
         $_SESSION['mantenimiento_estado_participante_vista'] = "...";
     } else {
         $_SESSION['mantenimiento_estado_participante_vista'] = "No tiene permisos para visualizar";
     }
-
-
-
-
-
-
-
-
-
+    ob_end_flush();
 ?>
 <!DOCTYPE html>
 <html>
