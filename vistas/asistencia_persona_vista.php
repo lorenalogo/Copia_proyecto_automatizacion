@@ -8,7 +8,7 @@ require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
 
-$Id_objeto = 155;
+$Id_objeto = 153;
 $visualizacion = permiso_ver($Id_objeto);
 if ($visualizacion == 0) {
     echo '<script type="text/javascript">
