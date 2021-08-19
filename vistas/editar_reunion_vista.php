@@ -10,7 +10,7 @@ require_once('../clases/funcion_permisos.php');
 $dtz = new DateTimeZone("America/Tegucigalpa");
 $dt = new DateTime("now", $dtz);
 $hoy = $dt->format("Y-m-d");
-$Id_objeto = 146;
+$Id_objeto = 144;
 
 bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A crear Reunion');
 
