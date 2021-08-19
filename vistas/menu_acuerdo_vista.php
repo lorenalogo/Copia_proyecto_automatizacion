@@ -1,31 +1,32 @@
 <?php
+ob_start();
+session_start();
 require_once('../vistas/pagina_inicio_vista.php');
 require_once('../clases/Conexion.php');
 require_once('../clases/funcion_visualizar.php');
 
-if (permiso_ver('151') == '1') {
+if (permiso_ver('149') == '1') {
 
     $_SESSION['nuevo_acuerdo_menu'] = "...";
 } else {
     $_SESSION['nuevo_acuerdo_menu'] = "No tiene permisos para visualizar";
 }
 
-if (permiso_ver('152') == '1') {
+if (permiso_ver('150') == '1') {
 
     $_SESSION['acuerdos_pendientes_menu'] = "...";
 } else {
     $_SESSION['acuerdos_pendientes_menu'] = "No tiene permisos para visualizar";
 }
 
-if (permiso_ver('153') == '1') {
+if (permiso_ver('151') == '1') {
 
     $_SESSION['listar_acuerdos_menu'] = "...";
 } else {
     $_SESSION['listar_acuerdos_menu'] = "No tiene permisos para visualizar";
 }
 
-
-
+ob_end_flush();
 ?>
 <!DOCTYPE html>
 <html>
