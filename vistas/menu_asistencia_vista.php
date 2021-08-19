@@ -1,23 +1,24 @@
 <?php
+ob_start();
+session_start();
 require_once('../vistas/pagina_inicio_vista.php');
 require_once('../clases/Conexion.php');
 require_once('../clases/funcion_visualizar.php');
 
-if (permiso_ver('154') == '1') {
+if (permiso_ver('152') == '1') {
 
     $_SESSION['asistencia_acta'] = "...";
 } else {
     $_SESSION['asistencia_acta'] = "No tiene permisos para visualizar";
 }
 
-if (permiso_ver('155') == '1') {
+if (permiso_ver('153') == '1') {
 
     $_SESSION['asistencia_persona'] = "...";
 } else {
     $_SESSION['asistencia_persona'] = "No tiene permisos para visualizar";
 }
-
-
+ob_end_flush();
 ?>
 <!DOCTYPE html>
 <html>
