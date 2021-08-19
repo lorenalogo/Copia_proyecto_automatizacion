@@ -8,7 +8,7 @@ require_once('../clases/funcion_visualizar.php');
 require_once('../clases/funcion_permisos.php');
 
 
-$Id_objeto = 156;
+$Id_objeto = 154;
 
 bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'Ingreso', 'A Mantenimiento Estado Acta');
 
@@ -52,11 +52,6 @@ if ($visualizacion == 0) {
 }
 
 ob_end_flush();
-
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html>
