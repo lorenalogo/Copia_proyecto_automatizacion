@@ -108,7 +108,7 @@ ob_end_flush();
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="tipo">Tipo de Reunión</label>
-                                                        <select class="form-control" onChange="showInp();showdatos()" style="width: 50%;" id="tipo" name="tipo">
+                                                        <select class="form-control" onChange="showInp(); showdatos();" style="width: 50%;" id="tipo" name="tipo">
                                                             <option value="0">-- Selecione un Tipo --</option>
                                                             <?php
                                                             try {
@@ -187,7 +187,7 @@ ob_end_flush();
                                                 <div style="padding: 0px 0 0px 0; margin: 15px 0px 5px 10px;">
                                                     <input type="hidden" name="estado" value="1">
                                                     <input type="hidden" name="reunion" value="nuevo">
-                                                    <button style="float: right; " type="submit" class="btn btn-success float-left" <?php echo $_SESSION['btn_crear']; ?> disabled onclick="return Llamarswal()">Agendar</button>
+                                                    <button style="float: right; " type="submit" class="btn btn-success float-left" <?php echo $_SESSION['btn_crear']; ?> disabled >Agendar</button>
                                                 </div>
                                                 <div class="icheck-danger d-inline" style="padding: 15px 0px 0px 15px;">
                                                     <input type="checkbox" id="checkboxPrimary10" name="selectall" onclick="marcar(this);">
@@ -395,34 +395,15 @@ LIMIT 1";
         inicio.addEventListener("change", comparaHoras);
         final.addEventListener("change", comparaHoras);
     </script>
-    <script>
-        if (document.getElementById('nombre').value === '' || document.getElementById('lugar').value === '') {
-            swal({
-                title: 'Oooops...',
-                text: 'Llena todos los campos!',
-                type: 'error',
-            });
-            return false;
-        }
-    </script>
 </body>
 
 </html>
-<script type="text/javascript" src="../js/funciones_registro_docentes.js"></script>
-<script type="text/javascript" src="../js/validar_registrar_docentes.js"></script>
-
-<script type="text/javascript" src="../js/pdf_mantenimientos.js"></script>
 <script src="../plugins/select2/js/select2.min.js"></script>
 <!-- Select2 -->
 <script src="../plugins/select2/js/select2.full.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
 <!-- datatables JS -->
 <script type="text/javascript" src="../plugins/datatables/datatables.min.js"></script>
 <!-- para usar botones en datatables JS -->
-<script src="../plugins/datatables/Buttons-1.5.6/js/dataTables.buttons.min.js"></script>
-<script src="../plugins/datatables/JSZip-2.5.0/jszip.min.js"></script>
-<script src="../plugins/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
-<script src="../plugins/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
 <script src="../plugins/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
 <script src="../js/tipoacta-ajax.js"></script>
