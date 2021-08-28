@@ -1,12 +1,8 @@
 <?php
-
-
 $servidor= "localhost";
 $usuario= "root";
 $password = "root";
-$base= "informat_desarrollo_automatizacion";
-
-
+$base= "automatizacion";
 	$mysqli = new mysqli($servidor, $usuario,$password,$base);
 	$connection = mysqli_connect($servidor, $usuario,$password,$base) or die("Error " . mysqli_error($connection));
 	
@@ -15,7 +11,7 @@ $base= "informat_desarrollo_automatizacion";
 		die('Error en la conexion' . $mysqli->connect_error);
 		exit();	
 	}
- $connect = new PDO("mysql:host=localhost;dbname=informat_desarrollo_automatizacion", "root", "root");
+ $connect = new PDO("mysql:host=localhost;dbname=automatizacion", "root", "root");
 
 if (!mysqli_set_charset($mysqli, "utf8")) {
     printf("Error cargando el conjunto de caracteres utf8: %s\n", mysqli_error($mysqli));
@@ -23,8 +19,4 @@ if (!mysqli_set_charset($mysqli, "utf8")) {
 } else {
     printf("");
 }
-
-    
-	
-
 ?>
